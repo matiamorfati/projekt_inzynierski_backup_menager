@@ -1,0 +1,1 @@
+Dodalem backup_manager, restore_manager, db_manager i integracion_test (do sprawdzenia jak działa)
