@@ -7,16 +7,16 @@ Integruje się z:
 - utils.checksum (weryfikacja integralności)
 - db_manger (rejestracja historii przywracania)
 """
+# Dodać import shutil
 
 import os
-import shutil
 import zipfile
 from datetime import datetime
 
 from utils.logger import get_logger
-from utils.checksum import verify_chcecksum
+from utils.checksum import verify_checksum
 from db_manager import DatabaseManager
-
+from utils.config import CONFIG
 
 class RestoreManager:
     """
@@ -34,7 +34,7 @@ class RestoreManager:
         :param logger: instancja loggera
         :param db: instancja bazy danych (DatabaseManager)
         """
-        self.config = config or {}
+        self.config = config or CONFIG
         self.logger = logger or get_logger("RestoreManager")
         self.db = db or DatabaseManager(logger=self.logger)
 
@@ -42,7 +42,7 @@ class RestoreManager:
         self.default_restore_dir = self.config.get("restore_directory", "restored_files")
 
         # Utworzenie katalogu do przywracania, jeśli nie istnieje
-        os.makedirs(self.default_backup_dir, exist_ok=True)
+        os.makedirs(self.default_restore_dir, exist_ok=True)
         self.logger.info(f"RestoreManager zainicjalizowany. Folder przywracania: {self.default_restore_dir}")
 
     # Główna funkcja - przywracanie backup
@@ -68,7 +68,7 @@ class RestoreManager:
             
             # 2. Weryfikajca integralności (jeśli mamy hash)
             if expected_hash:
-                ok = verify_chcecksum(backup_path, expected_hash, logger=self.logger)
+                ok = verify_checksum(backup_path, expected_hash, logger=self.logger)
                 if not ok:
                     self.logger.error(f"Integralność backupu niepoprawna! Plik mógł zostać zmieniony: {backup_file}")
                     self._register_restore(backup_file, destination, "FAILED_HASH")
@@ -133,7 +133,7 @@ class RestoreManager:
 if __name__ == "__main__":
     config = {
         "backup_directory": "backups",
-        "restore_directiory": "restored_files",
+        "restore_directory": "restored_files",
     }
 
     manager = RestoreManager(config=config)

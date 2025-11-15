@@ -4,7 +4,9 @@ db_manager.py - moduł odpowiedzialny za zarządzanie bazą danych (SQLite).
 Tworzy bazę, tabele oraz obsługuje zapis historii backupów.
 Każde działanine jest logowane przy pomocy utils/logger.py
 """
-
+# Edit 1 4.011 dodałem w self.conn (punkt 2. inicjalizacja połączenia) check_same_thread=False
+# Na wypadek gdyby 2 rzeczy chciały wysłać komunikat co będzie błędem
+# Edit 2. 15.11 Dodajemy kolumne sources do bazy danych
 
 import os
 import sqlite3
@@ -32,7 +34,7 @@ class DatabaseManager:
 
         # 2. Inicjalizacja połączenia
         try:
-            self.conn = sqlite3.connect(self.db_path)
+            self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
             self.cursor = self.conn.cursor()
             self.logger.info(f"Połączono z bazą danych: {self.db_path}")
             self._create_table()
@@ -53,15 +55,33 @@ class DatabaseManager:
                     path TEXT NOT NULL,
                     size INTEGER,
                     hash TEXT,
-                    status TEXT
+                    status TEXT,
+                    sources TEXT
                 )
             """)
             self.conn.commit()
             self.logger.debug("Tabela 'backups' została utworzona lub już istnieje.")
+            self._ensure_sources_column()
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas tworzenia tabeli: {e}")
+        
 
-    def add_backup_record(self, name: str, path: str, size: int, hash_value: str = None, status: str = "OK"):
+    def _ensure_sources_column(self):
+        """
+        Upewnia się, że w tabeli 'backups' istnieje kolumna 'sources'.
+        Jeśli baza była utworzona wcześniej, dodaje kolumnę ALTER TABLE.
+        """
+        try:
+            self.cursor.execute("PRAGMA table_info(backups)")
+            cols = [row[1] for row in self.cursor.fetchall()]
+            if "sources" not in cols:
+                self.cursor.execute("ALTER TABLE backups ADD COLUMN sources TEXT")
+                self.conn.commit()
+                self.logger.info("Dodano kolumnę 'sources' do tabeli 'backups'.")
+        except sqlite3.Error as e:
+            self.logger.error(f"Błąd podczas sprawdzania/aktualizacji schematu tabeli 'backups': {e}")
+
+    def add_backup_record(self, name: str, path: str, size: int, hash_value: str = None, status: str = "OK", sources: str | None = None):
         """
         Dodaje nowy wpis o backupie do bazy danych.
         :param name: nazwa pliku backupu
@@ -69,15 +89,16 @@ class DatabaseManager:
         :param: size: rozmiar pliku (w bajtach)
         :param: hash_value: suma kontrolna pliku (obcjonalnie)
         :param: status : status (np.: 'OK', 'FAILED')
+        :param: sources: lista ścieżek źródłowych jako teskt
         """
 
         date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         try:
             self.cursor.execute("""
-                INSERT INTO backups (name, date, path, size, hash, status)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (name, date_str, path, size, hash_value, status))
+                INSERT INTO backups (name, date, path, size, hash, status, sources)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (name, date_str, path, size, hash_value, status, sources))
             self.conn.commit()
             self.logger.info(f"Dodano wpis do bazy: {name} ({status})")
         except sqlite3.Error as e:
@@ -87,13 +108,13 @@ class DatabaseManager:
     def get_backup_history(self, limit: int = 10):
         """
         Pobiera listę ostatnich backupów z bazy danych.
-        :param limit: ile ostatnich rekordów pobrać (domyslne 10)
+        :param limit: ile ostatnich rekordów pobrać (domyślnie 10)
         :return: lista krotek (name, date, path, size, status)
         """
 
         try:
             self.cursor.execute("""
-                SELECT name, date, path, size, status FROM backups
+                SELECT name, date, path, size, status, sources FROM backups
                 ORDER BY id DESC
                 LIMIT ?
             """, (limit,))
@@ -110,7 +131,7 @@ class DatabaseManager:
         """
         try:
             self.conn.close()
-            self.logger.info("Połącznie z bazą danych zostało zamknięte.")
+            self.logger.info("Połączenie z bazą danych zostało zamknięte.")
         except Exception as e:
             self.logger.error(f"Błąd przy zamykaniu połączenia: {e}")
 
@@ -121,15 +142,16 @@ if __name__ == "__main__":
     logger = get_logger("DBTest")
     db = DatabaseManager(logger=logger)
 
-
     # 1. Dodanie testowego wpisu
     db.add_backup_record(
         name="Backup_2025_10_23.zip",
         path="backups/Backup_2025_10_23.zip",
         size=2048,
         hash_value="abc123def456",
-        status="OK"
+        status="OK",
+        sources="/C/test"
     )
+
 
     # 2. Pobranie i wyświetlenie historii
     history = db.get_backup_history(limit=5)

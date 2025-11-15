@@ -5,9 +5,7 @@ checksum.py - funkcje do obliczania i weryfikacji sum kontrolnych.
 Domyślnie używa SHA-256. Zawiera:
 - calculate_checksum(file_path, algo="sha256", chunk_size=1MB)
 - verify_checksum(file_path, expected_hash, algo="sha256")
-- opcjonalne: manifest katalogu (hashy plików) do późniejszej weyfikacji.
-
-Uwaga: brak bezpośredniej zależności od loggera by uniknąć cykli importów.
+- opcjonalne: manifest katalogu (hashy plików) do późniejszej weryfikacji.
 """
 
 from __future__ import annotations
@@ -16,7 +14,10 @@ import hashlib
 import json
 import os
 from typing import Dict, Optional
+import logging
+from utils.logger import get_logger
 
+module_logger = get_logger("Checksum")
 
 # Podstawowe API plikowe
 
@@ -24,7 +25,7 @@ def calculate_checksum(
         file_path: str,
         algo: str = "sha256",
         chunk_size: int = 1024 * 1024,
-        logger: Optional[object] = None,
+        logger: logging.Logger = None,
 ) -> str:
     """
     Oblicza sumę kontrolną pliku w trybie streamingowym (nie wczytuje całego do RAM).
@@ -38,23 +39,21 @@ def calculate_checksum(
         FileNotFoundError - gdy plik nie istnieje
         ValueError - gdy algorytm nie jest obsługiwany.
     """
+    logger = logger or module_logger
 
     if not os.path.exists(file_path):
         msg = f"Plik nie istnieje: {file_path}"
-        if logger:
-            logger.error(msg)
+        logger.error(msg)
         raise FileNotFoundError(msg)
 
     try:
         h = hashlib.new(algo)
     except Exception as e:
         msg = f"Nieobsługiwany algorytm: {algo} ({e})"
-        if logger:
-            logger.error(msg)
+        logger.error(msg)
         raise ValueError(msg)
     
-    if logger:
-        logger.debug(f"Liczenie {algo} dla: {file_path}")
+    logger.debug(f"Liczenie {algo} dla: {file_path}")
 
     with open(file_path, "rb") as f:
         while True:
@@ -64,52 +63,47 @@ def calculate_checksum(
             h.update(chunk)
     
     digest = h.hexdigest()
-    if logger:
-        logger.debug(f"{algo}({file_path}) = {digest}")
+    logger.debug(f"{algo}({file_path}) = {digest}")
     return digest
 
-def verify_chcecksum(
+def verify_checksum(
         file_path: str,
         expected_hash: str,
         algo: str = "sha256",
         chunk_size: int = 1024 * 1024,
-        logger: Optional[object] = None,
+        logger: logging.Logger = None,
 ) -> bool:
     """
-    Porównuje oblicznoy hash z oczekownym.
+    Porównuje obliczony hash z oczekownym.
     :return: True jeśli zgodne, False w przeciwnym razie.
     """
+    logger = logger or module_logger
     try:
         actual = calculate_checksum(file_path, algo=algo, chunk_size=chunk_size, logger=logger)
     except Exception:
         return False
     ok = (actual.lower() == (expected_hash or "").lower()) 
-    if logger:
-        if ok:
-            logger.debug(f"Checkum OK dla: {file_path}")   
-        else:
-            logger.error(f"Checksum NIEZGODNY dla: {file_path} (actual={actual}, expected={expected_hash})")
+    if ok:
+        logger.debug(f"Checkum OK dla: {file_path}")   
+    else:
+        logger.error(f"Checksum NIEZGODNY dla: {file_path} (actual={actual}, expected={expected_hash})")
     return ok
-
-### TU KONIEC JAK NA 23.10
-# Manifest katalogu (obcjonalne na przyszłość)\
-# Umożliwa zapis i weryfikacje hashy wszyskich plików w katalogu (relatywne ścieżki.)
 
 
 def build_dir_manifest(
         dir_path: str,
         algo: str = "sha256",
-        logger: Optional[object] = None,
+        logger: logging.Logger = None,
 ) -> Dict[str, Dict[str, int | str]]:
     """
     Tworzy manifest {relative_path: {"hash": <sha>, "size": <bytes>}, ...}
-    :param dir_path: aktalog źródłowy
+    :param dir_path: katalog źródłowy
     """
+    logger = logger or module_logger
 
     if not os.path.isdir(dir_path):
         msg = f"To nie jest katalog: {dir_path}"
-        if logger:
-            logger.error(msg)
+        logger.error(msg)
         raise NotADirectoryError(msg)
     
     manifest: Dict[str, Dict[str, int | str]] = {}
@@ -122,13 +116,11 @@ def build_dir_manifest(
             try:
                 h = calculate_checksum(full, algo=algo, logger=logger)
                 size = os.path.getsize(full)
-                manifest[rel] = {"hahs": h, "size": size}
+                manifest[rel] = {"hash": h, "size": size}
             except Exception as e:
-                if logger:
-                    logger.error(f"Pominięto '{full}' ({e})")
+                logger.error(f"Pominięto '{full}' ({e})")
 
-    if logger:
-        logger.debug(f"Zbudowano manifest dla: {dir_path} (plików: {len(manifest)})")
+    logger.debug(f"Zbudowano manifest dla: {dir_path} (plików: {len(manifest)})")
     return manifest
 
 
@@ -140,7 +132,7 @@ def save_manifest(manifest: Dict[str, Dict[str, int | str]], path: str) -> None:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
 
 
-def load_maniifest(path: str) -> Dict[str, Dict[str, int | str]]:
+def load_manifest(path: str) -> Dict[str, Dict[str, int | str]]:
     """
     Wczytanie manifestu
     """
@@ -152,24 +144,24 @@ def verify_manifest(
     dir_path: str,
     manifest: Dict[str, Dict[str, int | str]],
     algo: str = "sha256",
-    logger: Optional[object] = None,
+    logger: logging.Logger = None,
 ) -> bool:
     """
     Sprawdza, czy wszystkie pliki z manifesty istnieją i mają zgodne hashe.
     :return: True gdy wszystko sie zgadza
     """
+    logger = logger or module_logger
     base = os.path.abspath(dir_path)
     all_ok = True
 
-    for rel, meta in manifest.item():
+    for rel, meta in manifest.items():
         full = os.path.join(base, rel)
         expected = str(meta.get("hash", ""))
         if not os.path.exists(full):
-            if logger:
-                logger.error(f"Brak pliku: {full}")
+            logger.error(f"Brak pliku: {full}")
             all_ok = False
             continue
-        if not verify_chcecksum(full, expected, algo=algo, logger=logger):
+        if not verify_checksum(full, expected, algo=algo, logger=logger):
             all_ok = False
         
     return all_ok
@@ -183,4 +175,4 @@ if __name__ == "__main__":
     test_file = __file__
     digest = calculate_checksum(test_file)
     print("SHA256:", digest)
-    print("Verify:", verify_chcecksum(test_file, digest))
+    print("Verify:", verify_checksum(test_file, digest))

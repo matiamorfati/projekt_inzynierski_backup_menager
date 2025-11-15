@@ -46,8 +46,8 @@ def get_logger(name: str = "BackupSystem"):
 
 
     # 2. Nazwa pliku log - z datą, np. "backup-log-2025-10-23.log"
-    currnet_date = datetime.now().strftime("%Y-%m-%d")
-    log_file = os.path.join(log_dir, f"backup_log_{currnet_date}.log")
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    log_file = os.path.join(log_dir, f"backup_log_{current_date}.log")
 
 
     # 3. Utworzenie loggera o podanej nazwie
@@ -55,7 +55,7 @@ def get_logger(name: str = "BackupSystem"):
     logger.setLevel(logging.DEBUG)  # zapisujemy wszyskie poziomy (DEBUG, INFO, WARNING, ERROR)
 
 
-    # 4. Zapobiaganie duplikowaniu logów przy wielokrotnym imporcie
+    # 4. Zapobieganie duplikowaniu logów przy wielokrotnym imporcie
     if logger.handlers:
         return logger
 
@@ -83,7 +83,7 @@ def get_logger(name: str = "BackupSystem"):
     file_handler.setLevel(logging.DEBUG)
 
 
-    # 7. Handelr do konsoli (czytelne komuniakty w terminalu)
+    # 7. Handler do konsoli (czytelne komunikaty w terminalu)
     # Kolorowy
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(color_formatter)
@@ -94,6 +94,7 @@ def get_logger(name: str = "BackupSystem"):
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
 
+    logger.propagate = False
 
     # 9. Informacja startowa
     logger.info(f"Logger '{name}' został zainicjalizowany - zapisywanie do pliku: {log_file}")
@@ -112,4 +113,3 @@ if __name__ == "__main__":
     test_logger.error("To jest komuniakt ERROR - błąd krytyczny.")
 
 
-#DODAĆ IMPLEMENTACJE LOGGERA DO BACKUP_MANAGER!!!
