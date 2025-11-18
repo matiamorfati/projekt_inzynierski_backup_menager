@@ -7,6 +7,7 @@ Każde działanine jest logowane przy pomocy utils/logger.py
 # Edit 1 4.011 dodałem w self.conn (punkt 2. inicjalizacja połączenia) check_same_thread=False
 # Na wypadek gdyby 2 rzeczy chciały wysłać komunikat co będzie błędem
 # Edit 2. 15.11 Dodajemy kolumne sources do bazy danych
+# Edit 3. 17.11 dodajemy metode do pobierania nazw danych w backupie (get_backup_name)
 
 import os
 import sqlite3
@@ -125,6 +126,37 @@ class DatabaseManager:
             self.logger.error(f"Błąd podczas odczytu historii: {e}")
             return []
         
+    def get_backup_by_name(self, name: str):
+        """
+        Zwraca pojedynczy rekord backupu o podanej nazwie
+        Jeśli jest kilka rekordów o tej samej nazwie - bierze ostatni (po id)
+        :param name: nazwa pliku backupu
+        """
+        try:
+            self.cursor.execute("""
+                SELECT name, date, path, size, hash, status, sources
+                FROM backups
+                WHERE name = ?
+                ORDER BY id DESC
+                LIMIT 1
+            """, (name,))
+            row = self.cursor.fetchone()
+            if not row:
+                return None
+
+            return {
+                "name": row[0],
+                "date": row[1],
+                "path": row[2],
+                "size": row[3],
+                "hash": row[4],
+                "status": row[5],
+                "sources": row[6]
+            }
+        except sqlite3.Error as e:
+            self.logger.error(f"Błąd podczas pobierania backupu '{name}' z bazy: {e}")
+            return None
+
     def close(self):
         """
         Zamyka połączenie z bazą danych.

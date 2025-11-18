@@ -2,6 +2,7 @@
 
 # EDIT 1.  08.11  Wersja 1.0
 # EDIT 2.  13.11  Wprowadzenie do wersji 2.0 (lepszy dayly sender oraz dodawanie załączników)
+# EDIT 3.  17.11  Wprowadzenie notyfikacji po przywróceniu
 """
 mail_notifier.py - Wysyła powaidomienia e-mail 
 Wersja 1.0: Wysyła wiadomość o stanie backupu
@@ -135,7 +136,28 @@ class MailNotifier:
             self.logger.error(f"Błąd podczas generowania raportu dziennego: {e}")
             return False
         
+    # 4. Powiadomoenie po przywróceniu
+    def notify_restore_result(self, backup_name: str, status: str, destination: str, details: str = "", attachments: list[str] | None=None):
+        """
+        Wysyła powiadomienia e-mail po zakończonym przywracaniu
+        :param backup_name: nazwa pliku backupu
+        :param status: 'OK', 'FAILED', 'OK_PARTIAL', itd.
+        :param destination: ścieżka katalogu, do którego przywrócilśmy dane
+        :param details: dodatkowe informacje (jakie foldery, ile plików)
+        :param attachments: lista ścieżek do załączników
+        """
+        date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+        subject = f"[Backup SYstem] Restore: {status} ({backup_name})"
+        body = (
+            f"Data: {date_str}\n"
+            f"Nazwa backupu: {backup_name}\n"
+            f"Status przywracania: {status}\n"
+            f"Folder docelowy: {destination}\n"
+            f"Szczegóły: \n{details}\n"
+        )
+
+        return self.send_email(subject, body, attachments=attachments)
 
 
 # Test Manualny
