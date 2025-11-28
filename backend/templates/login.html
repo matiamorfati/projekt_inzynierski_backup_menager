@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backup Manager</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- HEADER -->
+      <header class="header">
+        <h1 class="brand">Backup Manager</h1>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="content">
+        <section class="login-card">
+          <h2>Login</h2>
+          <form>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="admin@example.com"
+              required
+            />
+
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter password"
+              required
+            />
+            <div class="actionContainer">
+              <div class="checkboxContainer">
+                <input type="checkbox" id="remember" />
+                <label for="remember">Remember Me</label>
+              </div>
+              <p class="forget-password">
+                Forget your password?<a href="#">Click here</a>
+              </p>
+            </div>
+            <button type="submit" class="save-btn">Log in</button>
+          </form>
+          <p class="register-link">
+            Don't have an account? <a href="#">Register</a>
+          </p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

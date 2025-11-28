@@ -1,0 +1,65 @@
+backup_manager_project/      ← katalog główny projektu
+│
+├── venv/                    ← Twoje wirtualne środowisko (nie commitować)
+│
+├── backend/                 ← katalog projektu Django
+│   ├── manage.py
+│   └── backend/
+│       ├── __init__.py
+│       ├── settings.py
+│       ├── urls.py
+│       ├── asgi.py
+│       └── wsgi.py
+│
+├── backup/                  ← aplikacja Django do backupów
+│   ├── migrations/
+│   ├── templates/
+│   │   └── backup/
+│   │       ├── dashboard.html
+│   │       └── backup_history.html
+│   ├── static/
+│   │   └── backup/
+│   │       ├── css/
+│   │       │   └── backup.css
+│   │       ├── js/
+│   │       │   └── backup.js
+│   │       └── images/
+│   ├── views.py
+│   ├── urls.py
+│   └── apps.py
+│
+├── restore/                 ← aplikacja Django do przywracania danych
+│   ├── templates/restore/
+│   │   └── restore_page.html
+│   ├── static/restore/
+│   ├── views.py
+│   └── urls.py
+│
+├── scheduler/               ← aplikacja do harmonogramu zadań
+│   ├── templates/scheduler/
+│   ├── static/scheduler/
+│   ├── views.py
+│   └── urls.py
+│
+├── notifications/           ← aplikacja do mail notifiera
+│   ├── templates/notifications/
+│   ├── static/notifications/
+│   ├── views.py
+│   └── urls.py
+│
+├── services/                ← Twój istniejący kod Python (logika)
+│   ├── backup_manager.py
+│   ├── restore_manager.py
+│   ├── scheduler.py
+│   ├── mail_notifier.py
+│   ├── db_manager.py
+│   └── integration_tests/
+│       ├── v1.py
+│       └── v2.py
+│
+├── frontend/                ← oryginalny folder z widokami (backup)
+│   ├── dashboard.html
+│   ├── settings.html
+│   └── css/
+│       └── style.css
+└── requirements.txt         ← lista paczek Python

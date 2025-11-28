@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+body {
+  background: #f7f7f9;
+  color: #222;
+}
+
+/* ---------------------------------------------------
+   LAYOUT
+--------------------------------------------------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-btn,
+.login-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.login-btn {
+  border: 1px solid #ccc;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e1e1e1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-btn {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  background: #eef1ff;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.95rem;
+  transition: 0.15s;
+}
+
+.nav-btn:hover {
+  background: #e2e7ff;
+}
+
+.nav-btn.active {
+  background: #d7ddff;
+  font-weight: 600;
+}
+
+/* CONTENT */
+
+.content {
+  flex: 1;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* SETTINGS*/
+.settings {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.settings-card,
+.system-info {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  min-width: 280px;
+}
+
+.settings-card h2,
+.system-info h2 {
+  margin-bottom: 20px;
+}
+
+.settings-card label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.settings-card input[type="email"],
+.settings-card input[type="text"],
+.settings-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f1f3f7;
+  margin-bottom: 10px;
+}
+
+.settings-card input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.save-btn {
+  margin-top: 15px;
+  background-color: #3366ff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #254eda;
+}
+
+.system-info p {
+  padding: 0.25rem;
+  font-size: 1.25rem;
+}

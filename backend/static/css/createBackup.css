@@ -1,0 +1,174 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+body {
+  background: #f7f7f9;
+  color: #222;
+}
+
+/* ---------------------------------------------------
+   LAYOUT
+--------------------------------------------------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-btn,
+.login-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.login-btn {
+  border: 1px solid #ccc;
+}
+
+/* MAIN LAYOUT */
+
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e1e1e1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-btn {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  background: #eef1ff;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.95rem;
+  transition: 0.15s;
+}
+
+.nav-btn:hover {
+  background: #e2e7ff;
+}
+
+.nav-btn.active {
+  background: #d7ddff;
+  font-weight: 600;
+}
+
+/* CONTENT */
+
+.content {
+  flex: 1;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  gap: 24px;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-container h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-container button {
+  width: 70%;
+  min-width: 200px;
+  align-self: center;
+  background-color: #3366ff;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #254eda;
+}

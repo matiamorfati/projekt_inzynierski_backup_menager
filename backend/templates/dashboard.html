@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backup Manager</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- HEADER -->
+      <header class="header">
+        <h1 class="brand">Backup Manager</h1>
+        <div class="header-actions">
+          <button class="icon-btn">🌙</button>
+          <button class="login-btn">Log in</button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+          <button class="nav-btn active">Dashboard</button>
+          <button class="nav-btn">Create Backup</button>
+          <button class="nav-btn">History</button>
+          <button class="nav-btn">Settings</button>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+          <div class="content-header">
+            <h2>Dashboard</h2>
+            <button class="primary-btn">+ Create Backup</button>
+          </div>
+
+          <div class="cards">
+            <!-- BACKUP HISTORY CARD -->
+            <section class="card">
+              <h3>Backup History</h3>
+              <table class="history-table">
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+                <tr>
+                  <td>Photos</td>
+                  <td>2025-11-12</td>
+                  <td class="status success">Confirmed</td>
+                </tr>
+                <tr>
+                  <td>Documents</td>
+                  <td>2025-11-11</td>
+                  <td class="status success">Confirmed</td>
+                </tr>
+                <tr>
+                  <td>Project</td>
+                  <td>2025-11-09</td>
+                  <td class="status failed">Failed</td>
+                </tr>
+              </table>
+            </section>
+
+            <!-- SETTINGS SUMMARY CARD -->
+            <section class="card">
+              <h3>Settings Summary</h3>
+
+              <div class="setting">
+                <label>Backup Frequency</label>
+                <select class="input">
+                  <option>Every 24h</option>
+                </select>
+              </div>
+
+              <div class="setting">
+                <label>Automatic Backups</label>
+                <div class="toggle">Enabled</div>
+              </div>
+
+              <p class="last-backup">Last backup: Feb 1, 2025</p>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
