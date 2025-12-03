@@ -19,6 +19,11 @@ from utils.checksum import calculate_checksum, verify_checksum
 from utils.checksum import build_dir_manifest, save_manifest
 from utils.config import CONFIG
 
+# Do google drive
+try:
+    from cloud_storage import GoogleDriveStorage
+except ImportError:
+    GoogleDriveStorage = None
 
 # Edit 1. 21.10.2025 16:00 NARAZIE ROBIMY SZKIC STRUKTURY
 # Edit 2. 21.10.2025 19:00 Zaczynamy wporwaadzać podstawwoe funkcjonalności
@@ -30,6 +35,9 @@ from utils.config import CONFIG
 # Edit 8. 11.11.2025 Proba naprawy wysyłania maila
 # Edit 9. 13.11.2025 Ogolne poprawki, dodanie usuwania manifestów
 # Edit 10. 15.11.2025 Dodanie wyboru wielu źródeł i zapis ścieżek do bazy danych
+# Edit 11. 29.11.2025 Dodanie logiki do obsługi nowych funkcji bazy danych
+# Edit 12. 30.11.2025 Dodanie funkcji wysyłania backupu na Google Drive urzywając nowgo skryptu c;oud_storage.py
+
 
 """
 Notka 1. z 04.11.2025 17:20 odapalając test wybierania folderu nie zkomentowałem usuwania starych backupów
@@ -65,6 +73,22 @@ class BackupManager:
         # Tworzenie katalogu backupów, jeśli nie istnieje
         os.makedirs(self.default_backup_dir, exist_ok=True)   
         self.logger.info(f"BackupManager zainicjowany. Folder backupów: {self.default_backup_dir}") 
+
+        # Integracja z Google Drive
+        self.cloud = None
+        if self.config.get("enable_drive_upload") and GoogleDriveStorage is not None:
+            creds_path = self.config.get("drive_credentials_path")
+            folder_id = self.config.get("drive_folder_id")
+            try:
+                self.cloud = GoogleDriveStorage(credentials_path=creds_path, folder_id=folder_id, logger=self.logger)
+                self.logger.info("Integracja z Google Drive została zainicjowana pomyslnie.")
+            except Exception as e:
+                self.logger.error(f"Nie udało się zainicjować GoogleDriveStorage: {e}")
+        elif self.config.get("enable_drive_upload") and GoogleDriveStorage is None:
+            self.logger.error("enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.")
+        else:
+            self.logger.info("Integracja z Google Drive jest wyłączona (enable_drive_upload=False).")
+
         
     def create_backup(self, source: str = None, destination: str = None, sources: list[str] | None = None):
         """
@@ -127,6 +151,16 @@ class BackupManager:
             size_bytes = os.path.getsize(backup_path)
             file_hash = calculate_checksum(backup_path, logger=self.logger)
             
+            # 5.5 Opcjonalny upload na Google Drive
+            drive_link = None
+            if self.cloud and self.config.get("enable_drive_upload", False):
+                try:
+                    drive_link = self.cloud.upload_file(backup_path)
+                    self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
+                except Exception as e:
+                    self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+
+
             # Zapis listy ścieżek w formie tekstu
             sources_str = ";".join(os.path.abspath(p) for p in sources_list)
 
@@ -148,6 +182,9 @@ class BackupManager:
                        f"Ścieżka Backupu: {backup_path}\n"
                        f"Źródła:\n" + "\n".join(f"- {p}" for p in sources_list)
                        )
+
+            if drive_link:
+                details += f"\nLink Google Drive: {drive_link}"
 
             attachments = []
 
@@ -191,7 +228,7 @@ class BackupManager:
     def _collect_sources(self, source: str | None, sources: list[str] | None) -> list[str]:
         """
         Zbiera liste ścieżek do backupu na podstawie:
-        -parametrów funkcji (source / sources)
+        - parametrów funkcji (source / sources)
         - confingu
         - interaktytwnego inputu
         """
@@ -320,6 +357,72 @@ class BackupManager:
         return verify_checksum(backup_path, expected_hash, logger=self.logger)
 
 
+    
+    def _apply_profile_overrides(self, profile: dict):
+        """
+        Obcjonalnie nadpisuje kilka ustawień z profilu backup
+        np.: odbiorce maila, ale nie rozwalając CONFIG
+        """
+        if not profile:
+            return
+        
+        # Mail - jeśli w profilu jest recipient_email to go użyj
+        recipient = profile.get("recipient_email")
+        if recipient:
+            self.config["recipient_email"] = recipient
+            try:
+                # Jeśli MailNotifier trzyma te dane w atrybucie
+                self.mailer.recipient_email = recipient
+            except AttributeError:
+                self.logger.warning("Nie udało się ustawić recipient_email w mailerze z profilu.")
+        # Narazie tylko mailer bo reszta jest obsłógiwana przy tworzeniu backupu
+        # Gdy dodamy scheduler 2.0 można dodać np: backup_frequency, daily_report_
+
+
+    # Nowa metoda do tworzenia backupu z profilu
+    def create_backup_from_profile(self, profile_id: int | None = None):
+        """
+        Tworzy backup na podstawie profilu backupu zapisanego w bazie
+        Jeśli profil_id = None, używa profilu domyslnego (is_default = 1)
+        """
+        # Upewnienie się że DatabaseManger ma odpowienie metody
+        if not hasattr(self.db, "get_backup_profile") or not hasattr(self.db, "get_default_backup_profile"):
+            self.logger.error("DatabaseManger nie obsługuje profili backupu (brak metod get_backup_profile/get_default_backup_profile).")
+            return
+        
+        # 1. Pobieranie profili
+        if profile_id is None:
+            profile = self.db.get_default_backup_profile()
+            if not profile:
+                self.logger.error("Brak domyslnego profilu backupu w bazie danych")
+                return
+        else:
+            profile = self.db.get_backup_profile(profile_id)
+            if not profile:
+                self.logger.error(f"Nie znaleziono profilu backupu o id={profile_id}.")
+                return
+            
+        p_id = profile.get("id")
+        p_name = profile.get("name")
+
+        # 2. Pobieranie źródła 
+        sources_str = profile.get("sources") or ""
+        sources_list = [p.strip() for p in sources_str.split(";") if p.strip()]
+
+        if not sources_list:
+            self.logger.error(f"Profil backupu (id={p_id}, name={p_name}) nie ma zdefiniowanych źródeł.")
+            return 
+
+        # 3. Katalog docelowy
+        destination = profile.get("backup_directory") or self.default_backup_dir
+
+        # 4. Nadpisanie konfiguracji mailer 
+        self._apply_profile_overrides(profile)
+
+        self.logger.info(f"Tworzenie backupu na podstawie profilu (id={p_id}, name={p_name}) do katalogu: {destination}")
+
+        # 5. Użycie creator_backup
+        self.create_backup(destination=destination, sources=sources_list)
 """
 Uwagi do struktury:
 - create_backup() - Główna metoda któą będziemy wywoływać w main.py
@@ -331,28 +434,53 @@ Uwagi do struktury:
 """
 Test na robienie backupa z kilku folderów
 """
+# if __name__ == "__main__":
+#     config = {
+#         # "source_directory": "test_data",  # fodler do zbacupowania
+#         # Narazie ukrywamy dla testu wyboru folderu
+#         "backup_directory": "backups",  # tu zapisujemy backup
+#     }
+
+#     manager = BackupManager(config=config)
+
+#     # list afoldeów do balcup
+#     test_sources = [
+#         "for zip",
+#         "for zip2",
+#         "NOwe.txt"
+#     ]
+
+#     # Tworzymy backup
+#     manager.create_backup(sources=test_sources)  
+
+#     # Sprawdamy co jest w bazie
+#     print("Ostatnie backupy")
+#     history = manager.db.get_backup_history(limit=5)
+#     for name, date, path, size, status, sources in history:
+#         print(f"{date} | {name} | {status} | {size} B")
+#         print(f"sources: {sources}")
+
+# Test 3 
 if __name__ == "__main__":
-    config = {
-        # "source_directory": "test_data",  # fodler do zbacupowania
-        # Narazie ukrywamy dla testu wyboru folderu
-        "backup_directory": "backups",  # tu zapisujemy backup
-    }
+    logger = get_logger("BackupTest")
+    db = DatabaseManager(logger=logger)
 
-    manager = BackupManager(config=config)
+    profile_id = db.create_backup_profile(
+        name="Adam Mickiewicz",
+        sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
+        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2;"
+        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\NOwe.txt;"
+        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\drive_test_file.txt",
+        backup_directory="backups_test_profile",
+        backup_frequency="daily",
+        daily_report_enable=False,
+        recipient_email="backup.system.receiver@gmail.com",
+        is_default=True,
+    )
 
-    # list afoldeów do balcup
-    test_sources = [
-        "for zip",
-        "for zip2"
-    ]
+    manager = BackupManager(config=CONFIG, logger=logger, db=db)
 
-    # Tworzymy backup
-    manager.create_backup(sources=test_sources)  
+    manager.create_backup_from_profile(profile_id)
 
-    # Sprawdamy co jest w bazie
-    print("Ostatnie backupy")
-    history = manager.db.get_backup_history(limit=5)
-    for name, date, path, size, status, sources in history:
-        print(f"{date} | {name} | {status} | {size} B")
-        print(f"sources: {sources}")
+    db.close()
 

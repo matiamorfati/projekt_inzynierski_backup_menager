@@ -10,6 +10,7 @@ Integruje się z:
 # Dodać import shutil
 # EDIT 2. 17.11.2025 Dodajemy ulepszenia: Podgląd zawartości backupu, wybór elementu do przywrócenia
 # EDIT 3. 17.11.2025 Dodajemy powiadomienia mailwoe oraz wprowadzenie pobierania z bazy danych nazw plików/folderów z ZIP
+# EDIT 4. 02.12.2025 Dodajemy pobierania z Google Drive
 import os
 import zipfile
 from datetime import datetime
@@ -20,6 +21,11 @@ from mail_notifier import MailNotifier
 from utils.logger import get_logger
 from utils.checksum import verify_checksum
 from utils.config import CONFIG
+
+try:
+    from cloud_storage import GoogleDriveStorage
+except ImportError:
+    GoogleDriveStorage = None
 
 class RestoreManager:
     """
@@ -55,6 +61,22 @@ class RestoreManager:
         # Utworzenie katalogu do przywracania, jeśli nie istnieje
         os.makedirs(self.default_restore_dir, exist_ok=True)
         self.logger.info(f"RestoreManager zainicjalizowany. Folder przywracania: {self.default_restore_dir}")
+
+        # Integracja z Google Drive 
+        self.cloud = None
+        if self.config.get("enable_drive_upload") and GoogleDriveStorage is not None:
+            creds_path = self.config.get("drive_credentials_path")
+            folder_id = self.config.get("drive_folder_id")
+            try:
+                self.cloud = GoogleDriveStorage(credentials_path=creds_path, folder_id=folder_id, logger=self.logger)
+                self.logger.info("RestoreManager: integracja z Google Drive została zainicjowana.")
+            except Exception as e:
+                self.logger.error(f"RestoreManager: nie udało się zainicjowaćGoogleDriveStorage: {e}")
+        elif self.config.get("enable_drive_upload") and GoogleDriveStorage is None:
+            self.logger.error("RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.")
+        else:
+            self.logger.info("RestoreManager: integracja z Google Drive jest wyłączona")
+
     
     def _get_today_log_path(self) -> str | None:
         """
@@ -194,6 +216,152 @@ class RestoreManager:
             self.logger.info(f"Zarejestrowano operację przywracania: {backup_name} ({status})")
         except Exception as e:
             self.logger.error(f"Błąd podczas zapisu do bazy danych: {e}")
+
+    def download_backup_from_drive(self, backup_name: str, destination_dir: str | None = None ) -> str | None:
+        """
+        Pobiera plik backup o zadanej nazwie z Google Drive do lokalnego katalogu
+        :param backup_name: nazwa pliku .zip na Drive
+        :param destination_dir: katalog, gdzie zapiszemy plik (domyślnie self.default_backup_dir)
+        Zwraca ścieżke do pobranego pliku lub None
+        """
+        if not self.cloud:
+            self.logger.error("Integracja z Google Drive nie jest dostępna - nie można pobrać backupu")
+            return None
+        
+        destination_dir = destination_dir or self.default_backup_dir
+        os.makedirs(destination_dir, exist_ok=True)
+
+        # Szukanie pliku o takiej nazwie na Drive
+        files = self.cloud.find_file_by_name(backup_name)
+        if not files:
+            self.logger.error(f"Na Google Drive nie znaleziono pliku backup o nazwie: {backup_name}")
+            return None
+        
+        file_meta = files[0]
+        file_id = file_meta["id"]
+
+        local_path = os.path.join(destination_dir, backup_name)
+
+        try:
+            self.cloud.download_file(file_id, local_path)
+            return local_path
+        except Exception:
+            # logowanie już jest w download_file
+            return None
+        
+    def restore_from_drive(self, backup_name: str, destination: str | None = None, expected_hash: str | None = None) -> bool:
+        """
+        Pobiera wskazany plik ZIP z Google Drive
+        Wywołuje standardowe restore_backup() na lokalnym pliku
+        """
+        self.logger.info(f"Przywracanie backupu z Google Drive: {backup_name}")
+
+        local_path = self.download_backup_from_drive(backup_name)
+        if not local_path:
+            self.logger.error("Nie udało się pobrać backupu z Google Drive - przerwano przywracanie.")
+            return False
+        
+        local_name = os.path.basename(local_path)
+        return self.restore_backup(local_name, destination=destination, expected_hash=expected_hash)
+    
+    def restore_from_drive_with_choice(self, backup_name: str, destination: str | None = None, expected_hash: str | None = None) -> bool:
+        """
+        Pobiera plik ZIP z Google Drive i pozawala wybrać:
+        1) Pełne przywrócenie
+        2) przywrócenie tylko wybranego katalogu/elementu (root)
+        """
+        if not self.cloud:
+            self.logger.error("Integracja z Google Drive nie jest dostępna")
+            print("Integracja z Google Drive nie jest dostępna")
+            return False
+        
+        self.logger.info(f"Przywracanie backupu z Google Drvie (z wyborem): {backup_name}")
+        print(f"\n[Pobieranie backupu z Google Drive] {backup_name}")
+
+        # 1. Pobieranie ZIP-a do lokalnego katalogu backups/
+        local_path = self.download_backup_from_drive(backup_name)
+        if not local_path:
+            self.logger.error("Nie udało się pobraćbackupu z Google Drive.")
+            print("Nie udało się pobrać backupu z Google Drvie (sprawdź logi)")
+            return False
+        
+        local_name = os.path.basename(local_path)
+
+        # 2. Podgląd zawartości ZIP-a
+        contents = self.preview_backup_contents(local_name)
+        if not contents:
+            self.logger.error("Nie udało się odczytać zawartości backupu")
+            print("Nie udało się odczytać zawartości backupu (albo plik nie jest ZIP-em).")
+            return False
+        
+        # 3. Wyznaczenie "rootów" - główne katalogi / pliki z backupu
+        roots: set[str] = set()
+        for item in contents:
+            parts = item.split("/", 1)
+            roots.add(parts[0])
+
+        roots = sorted(roots)
+
+        print("\nZnaleziono następujące główne elementy w backupie: ")
+        for idx, r in enumerate(roots, start=1):
+            print(f"{idx}. {r}")
+
+        # 4. Wybór trybu przywracania
+        print("\nCo chcesz zrobić?")
+        print("1) Przywróć cały backup")
+        print("2) Przywróć tylko wybrany katalog/element")
+        choice = input("Wybór (Enter = 1): ").strip() or "1"
+
+        match choice:
+            case "1":
+                # Pełne przywrócenie więc używamy istniejącej już funkcji
+                return self.restore_backup(local_name, destination=destination, expected_hash=expected_hash)
+
+            case "2":
+                choice_root = input("Podaj numery elementów do przywrócenia(np: 1, 2, 3): ").strip()
+                
+                if not choice_root:
+                    print("Nie podano żadnych numerów - przerwano")
+                    return False
+                
+                try:
+                    indexes = {int(x) 
+                               for x in choice_root.replace(" ", "").split(",") 
+                               if x
+                            }
+                except ValueError:
+                    print("Nieprawidłowy format - przerwano")
+                    return False
+                
+                selected_roots: list[str] = []
+                for idx in sorted(indexes):
+                    if 1 <= idx <= len(roots):
+                        selected_roots.append(roots[idx - 1])
+                    else:
+                        print(f"Numer {idx} jest poza zakresem - pominięty.")
+
+                if not selected_roots:
+                    print("Żaden numer nie był poprawny - przerwano")
+                    return False
+                
+                print(f"Przywracanie Elementów: ")
+                for r in selected_roots:
+                    print(f" - {r}")
+                                    
+                return self.restore_selected(
+                    backup_file=local_name,
+                    selection=selected_roots,
+                    destination=destination,
+                    expected_hash=expected_hash
+                )
+            
+            case _:
+                print("Nieprawidłowy wybór - przerwano.")
+                return False
+
+
+
+
 
     # Nowe Podgląd zawartości ZIP
     def preview_backup_contents(self, backup_file: str) -> list[str]:
@@ -367,12 +535,38 @@ class RestoreManager:
 
 
 # Przeporwadzić test 
-# Test Manualny
-if __name__ == "__main__":
-    config = {
-        "backup_directory": "backups",
-        "restore_directory": "restored_files",
-    }
+# Test Manualny 1.
+# if __name__ == "__main__":
+#     config = {
+#         "backup_directory": "backups",
+#         "restore_directory": "restored_files",
+#     }
 
-    manager = RestoreManager(config=config)
-    manager.restore_interactive()
+#     manager = RestoreManager(config=config)
+#     manager.restore_interactive()
+
+
+
+# Test Manualny 2. dla samego restore from dirve
+# if __name__ == "__main__":
+#     logger = get_logger("RestoreTest")
+#     rm = RestoreManager(config=CONFIG, logger=logger)
+
+#     backup_name = input("Podaj nazwę pliku backupu na Drive: ").strip()
+#     if not backup_name:
+#         print("Nie podano nazwy pliku.")
+#     else:
+#         ok = rm.restore_from_drive(backup_name)
+#         print(f"Przywracanie zakończone: {ok}")
+
+# test Manualny 3. Dla restore from drive with choicce
+if __name__ == "__main__":
+    logger = get_logger("RestoreTest")
+    rm = RestoreManager(config=CONFIG, logger=logger)
+
+    backup_name = input("Podaj nazwę pliku backupu na Drive: ").strip()
+    if not backup_name:
+        print("Nie podano nazwy pliku.")
+    else:
+        ok = rm.restore_from_drive_with_choice(backup_name)
+        print(f"Przywracanie zakończone: {ok}")

@@ -17,6 +17,7 @@ W przyszłości (Wersja 2.0):
 # EDIT 1. 25.10 Zaczęcie pisania programu przemiyslenie logiki (wydzielenie na 2 wersje)
 # EDIT 2. 04.11 Kontynacja pisania programu przeporwadzenie testu działania
 # EDIT 3. 13.11 Wprowadzenie wysyłania dayly maili
+# Edit 4. 04.12 Wprowadzenie do 2.0
 
 
 import time
@@ -59,6 +60,11 @@ class BackupScheduler:
         self.logger.info(f"BackupScheduler zainicjalizowany (tryb: {self.frequency})")
 
 
+
+    # def load_from_profile(self):
+    #     profile = self.db.get_ac
+
+
     # 1. Planowanie zadań
 
     def schedule_backup(self, frequency: str = "daily"):
@@ -84,6 +90,7 @@ class BackupScheduler:
             self.logger.warning(f"Nieznana częstotliwość: {frequency}, ustawiono domyśnie 'daily'")
             schedule.every().day.at("8:00").do(self._run_backup)
 
+    
     
     # 2. Stworzenie/Zlecenie backupu
 
