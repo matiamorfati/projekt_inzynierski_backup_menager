@@ -1,77 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings – Backup Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-  <body>
-    <div class="app">
-      <!-- HEADER -->
-      <header class="header">
-        <h1 class="brand">Backup Manager</h1>
-        <div class="header-actions">
-          <button class="icon-btn">🌙</button>
-          <button class="login-btn">Log in</button>
-        </div>
-      </header>
-
-      <div class="layout">
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-          <button class="nav-btn">Dashboard</button>
-          <button class="nav-btn">Create Backup</button>
-          <button class="nav-btn">History</button>
-          <button class="nav-btn active">Settings</button>
-        </nav>
-
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
-          <section class="settings">
-            <div class="settings-card">
-              <h2>Backup Configuration</h2>
-              <label for="frequency">Backup Frequency</label>
-              <select id="frequency">
-                <option>Daily</option>
-                <option>Weekly</option>
-                <option>Monthly</option>
-              </select>
-
-              <label for="auto-backup">
-                <input type="checkbox" id="auto-backup" checked />
-                Enable automatic backups
-              </label>
-
-              <label for="admin-email">Admin email</label>
-              <input
-                type="email"
-                id="admin-email"
-                value="admin@example.com"
-                readonly
-              />
-
-              <label for="storage-path">Storage path</label>
-              <input
-                type="text"
-                id="storage-path"
-                value="/var/backups"
-                readonly
-              />
-
-              <button class="save-btn">Save changes</button>
-            </div>
-
-            <div class="system-info">
-              <h2>System Info</h2>
-              <p><strong>System:</strong> Windows</p>
-              <p><strong>Last backup date:</strong> 2024-10-09</p>
-              <p><strong>Next scheduled backup:</strong> 2024-10-09</p>
-            </div>
-          </section>
-        </main>
+<body>
+  <div class="app">
+    <!-- header -->
+    <header class="header">
+      <h1 class="brand">Backup Manager</h1>
+      <div class="header-actions">
+        <button class="icon-btn">🌙</button>
+        <button class="login-btn" onclick="location.href='../login-page/login.html'">Log in</button>
       </div>
+    </header>
+
+    <div class="layout">
+      <!-- sidebar -->
+      <nav class="sidebar">
+        <a class="nav-link" href="../dashboard/index.html">Dashboard</a>
+        <a class="nav-link" href="../create-backup/createBackup.html">Create Backup</a>
+        <a class="nav-link" href="../backup-history/backupHistory.html">History</a>
+        <a class="nav-link active" href="settings.html">Settings</a>
+      </nav>
+
+      <!-- main content -->
+      <main class="content">
+        <div class="content-header">
+          <h2>Settings</h2>
+        </div>
+
+        <div class="settings-row">
+          <section class="settings-card card">
+            <h3>Backup Configuration</h3>
+
+            <label for="frequency">Backup Frequency</label>
+            <select id="frequency" class="input">
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+            </select>
+
+            <label class="toggle-label">
+              <div class="toggle-switch" id="autoWrap">
+                <input type="checkbox" id="auto-backup" checked />
+                <span class="knob"></span>
+              </div>
+              <span class="toggle-text">Enable automatic backups</span>
+            </label>
+
+            <label for="admin-email">Admin email</label>
+            <input type="email" id="admin-email" value="admin@example.com" />
+
+            <label for="storage-path">Storage path</label>
+            <input type="text" id="storage-path" value="/var/backups" />
+
+            <button class="save-btn" id="saveSettings">Save changes</button>
+          </section>
+
+          <section class="system-info card">
+            <h3>System Info</h3>
+            <p><strong>System:</strong> <span class="muted">Windows</span></p>
+            <p><strong>Last backup date:</strong> <span class="muted">2024-10-09</span></p>
+            <p><strong>Next scheduled backup:</strong> <span class="muted">2024-10-10</span></p>
+          </section>
+        </div>
+
+      </main>
     </div>
-  </body>
+  </div>
+
+<script>
+  // podświetlanie aktywnego linku w sidebarze
+  (function() {
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const current = location.href;
+    links.forEach(link => {
+      if (current.includes(link.getAttribute('href'))) link.classList.add('active');
+    });
+  })();
+
+  // toggle: ustawiam klasę .on na wrapperze, żeby móc zmienić kolor toru
+  const autoCheckbox = document.getElementById('auto-backup');
+  const autoWrap = document.getElementById('autoWrap');
+
+  function updateToggle() {
+    if (autoCheckbox.checked) autoWrap.classList.add('on');
+    else autoWrap.classList.remove('on');
+  }
+  // initial
+  updateToggle();
+  // listener
+  autoCheckbox.addEventListener('change', updateToggle);
+
+  //jak na razie demo save
+  document.getElementById('saveSettings').addEventListener('click', () => {
+    const data = {
+      freq: document.getElementById('frequency').value,
+      auto: document.getElementById('auto-backup').checked,
+      email: document.getElementById('admin-email').value,
+      path: document.getElementById('storage-path').value
+    };
+    alert('Zapisuję ustawienia:\n' + JSON.stringify(data, null, 2));
+    // tu możesz dodać fetch() do backendu
+  });
+</script>
+
+</body>
 </html>

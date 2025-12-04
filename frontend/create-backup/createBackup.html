@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backup Manager</title>
+  <link rel="stylesheet" href="style.css"  />
+</head>
 
-  <body>
-    <div class="app">
-      <!-- HEADER -->
-      <header class="header">
-        <h1 class="brand">Backup Manager</h1>
-        <div class="header-actions">
-          <button class="icon-btn">🌙</button>
-          <button class="login-btn">Log in</button>
-        </div>
-      </header>
-
-      <div class="layout">
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-          <button class="nav-btn">Dashboard</button>
-          <button class="nav-btn active">Create Backup</button>
-          <button class="nav-btn">History</button>
-          <button class="nav-btn">Settings</button>
-        </nav>
-
-        <!-- MAIN CONTENT -->
-        <main class="content">
-          <div class="content-header">
-            <h2>Create Backup</h2>
-          </div>
-
-          <div class="cards">
-            <div class="form-container">
-              <div class="form-group">
-                <label for="backupName">Backup Name</label>
-                <input
-                  type="text"
-                  id="backupName"
-                  placeholder="Enter backup name"
-                />
-              </div>
-              <div class="form-group">
-                <label for="sourceFolder">Select Source</label>
-                <select id="sourceFolder">
-                  <option>Choose source folder</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="backupType">Backup Type</label>
-                <select id="backupType">
-                  <option>Full</option>
-                  <option>Incremental</option>
-                </select>
-              </div>
-              <button>Create backup</button>
-            </div>
-          </div>
-        </main>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1 class="brand">Backup Manager</h1>
+      <div class="header-actions">
+        <button class="icon-btn">🌙</button>
+        <button class="login-btn" onclick="location.href='../login-page/login.html'">Log in</button>
       </div>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar">
+        <a class="nav-link" href="../dashboard/index.html">Dashboard</a>
+        <a class="nav-link active" href="createBackup.html">Create Backup</a>
+        <a class="nav-link" href="../backup-history/backupHistory.html">History</a>
+        <a class="nav-link" href="../settings/settings.html">Settings</a>
+      </nav>
+
+      <main class="content">
+        <div class="content-header">
+          <h2>Create Backup</h2>
+        </div>
+
+        <div class="cards">
+          <div class="form-container">
+            <div class="form-group">
+              <label for="backupName">Backup Name</label>
+              <input type="text" id="backupName" placeholder="Enter backup name" />
+            </div>
+
+            <div class="form-group">
+              <label for="sourceFolder">Select Source</label>
+              <select id="sourceFolder">
+                <option>Choose source folder</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="backupType">Backup Type</label>
+              <select id="backupType">
+                <option>Full</option>
+                <option>Incremental</option>
+              </select>
+            </div>
+
+            <button class="btn-primary" type="button">+ Create backup</button>
+          </div>
+        </div>
+
+      </main>
     </div>
-  </body>
+  </div>
+
+  <!-- ACTIVE SCRIPT -->
+  <script>
+  (function() {
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const current = location.href;
+    links.forEach(link => {
+      if (current.includes(link.getAttribute('href'))) {
+        link.classList.add('active');
+      }
+    });
+  })();
+  </script>
+
+</body>
 </html>
