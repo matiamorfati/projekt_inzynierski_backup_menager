@@ -152,7 +152,7 @@ def create_backup_profile(
     sources_str = ";".join(sources)
     profile_id = _db.create_backup_profile(
         name=name,
-        sources=sources,
+        sources=sources_str,
         backup_directory=backup_directory,
         restore_directory=restore_directory,
         backup_frequency=backup_frequency,
