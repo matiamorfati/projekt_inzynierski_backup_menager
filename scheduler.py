@@ -141,8 +141,8 @@ class BackupScheduler:
         # W wersji 2.0 czas (godzina) będzie pobierany z bazy lub config/ ustawiany na froncie
         if frequency == "daily":
             schedule.every(1).minutes.do(self._run_backup)
-# Na chwile !!
-            # schedule.every().day.at("8:00").do(self._run_backup)
+            # To skomentować dla testu szybkiego
+            schedule.every().day.at("8:00").do(self._run_backup)
             self.logger.info("Ustawiono harmonogram: codnienny backup o 8:00")
         elif frequency == "weekly":
             schedule.every().monday.at("8:00").do(self._run_backup)
@@ -267,8 +267,8 @@ class BackupScheduler:
             return
         time_str = self.config.get("daily_report_time", "8:00")
         schedule.every(2).minutes.at(time_str).do(self._run_daily_report)
-# Na chwile
-        # schedule.every().day.at(time_str).do(self._run_daily_report)
+        # To skomentować dla testu szybkiego
+        schedule.every().day.at(time_str).do(self._run_daily_report)
         self.logger.info(f"Ustawiono raport dzienny o {time_str}")
 
     def _run_daily_report(self):
