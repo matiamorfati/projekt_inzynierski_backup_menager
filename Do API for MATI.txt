@@ -1,0 +1,367 @@
+API – kontrakt backendu (Backup Manager)
+=======================================
+
+Wersja wstępna – pod Django / REST API
+
+
+1. Opis ogólny
+--------------
+
+Backend składa się z modułów:
+
+- backup_manager.py – tworzenie backupów (zip, hash, manifest, zapis do bazy, opcjonalny upload na Google Drive, mail po zakończeniu).
+- restore_manager.py – przywracanie pełne i częściowe z pliku ZIP (plus wpisy w bazie, maile).
+- db_manager.py – SQLite, tabele `backups` + `backup_profiles`, historia backupów, profile.
+- scheduler.py – harmonogram backupów + dzienne raporty mailowe (biblioteka `schedule`, osobny wątek).
+- mail_notifier.py – wysyłanie maili (powiadomienia o backupie/restore + dzienny raport).
+- cloud_storage.py – upload + download backupu na Google Drive.
+- utils/logger.py, utils/checksum.py, utils/config.py – logowanie, checksumy, konfiguracja.
+
+Dla API i frontu wszystko przechodzi przez:
+
+- core_service.py – cienka warstwa pośrednia między Django a logiką.
+  Inicjalizuje wszystkie managery i wystawia proste funkcje typu:
+  `run_backup_from_sources`, `run_backup_from_profile`, `restore_full`, `start_scheduler` itd.
+
+
+2. Jak korzystać z backendu w Django
+------------------------------------
+
+W widokach / DRF NIE importujemy bezpośrednio `backup_manager` ani `scheduler`.
+
+Zamiast tego używamy tylko funkcji z `core_service.py`:
+
+from core_service import (
+    get_system_status,
+    run_backup_from_sources,
+    run_backup_from_profile,
+    get_backup_history,
+    list_backup_profiles,
+    get_backup_profile,
+    create_backup_profile,
+    restore_full,
+    restore_partial,
+    start_scheduler,
+    stop_scheduler,
+    send_daily_report_now,
+)
+
+Każda z tych funkcji:
+- nie używa input() ani print(),
+- przyjmuje proste typy (str, list[str], int, bool),
+- zwraca słowniki (dict), które można bezpośrednio zwrócić jako JSON w Django.
+
+
+3. Proponowane endpointy HTTP
+-----------------------------
+
+Ścieżki można zmienić, ważne jest mapowanie na funkcje z core_service.
+
+3.1. Status systemu
+-------------------
+
+GET /api/status/
+    → get_system_status()
+
+Zwraca: czy backend żyje + informacja o ostatnim backupie.
+
+
+3.2. Backup – uruchamianie
+--------------------------
+
+POST /api/backups/run/sources/
+    → run_backup_from_sources(sources, destination)
+
+POST /api/backups/run/profile/
+    → run_backup_from_profile(profile_id)
+
+- `sources` – lista ścieżek do backupu (np. ["C:/Projekty", "D:/Dane"]).
+- `destination` – katalog docelowy na ZIP-y (np. "backups").
+- `profile_id` – ID profilu z bazy; jeśli brak, używany jest profil domyślny.
+
+
+3.3. Backup – historia
+----------------------
+
+GET /api/backups/history/?limit=20
+    → get_backup_history(limit)
+
+Zwraca listę ostatnich backupów (nazwa pliku, data, ścieżka, rozmiar, status, źródła).
+
+
+3.4. Profile backupów
+---------------------
+
+GET /api/profiles/
+    → list_backup_profiles()
+
+GET /api/profiles/<id>/
+    → get_backup_profile(profile_id)
+
+POST /api/profiles/
+    → create_backup_profile(...)
+
+Tworzenie profilu:
+- name – nazwa profilu
+- sources – lista ścieżek do backupu
+- backup_directory – katalog na ZIP-y
+- restore_directory – katalog do przywracania
+- backup_frequency – np. "daily", "weekly" (do odczytu przez scheduler)
+- daily_report_enable – bool (czy wysyłać raport dzienny)
+- daily_report_time – godzina raportu, np. "08:00"
+- recipient_email – mail odbiorcy raportów/powiadomień
+- is_default – czy to jest profil domyślny
+
+
+3.5. Restore (przywracanie)
+---------------------------
+
+POST /api/restores/full/
+    → restore_full(backup_name, destination)
+
+POST /api/restores/partial/
+    → restore_partial(backup_name, selection, destination)
+
+- backup_name – nazwa pliku ZIP w katalogu backups (np. "Backup_2025_12_05-18_22_01.zip").
+- destination – katalog, do którego ma zostać przywrócony backup.
+- selection – lista katalogów/plików z wnętrza ZIP-a do częściowego przywrócenia.
+
+
+3.6. Scheduler + raporty
+------------------------
+
+POST /api/scheduler/start/
+    → start_scheduler(profile_id)
+
+POST /api/scheduler/stop/
+    → stop_scheduler()
+
+POST /api/reports/daily/send/
+    → send_daily_report_now()
+
+Scheduler:
+- start_scheduler(profile_id) – ładuje ustawienia z danego profilu (lub z profilu domyślnego)
+  i uruchamia harmonogram backupów + raportów dziennych w tle.
+- stop_scheduler() – zatrzymuje harmonogram.
+- send_daily_report_now() – ręczne wywołanie raportu dziennego (np. z panelu admina).
+
+
+4. Przykładowe JSON-y (request/response)
+----------------------------------------
+
+4.1. GET /api/status/
+
+Response:
+
+{
+  "ok": true,
+  "last_backup": {
+    "name": "Backup_2025_12_05-18_22_01.zip",
+    "date": "2025-12-05 18:22:05",
+    "path": "backups/Backup_2025_12_05-18_22_01.zip",
+    "size": 123456,
+    "status": "OK",
+    "sources": "C:/path1;C:/path2"
+  }
+}
+
+
+4.2. POST /api/backups/run/sources/
+
+Request:
+
+{
+  "sources": [
+    "C:/Users/Admin/Desktop/Projekt/Repo",
+    "D:/Dane/Important"
+  ],
+  "backup_directory": "backups"
+}
+
+Response (przykład):
+
+{
+  "ok": true,
+  "backup": {
+    "name": "Backup_2025_12_05-18_22_01.zip",
+    "date": "2025-12-05 18:22:05",
+    "path": "backups/Backup_2025_12_05-18_22_01.zip",
+    "size": 123456,
+    "status": "OK",
+    "sources": "C:/...;D:/..."
+  }
+}
+
+
+4.3. POST /api/backups/run/profile/
+
+Request:
+
+{
+  "profile_id": 1
+}
+
+albo bez podanego profilu:
+
+{}
+
+Response – taki sam schemat jak wyżej:
+
+{
+  "ok": true,
+  "backup": {
+    "...": "dane ostatniego backupu"
+  }
+}
+
+
+4.4. GET /api/backups/history/?limit=20
+
+Response:
+
+{
+  "ok": true,
+  "items": [
+    {
+      "name": "Backup_2025_12_05-18_22_01.zip",
+      "date": "2025-12-05 18:22:05",
+      "path": "backups/Backup_2025_12_05-18_22_01.zip",
+      "size": 123456,
+      "status": "OK",
+      "sources": "..."
+    },
+    {
+      "name": "Backup_2025_12_04-17_10_00.zip",
+      "date": "2025-12-04 17:10:00",
+      "path": "backups/Backup_2025_12_04-17_10_00.zip",
+      "size": 98765,
+      "status": "OK",
+      "sources": "..."
+    }
+  ]
+}
+
+
+4.5. POST /api/profiles/ (tworzenie profilu)
+
+Request:
+
+{
+  "name": "Biuro Kraków – codzienny backup",
+  "sources": [
+    "C:/Projekty",
+    "D:/Dane_ważne"
+  ],
+  "backup_directory": "backups",
+  "restore_directory": "restored_files",
+  "backup_frequency": "daily",
+  "daily_report_enable": true,
+  "daily_report_time": "08:00",
+  "recipient_email": "backup.system.receiver@gmail.com",
+  "is_default": false
+}
+
+Response (schemat):
+
+{
+  "ok": true,
+  "profile": {
+    "id": 1,
+    "name": "Biuro Kraków – codzienny backup",
+    "sources": "C:/Projekty;D:/Dane_ważne",
+    "backup_directory": "backups",
+    "restore_directory": "restored_files",
+    "backup_frequency": "daily",
+    "daily_report_enable": true,
+    "daily_report_time": "08:00",
+    "recipient_email": "backup.system.receiver@gmail.com",
+    "is_default": false,
+    "created_at": "2025-12-06 12:00:00",
+    "updated_at": "2025-12-06 12:00:00"
+  }
+}
+
+
+4.6. POST /api/restores/full/
+
+Request:
+
+{
+  "backup_name": "Backup_2025_12_05-18_22_01.zip",
+  "destination": "restored_files"
+}
+
+Response:
+
+{
+  "ok": true,
+  "backup": {
+    "name": "Backup_2025_12_05-18_22_01.zip",
+    "date": "2025-12-05 18:22:05",
+    "path": "backups/Backup_2025_12_05-18_22_01.zip",
+    "size": 123456,
+    "status": "OK",
+    "sources": "..."
+  }
+}
+
+
+4.7. POST /api/restores/partial/
+
+Request:
+
+{
+  "backup_name": "Backup_2025_12_05-18_22_01.zip",
+  "destination": "restored_files",
+  "selection": [
+    "Projekt1",
+    "Dokumenty/Umowy"
+  ]
+}
+
+Response:
+
+{
+  "ok": true,
+  "backup": {
+    "name": "Backup_2025_12_05-18_22_01.zip",
+    "date": "2025-12-05 18:22:05",
+    "path": "backups/Backup_2025_12_05-18_22_01.zip",
+    "size": 123456,
+    "status": "OK",
+    "sources": "..."
+  }
+}
+
+
+4.8. Scheduler + raporty
+
+POST /api/scheduler/start/
+
+Request:
+
+{
+  "profile_id": 1
+}
+
+Response:
+
+{
+  "ok": true
+}
+
+POST /api/scheduler/stop/
+
+Response:
+
+{
+  "ok": true
+}
+
+POST /api/reports/daily/send/
+
+Response:
+
+{
+  "ok": true
+}
