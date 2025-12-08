@@ -4,52 +4,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
+    <title>Backup History</title>
     <link rel="stylesheet" href="{% static 'css/backupHistory.css' %}" />
   </head>
 
   <body>
     <div class="app">
-      <!-- HEADER -->
       <header class="header">
         <h1 class="brand">Backup Manager</h1>
         <div class="header-actions">
           <button class="icon-btn">🌙</button>
-          <button class="login-btn">Log in</button>
+          <button
+            class="login-btn"
+            onclick="location.href='../login-page/login.html'"
+          >
+            Log in
+          </button>
         </div>
       </header>
 
       <div class="layout">
-        <!-- SIDEBAR -->
         <nav class="sidebar">
-          <button class="nav-btn" href="./dashboard.html">Dashboard</button>
-          <button class="nav-btn" href="./create_backup.html">
-            Create Backup
-          </button>
-          <button class="nav-btn active" href="./backup_history.html">
-            History
-          </button>
-          <button class="nav-btn" href="./settings.html">Settings</button>
+          <a class="nav-link" href="./dashboard.html">Dashboard</a>
+          <a class="nav-link" href="./create_backup.html">Create Backup</a>
+          <a class="nav-link active" href="#">History</a>
+          <a class="nav-link" href="./settings.html">Settings</a>
         </nav>
 
-        <!-- MAIN CONTENT -->
         <main class="content">
           <div class="content-header">
             <h2>Backup History</h2>
             <button class="primary-btn">Clear History</button>
           </div>
 
-          <div class="history-container">
-            <div class="history-filters">
-              <input type="text" placeholder="Search by name or date" />
-              <select>
+          <section class="history-container">
+            <div class="history-top">
+              <input
+                class="search"
+                type="text"
+                placeholder="Search by name or date"
+              />
+              <select class="status-filter" aria-label="Filter by status">
                 <option>Filter by status: All</option>
                 <option>Confirmed</option>
                 <option>Failed</option>
               </select>
             </div>
 
-            <table>
+            <table class="table" role="table" aria-label="Backup history table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -64,26 +66,26 @@
                   <td>Photos</td>
                   <td>PC-01</td>
                   <td>2024-10-09</td>
-                  <td class="status confirmed">✔ Confirmed</td>
-                  <td class="view-log">🔍 View Log</td>
+                  <td class="status confirmed">✔ <span>Confirmed</span></td>
+                  <td class="view-log">🔍 <span>View Log</span></td>
                 </tr>
                 <tr>
                   <td>Documents</td>
                   <td>PC-03</td>
                   <td>2024-10-09</td>
-                  <td class="status confirmed">✔ Confirmed</td>
-                  <td class="view-log">🔍 View Log</td>
+                  <td class="status confirmed">✔ <span>Confirmed</span></td>
+                  <td class="view-log">🔍 <span>View Log</span></td>
                 </tr>
                 <tr>
                   <td>Project</td>
                   <td>PC-02</td>
                   <td>2024-10-09</td>
-                  <td class="status failed">✖ Failed</td>
-                  <td class="view-log">🔍 View Log</td>
+                  <td class="status failed">✖ <span>Failed</span></td>
+                  <td class="view-log">🔍 <span>View Log</span></td>
                 </tr>
               </tbody>
             </table>
-          </div>
+          </section>
         </main>
       </div>
     </div>

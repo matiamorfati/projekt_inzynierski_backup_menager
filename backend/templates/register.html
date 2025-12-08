@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Register – Backup Manager</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1 class="brand">Backup Manager</h1>
+        <div class="header-actions">
+          <button class="icon-btn">🌙</button>
+        </div>
+      </header>
+
+      <main class="content content-center">
+        <section class="register-card card">
+          <h2 class="register-title">Backup Manager</h2>
+          <p class="sub">Create a new account</p>
+
+          <form id="registerForm" novalidate>
+            <label class="field-label" for="fullname">Full Name</label>
+            <input id="fullname" type="text" placeholder="John Doe" />
+
+            <label class="field-label" for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="admin@example.com"
+              required
+            />
+
+            <label class="field-label" for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Minimum 6 characters"
+              required
+            />
+
+            <label class="field-label" for="password2">Confirm password</label>
+            <input
+              id="password2"
+              type="password"
+              placeholder="Repeat your password"
+              required
+            />
+
+            <label class="checkbox-line">
+              <input id="agree" type="checkbox" />
+              <span>I agree to the Terms of Service and Privacy Policy</span>
+            </label>
+
+            <button class="save-btn" type="submit">Create Account</button>
+          </form>
+
+          <p class="register-link">
+            Already have an account?
+            <a href="../login-page/login.html">Log in</a>
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      function showMessage(text, type = "info") {
+        let box = document.getElementById("toast");
+        if (!box) {
+          box = document.createElement("div");
+          box.id = "toast";
+          box.style.position = "fixed";
+          box.style.right = "20px";
+          box.style.top = "20px";
+          box.style.padding = "12px 16px";
+          box.style.borderRadius = "10px";
+          box.style.fontWeight = "600";
+          box.style.boxShadow = "0 4px 14px rgba(0,0,0,0.15)";
+          box.style.zIndex = "9999";
+          document.body.appendChild(box);
+        }
+
+        box.textContent = text;
+
+        if (type === "error") {
+          box.style.background = "#fee2e2";
+          box.style.color = "#991b1b";
+        } else if (type === "success") {
+          box.style.background = "#dcfce7";
+          box.style.color = "#14532d";
+        } else {
+          box.style.background = "#eef2ff";
+          box.style.color = "#1e293b";
+        }
+
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(() => box.remove(), 2500);
+      }
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const full = fullname.value.trim();
+          const emailVal = email.value.trim();
+          const p1 = password.value;
+          const p2 = password2.value;
+          const agree = document.getElementById("agree").checked;
+
+          if (!full || !emailVal || !p1 || !p2) {
+            showMessage("Wypełnij wszystkie pola", "error");
+            return;
+          }
+          if (p1.length < 6) {
+            showMessage("Hasło min. 6 znaków", "error");
+            return;
+          }
+          if (p1 !== p2) {
+            showMessage("Hasła nie są takie same", "error");
+            return;
+          }
+          if (!agree) {
+            showMessage("Zaakceptuj regulamin", "error");
+            return;
+          }
+
+          showMessage("Zarejestrowano pomyślnie!", "success");
+
+          setTimeout(() => {
+            location.href = "../login-page/login.html";
+          }, 900);
+        });
+    </script>
+  </body>
+</html>

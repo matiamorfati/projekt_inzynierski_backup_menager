@@ -1,93 +1,100 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backup Manager</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
   </head>
+</head>
 
-  <body>
-    <div class="app">
-      <!-- HEADER -->
-      <header class="header">
-        <h1 class="brand">Backup Manager</h1>
-        <div class="header-actions">
-          <button class="icon-btn">🌙</button>
-          <button class="login-btn">Log in</button>
-        </div>
-      </header>
-
-      <div class="layout">
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-          <button class="nav-btn active" href="./dashboard.html">
-            Dashboard
-          </button>
-          <button class="nav-btn" href="./create_backup.html">
-            Create Backup
-          </button>
-          <button class="nav-btn" href="./backup_history.html">History</button>
-          <button class="nav-btn" href="./settings.html">Settings</button>
-        </nav>
-
-        <!-- MAIN CONTENT -->
-        <main class="content">
-          <div class="content-header">
-            <h2>Dashboard</h2>
-            <button class="primary-btn">+ Create Backup</button>
-          </div>
-
-          <div class="cards">
-            <!-- BACKUP HISTORY CARD -->
-            <section class="card">
-              <h3>Backup History</h3>
-              <table class="history-table">
-                <tr>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-                <tr>
-                  <td>Photos</td>
-                  <td>2025-11-12</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Documents</td>
-                  <td>2025-11-11</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Project</td>
-                  <td>2025-11-09</td>
-                  <td class="status failed">Failed</td>
-                </tr>
-              </table>
-            </section>
-
-            <!-- SETTINGS SUMMARY CARD -->
-            <section class="card">
-              <h3>Settings Summary</h3>
-
-              <div class="setting">
-                <label>Backup Frequency</label>
-                <select class="input">
-                  <option>Every 24h</option>
-                </select>
-              </div>
-
-              <div class="setting">
-                <label>Automatic Backups</label>
-                <div class="toggle">Enabled</div>
-              </div>
-
-              <p class="last-backup">Last backup: Feb 1, 2025</p>
-            </section>
-          </div>
-        </main>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <h1 class="brand">Backup Manager</h1>
+      <div class="header-actions">
+        <button class="icon-btn">🌙</button>
+        <button class="login-btn" onclick="location.href='../login-page/login.html'">Log in</button>
       </div>
+    </header>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+          <a class="nav-link active">Dashboard</a>
+          <a class="nav-link" href="./create_backup.html">Create Backup</a>
+          <a class="nav-link" href="./backup_history.html">History</a>
+          <a class="nav-link" href="./settings.html">Settings</a>
+        </nav>
+      <!-- MAIN CONTENT -->
+      <main class="content">
+        <div class="content-header">
+          <h2>Dashboard</h2>
+          <button class="primary-btn" onclick="location.href='../create-backup/createBackup.html'">+ Create Backup</button>
+        </div>
+
+        <div class="cards">
+          <section class="card">
+            <h3>Backup History</h3>
+            <table class="history-table">
+              <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+              <tr>
+                <td>Photos</td>
+                <td>2025-11-12</td>
+                <td class="status success">Confirmed</td>
+              </tr>
+              <tr>
+                <td>Documents</td>
+                <td>2025-11-11</td>
+                <td class="status success">Confirmed</td>
+              </tr>
+              <tr>
+                <td>Project</td>
+                <td>2025-11-09</td>
+                <td class="status failed">Failed</td>
+              </tr>
+            </table>
+          </section>
+
+          <section class="card">
+            <h3>Settings Summary</h3>
+            <div class="setting">
+              <label>Backup Frequency</label>
+              <select class="input">
+                <option>Every 24h</option>
+              </select>
+            </div>
+
+            <div class="setting">
+              <label>Automatic Backups</label>
+              <div class="toggle">Enabled</div>
+            </div>
+
+            <p class="last-backup">Last backup: Feb 1, 2025</p>
+          </section>
+        </div>
+      </main>
     </div>
-  </body>
+  </div>
+
+  <!-- ACTIVE SCRIPT -->
+  <script>
+  (function() {
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const current = location.href;
+    links.forEach(link => {
+      if (current.includes(link.getAttribute('href'))) {
+        link.classList.add('active');
+      }
+    });
+  })();
+  </script>
+
+</body>
 </html>

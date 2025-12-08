@@ -4,23 +4,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Login – Backup Manager</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
 
   <body>
     <div class="app">
-      <!-- HEADER -->
       <header class="header">
         <h1 class="brand">Backup Manager</h1>
+        <div class="header-actions">
+          <button class="icon-btn">🌙</button>
+        </div>
       </header>
 
-      <!-- MAIN CONTENT -->
-      <main class="content">
-        <section class="login-card">
-          <h2>Login</h2>
-          <form>
-            <label for="email">Email</label>
+      <main class="content content-center">
+        <section class="login-card card">
+          <h2 class="login-title">Backup Manager</h2>
+          <p class="sub">Login to your account</p>
+
+          <form id="loginForm" novalidate>
+            <label class="field-label" for="email">Email address</label>
             <input
               type="email"
               id="email"
@@ -28,29 +31,94 @@
               required
             />
 
-            <label for="password">Password</label>
+            <label class="field-label" for="password">Password</label>
             <input
               type="password"
               id="password"
-              placeholder="Enter password"
+              placeholder="Enter your password"
               required
             />
-            <div class="actionContainer">
-              <div class="checkboxContainer">
+
+            <div class="row-between" style="margin: 12px 0 6px">
+              <label class="checkboxContainer">
                 <input type="checkbox" id="remember" />
-                <label for="remember">Remember Me</label>
-              </div>
-              <p class="forget-password">
-                Forget your password?<a href="#">Click here</a>
-              </p>
+                <span>Remember me</span>
+              </label>
+              <a href="#" id="forgotLink" class="forget-password"
+                >Forgot password?</a
+              >
             </div>
-            <button type="submit" class="save-btn">Log in</button>
+
+            <button class="save-btn" type="submit">Log in</button>
           </form>
+
           <p class="register-link">
-            Don't have an account? <a href="#">Register</a>
+            Don't have an account?
+            <a href="../register/register.html">Register now</a>
           </p>
         </section>
       </main>
     </div>
+
+    <script>
+      function showMessage(msg, kind = "info") {
+        let box = document.getElementById("messageBox");
+        if (!box) {
+          box = document.createElement("div");
+          box.id = "messageBox";
+          box.style.position = "fixed";
+          box.style.right = "18px";
+          box.style.top = "18px";
+          box.style.zIndex = 9999;
+          box.style.padding = "12px 16px";
+          box.style.borderRadius = "8px";
+          box.style.boxShadow = "0 8px 20px rgba(0,0,0,0.12)";
+          box.style.fontWeight = 700;
+          box.style.minWidth = "200px";
+          box.style.maxWidth = "320px";
+          box.style.wordBreak = "break-word";
+          document.body.appendChild(box);
+        }
+        box.textContent = msg;
+
+        if (kind === "error") {
+          box.style.background = "#fee2e2";
+          box.style.color = "#991b1b";
+        } else if (kind === "success") {
+          box.style.background = "#dcfce7";
+          box.style.color = "#14532d";
+        } else {
+          box.style.background = "#eef2ff";
+          box.style.color = "#1e293b";
+        }
+
+        clearTimeout(window._msgTimer);
+        window._msgTimer = setTimeout(() => box.remove(), 3000);
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+
+          if (!email || !password) {
+            showMessage("Wypełnij email i hasło", "error");
+            return;
+          }
+
+          showMessage("Zalogowano (symulacja)", "success");
+          setTimeout(() => (location.href = "../dashboard/index.html"), 600);
+        });
+
+      document
+        .getElementById("forgotLink")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          showMessage("Funkcja resetu hasła niezaimplementowana", "info");
+        });
+    </script>
   </body>
 </html>
