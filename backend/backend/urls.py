@@ -19,8 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('backup/', include('backup.urls')),
-    path('restore/', include('restore.urls')),
-    path('scheduler/', include('scheduler.urls')),
-    path('notifications/', include('notifications.urls')),
+    path('', include('backup.urls')),  # <-- główna aplikacja
 ]

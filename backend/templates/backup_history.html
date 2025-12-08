@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backup Manager</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'css/backupHistory.css' %}" />
   </head>
 
   <body>
@@ -21,10 +22,14 @@
       <div class="layout">
         <!-- SIDEBAR -->
         <nav class="sidebar">
-          <button class="nav-btn">Dashboard</button>
-          <button class="nav-btn">Create Backup</button>
-          <button class="nav-btn active">History</button>
-          <button class="nav-btn">Settings</button>
+          <button class="nav-btn" href="./dashboard.html">Dashboard</button>
+          <button class="nav-btn" href="./create_backup.html">
+            Create Backup
+          </button>
+          <button class="nav-btn active" href="./backup_history.html">
+            History
+          </button>
+          <button class="nav-btn" href="./settings.html">Settings</button>
         </nav>
 
         <!-- MAIN CONTENT -->
