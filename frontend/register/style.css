@@ -1,0 +1,83 @@
+/* reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+/* fonty  */
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f4f5f7;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+/* prosty layout aplikacji */
+.app { display:flex; flex-direction:column; min-height:100vh; }
+
+/* header ) */
+.header {
+  height:64px; background:#fff; border-bottom:1px solid #ececec;
+  display:flex; align-items:center; justify-content:space-between; padding:0 24px;
+  position:sticky; top:0;
+}
+.brand { color:#3A61FF; font-size:20px; font-weight:700; }
+
+/* header buttons */
+.header-actions { display:flex; gap:10px; align-items:center; }
+.icon-btn, .login-btn { background:transparent; border:none; cursor:pointer; padding:8px 12px; border-radius:8px; }
+.login-btn { border:1px solid #e6e6e6; background:#fff; font-weight:700; }
+
+/* content  */
+.content { display:flex; justify-content:center; align-items:flex-start; flex:1; padding:28px 24px; }
+.content-center { align-items:center; }
+
+/* karta rejestracji */
+.register-card, .login-card {
+  width:100%;
+  max-width:540px;
+  background:#fff;
+  border-radius:12px;
+  padding:28px;
+  box-shadow:0 8px 30px rgba(15,15,15,0.04);
+  border:1px solid #eef0f3;
+}
+
+/* tytuły */
+.register-title, .login-title { font-size:22px; font-weight:700; text-align:center; color:#2b2b2b; }
+.sub { text-align:center; color:#6b7280; margin:8px 0 18px; }
+
+/* pola formularza */
+.field-label { display:block; margin-bottom:6px; font-weight:600; color:#111827; }
+.register-card input[type="text"],
+.register-card input[type="email"],
+.register-card input[type="password"],
+.login-card input[type="email"],
+.login-card input[type="password"] {
+  width:100%; padding:12px 14px; border-radius:8px; border:1px solid #e6e9ec;
+  background:#fafafa; margin-bottom:14px; font-size:15px; color:#111827; outline:none;
+}
+
+/* linia checkbox z tekstem */
+.checkbox-line { display:flex; align-items:center; gap:12px; cursor:pointer; color:#374151; margin:6px 0 12px; }
+.checkbox-line input[type="checkbox"] { width:18px; height:18px; accent-color:#3a61ff; }
+
+/* przycisk */
+.save-btn {
+  display:block; width:220px; margin:12px auto 0; background:#3a61ff; color:#fff;
+  border:none; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer;
+  box-shadow:0 8px 20px rgba(59,97,255,0.12);
+}
+.save-btn:hover { background:#2f53e6; }
+
+/* linki pod kartą */
+.register-link { text-align:center; margin-top:14px; font-size:14px; color:#374151; }
+.register-link a { color:#3366ff; text-decoration:none; }
+.register-link a:hover { text-decoration:underline; }
+
+/* respo */
+@media (max-width:640px) {
+  .register-card, .login-card { padding:20px; }
+  .save-btn { width:100%; }
+}
