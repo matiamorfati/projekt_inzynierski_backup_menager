@@ -6,7 +6,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def history(request):
-    return render(request, 'history.html')
+    return render(request, 'backup_history.html')
 
 def login_view(request):
     return render(request, 'login.html')

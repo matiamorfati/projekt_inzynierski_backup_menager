@@ -57,12 +57,30 @@ body {
   border: none;
   cursor: pointer;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #374151;
 }
 .login-btn {
   border: 1px solid #e6e6e6;
   background: #fff;
-  font-weight: 700;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
 }
 
 /* layout */

@@ -14,21 +14,16 @@
         <h1 class="brand">Backup Manager</h1>
         <div class="header-actions">
           <button class="icon-btn">🌙</button>
-          <button
-            class="login-btn"
-            onclick="location.href='../login-page/login.html'"
-          >
-            Log in
-          </button>
+          <a class="login-btn" href="{% url 'login' %}">Log in</a>
         </div>
       </header>
 
       <div class="layout">
         <nav class="sidebar">
-          <a class="nav-link" href="./dashboard.html">Dashboard</a>
+          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
           <a class="nav-link active">Create Backup</a>
-          <a class="nav-link" href="./backup_history.html">History</a>
-          <a class="nav-link" href="./settings.html">Settings</a>
+          <a class="nav-link" href="{% url 'history' %}">History</a>
+          <a class="nav-link" href="{% url 'settings' %}">Settings</a>
         </nav>
 
         <main class="content">
@@ -68,18 +63,5 @@
         </main>
       </div>
     </div>
-
-    <!-- ACTIVE SCRIPT -->
-    <script>
-      (function () {
-        const links = document.querySelectorAll(".sidebar .nav-link");
-        const current = location.href;
-        links.forEach((link) => {
-          if (current.includes(link.getAttribute("href"))) {
-            link.classList.add("active");
-          }
-        });
-      })();
-    </script>
   </body>
 </html>
