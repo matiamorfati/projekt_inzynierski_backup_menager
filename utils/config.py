@@ -29,6 +29,10 @@ CONFIG = {
     #"max_backup": 10, # to się włączy po testach zeby nie suuneło backupów do pokazania 
 
 
-    # Partycje 
-    # w przyszłości
-}
+    # Google Drive
+    "enable_drive_upload": True,
+    "drive_credentials_path": "credentials/client_secret.json",
+    "drive_folder_id": "1z0PgoQ33r1E5mw83CYEF319E84PjMtmI",
+    
+
+}   
