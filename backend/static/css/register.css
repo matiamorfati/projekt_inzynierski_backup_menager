@@ -161,17 +161,17 @@ body {
 }
 
 /* linki pod kartą */
-.register-link {
+.login-link {
   text-align: center;
   margin-top: 14px;
   font-size: 14px;
   color: #374151;
 }
-.register-link a {
+.login-link a {
   color: #3366ff;
   text-decoration: none;
 }
-.register-link a:hover {
+.login-link a:hover {
   text-decoration: underline;
 }
 
