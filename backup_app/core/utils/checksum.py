@@ -15,7 +15,7 @@ import json
 import os
 from typing import Dict, Optional
 import logging
-from utils.logger import get_logger
+from .logger import get_logger
 
 module_logger = get_logger("Checksum")
 

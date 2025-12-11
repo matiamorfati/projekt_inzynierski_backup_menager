@@ -16,13 +16,13 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from utils.config import CONFIG
-from utils.logger import get_logger
-from db_manager import DatabaseManager
-from backup_manager import BackupManager
-from restore_manager import RestoreManager
-from scheduler import BackupScheduler
-from mail_notifier import MailNotifier
+from .utils.config import CONFIG
+from .utils.logger import get_logger
+from .db_manager import DatabaseManager
+from .backup_manager import BackupManager
+from .restore_manager import RestoreManager
+from .scheduler import BackupScheduler
+from .mail_notifier import MailNotifier
 
 # Inicjalizacja core
 

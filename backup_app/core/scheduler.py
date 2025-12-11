@@ -25,11 +25,11 @@ import threading
 import schedule
 from datetime import datetime
 
-from backup_manager import BackupManager
-from db_manager import DatabaseManager
-from utils.logger import get_logger
-from utils.config import CONFIG
-from mail_notifier import MailNotifier
+from .backup_manager import BackupManager
+from .db_manager import DatabaseManager
+from .utils.logger import get_logger
+from .utils.config import CONFIG
+from .mail_notifier import MailNotifier
 
 class BackupScheduler:
     """

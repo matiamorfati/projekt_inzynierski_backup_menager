@@ -13,7 +13,7 @@ Każde działanine jest logowane przy pomocy utils/logger.py
 import os
 import sqlite3
 from datetime import datetime
-from utils.logger import get_logger
+from .utils.logger import get_logger
 
 
 class DatabaseManager:

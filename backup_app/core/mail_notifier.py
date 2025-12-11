@@ -19,9 +19,9 @@ import os
 from email.message import EmailMessage
 from datetime import datetime
 
-from utils.logger import get_logger
-from db_manager import DatabaseManager
-from utils.config import CONFIG
+from .utils.logger import get_logger
+from .db_manager import DatabaseManager
+from .utils.config import CONFIG
 
 class MailNotifier:
     """

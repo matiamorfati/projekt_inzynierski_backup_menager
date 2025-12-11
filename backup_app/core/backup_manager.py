@@ -10,14 +10,14 @@ import zipfile
 from datetime import datetime
 
 # moduły projektu
-from db_manager import DatabaseManager
-from mail_notifier import MailNotifier
+from .db_manager import DatabaseManager
+from .mail_notifier import MailNotifier
 
 # Utils
-from utils.logger import get_logger
-from utils.checksum import calculate_checksum, verify_checksum
-from utils.checksum import build_dir_manifest, save_manifest
-from utils.config import CONFIG
+from .utils.logger import get_logger
+from .utils.checksum import calculate_checksum, verify_checksum
+from .utils.checksum import build_dir_manifest, save_manifest
+from .utils.config import CONFIG
 
 # Do google drive
 try:

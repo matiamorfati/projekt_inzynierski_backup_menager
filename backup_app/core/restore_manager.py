@@ -15,12 +15,12 @@ import os
 import zipfile
 from datetime import datetime
 
-from db_manager import DatabaseManager
-from mail_notifier import MailNotifier
+from .db_manager import DatabaseManager
+from .mail_notifier import MailNotifier
 
-from utils.logger import get_logger
-from utils.checksum import verify_checksum
-from utils.config import CONFIG
+from .utils.logger import get_logger
+from .utils.checksum import verify_checksum
+from .utils.config import CONFIG
 
 try:
     from cloud_storage import GoogleDriveStorage
