@@ -1,0 +1,1 @@
+Test wysyłania pliku na Google Drive z BackupManagera.

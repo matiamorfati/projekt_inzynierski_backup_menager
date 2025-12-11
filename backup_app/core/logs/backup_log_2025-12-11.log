@@ -1,0 +1,16 @@
+2025-12-11 18:05:39 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-11.log
+2025-12-11 18:05:39 | DEBUG    | DriveTest | Ładowanie istniejącego tokena z: credentials/token.json
+2025-12-11 18:05:39 | INFO     | DriveTest | Token OAuth wygasł - próba odświeżenia
+2025-12-11 18:05:39 | ERROR    | DriveTest | Nie udało się odświeżyć tokenu OAuth: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2025-12-11 18:05:39 | INFO     | DriveTest | Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania
+2025-12-11 18:23:20 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-11.log
+2025-12-11 18:23:20 | INFO     | DriveTest | Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania
+2025-12-11 19:50:29 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-11.log
+2025-12-11 19:50:29 | INFO     | DriveTest | Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania
+2025-12-11 19:50:40 | INFO     | DriveTest | Proces OAuth zakończony pomyślnie
+2025-12-11 19:50:40 | INFO     | DriveTest | Zapisano nowy token OAuth do pliku: credentials/token.json
+2025-12-11 19:50:40 | INFO     | DriveTest | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-11 19:50:41 | INFO     | DriveTest | Utworzono nowy folder na Drive: BackupManager (id=1NYZW52f_LfRgfN42f-9z_kpAhecrSK5R)
+2025-12-11 19:50:43 | INFO     | DriveTest | Wysłano plik na Google Drive: name=drive_test_file.txt, id=1mV1fIE52uVdg4wdgdckRKGnqfFle_6dZ
+2025-12-11 19:50:43 | INFO     | DriveTest | Link do pliku: https://drive.google.com/file/d/1mV1fIE52uVdg4wdgdckRKGnqfFle_6dZ/view?usp=drivesdk
+2025-12-11 19:50:43 | INFO     | DriveTest | Testowy plik wysłany. Link/id: https://drive.google.com/file/d/1mV1fIE52uVdg4wdgdckRKGnqfFle_6dZ/view?usp=drivesdk

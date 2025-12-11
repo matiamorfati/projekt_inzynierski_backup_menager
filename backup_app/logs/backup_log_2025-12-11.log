@@ -45,3 +45,14 @@
 2025-12-11 15:09:43 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: restored_files
 2025-12-11 15:09:43 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
 2025-12-11 15:09:43 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-11 16:53:38 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-11.log
+2025-12-11 16:53:38 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-11.log
+2025-12-11 16:53:38 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-11 16:53:38 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-11 16:53:38 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-11 16:53:38 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-11 16:53:38 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: backups
+2025-12-11 16:53:38 | ERROR    | CoreService | enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.
+2025-12-11 16:53:38 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: restored_files
+2025-12-11 16:53:38 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-11 16:53:38 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)

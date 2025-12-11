@@ -6,8 +6,9 @@ Wymagane paczki:
 py -m pip install google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
 """
 
-# Edit 1. 30.11.2025 Stworzenie głównej kalsy i integracja z Drive
-# Edit 2. 02.12.2025 Poprawa niedziałjącego wysyłania do drive i dodanie fuinkcji pobierania z Drive
+# Edit 1. 30.11.2025 Stworzenie głównej klasy i integracja z Drive
+# Edit 2. 02.12.2025 Poprawa niedziałającego wysyłania do drive i dodanie funkcji pobierania z Drive
+# Edit 3. 11.12.2025 Dodanie funkcji tworzenia folderu na Drive jeśli nie istnieje
 
 from __future__ import annotations
 
@@ -24,7 +25,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-
 from googleapiclient.http import MediaIoBaseDownload
 
 
@@ -59,13 +59,17 @@ class GoogleDriveStorage:
             self.logger.error(f"Nie znaleziono pliku z kluczem Google Drive: {credentials_path}")
             raise FileNotFoundError(f"Nie znaleziono pliku z kluczem Google Drive: {credentials_path}")
 
-        
-
         self.creds: Credentials | None = None
         self._load_credentials()
 
         self.service = build("drive", "v3", credentials=self.creds)
         self.logger.info("Zainicjowano połączenie z Google Drive API (OAuth)")
+
+        # Jeśli nie podano folder_id, tworzymy lub pobieramy folder "BackupManager"
+        if folder_id is None:
+            self.folder_id = self.ensure_folder("BackupManager")
+        else:
+            self.folder_id = folder_id
 
     def _load_credentials(self) -> None:
         """
@@ -82,7 +86,7 @@ class GoogleDriveStorage:
             except Exception as e:
                 self.logger.error(f"Nie udało się wczytać istniejącego tokena OAuth: {e}")
                 creds = None
-            
+
         # 2. Jeśli nie mamy ważnych credów - odświeżamy lub przechodzimy pełny flow
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
@@ -91,11 +95,11 @@ class GoogleDriveStorage:
                     creds.refresh(Request())
                     self.logger.info("Token OAuth został odświeżony")
                 except Exception as e:
-                    self.logger.error(f"Nie udało się odswieżyć tokenu OAuth: {e}")
+                    self.logger.error(f"Nie udało się odświeżyć tokenu OAuth: {e}")
 
             if not creds or not creds.valid:
-                # Pełny flow OAuth - otworzy przeglądarke
-                self.logger.info("Proces OAuth rozpoczęty - ootworzy się przeglądarka do logowania")
+                # Pełny flow OAuth - otworzy przeglądarkę
+                self.logger.info("Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania")
                 flow = InstalledAppFlow.from_client_secrets_file(self.client_secret_path, SCOPES)
                 creds = flow.run_local_server(port=0)
                 self.logger.info("Proces OAuth zakończony pomyślnie")
@@ -110,6 +114,35 @@ class GoogleDriveStorage:
 
         self.creds = creds
 
+    def ensure_folder(self, folder_name: str) -> str:
+        """
+        Sprawdza czy folder o nazwie folder_name istnieje w Google Drive.
+        Jeśli nie istnieje - tworzy go.
+        Zwraca ID folderu.
+        """
+        # Najpierw szukamy folderu
+        query = f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+        results = self.service.files().list(
+            q=query,
+            spaces="drive",
+            fields="files(id, name)",
+        ).execute()
+        files = results.get("files", [])
+
+        if files:
+            folder_id = files[0]["id"]
+            self.logger.info(f"Folder istnieje na Drive: {folder_name} (id={folder_id})")
+            return folder_id
+
+        # Tworzymy folder jeśli nie istnieje
+        file_metadata = {
+            "name": folder_name,
+            "mimeType": "application/vnd.google-apps.folder"
+        }
+        folder = self.service.files().create(body=file_metadata, fields="id").execute()
+        folder_id = folder.get("id")
+        self.logger.info(f"Utworzono nowy folder na Drive: {folder_name} (id={folder_id})")
+        return folder_id
 
     def upload_file(self, local_path: str, remote_name: str | None = None, folder_id: str | None = None) -> str:
         """
