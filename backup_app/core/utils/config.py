@@ -32,7 +32,6 @@ CONFIG = {
     # Google Drive
     "enable_drive_upload": True,
     "drive_credentials_path": "credentials/client_secret.json",
-    "drive_folder_id": "1z0PgoQ33r1E5mw83CYEF319E84PjMtmI",
-    
+    "drive_folder_name": "BackupMenager_Backups" #folder tworzony dynamicznie przez google drive
 
 }   

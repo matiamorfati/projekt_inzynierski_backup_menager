@@ -461,26 +461,26 @@ Test na robienie backupa z kilku folderów
 #         print(f"sources: {sources}")
 
 # Test 3 
-if __name__ == "__main__":
-    logger = get_logger("BackupTest")
-    db = DatabaseManager(logger=logger)
-
-    profile_id = db.create_backup_profile(
-        name="Adam Mickiewicz",
-        sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
-        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2;"
-        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\NOwe.txt;"
-        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\drive_test_file.txt",
-        backup_directory="backups_test_profile",
-        backup_frequency="daily",
-        daily_report_enable=False,
-        recipient_email="backup.system.receiver@gmail.com",
-        is_default=True,
-    )
-
-    manager = BackupManager(config=CONFIG, logger=logger, db=db)
-
-    manager.create_backup_from_profile(profile_id)
-
-    db.close()
+# if __name__ == "__main__":
+    # logger = get_logger("BackupTest")
+    # db = DatabaseManager(logger=logger)
+# 
+    # profile_id = db.create_backup_profile(
+        # name="Adam Mickiewicz",
+        # sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
+        # r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2;"
+        # r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\NOwe.txt;"
+        # r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\drive_test_file.txt",
+        # backup_directory="backups_test_profile",
+        # backup_frequency="daily",
+        # daily_report_enable=False,
+        # recipient_email="backup.system.receiver@gmail.com",
+        # is_default=True,
+    # )
+# 
+    # manager = BackupManager(config=CONFIG, logger=logger, db=db)
+# 
+    # manager.create_backup_from_profile(profile_id)
+# 
+    # db.close()
 
