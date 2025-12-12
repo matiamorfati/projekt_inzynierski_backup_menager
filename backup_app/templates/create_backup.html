@@ -4,21 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backup Manager</title>
+    <title>Create Backup – Backup Manager</title>
     <link rel="stylesheet" href="{% static 'css/createBackup.css' %}" />
   </head>
 
   <body>
     <div class="app">
+      <!-- HEADER -->
       <header class="header">
         <h1 class="brand">Backup Manager</h1>
         <div class="header-actions">
-          <button class="icon-btn">🌙</button>
+          <button class="icon-btn" type="button">🌙</button>
           <a class="login-btn" href="{% url 'login' %}">Log in</a>
         </div>
       </header>
 
       <div class="layout">
+        <!-- SIDEBAR -->
         <nav class="sidebar">
           <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
           <a class="nav-link active">Create Backup</a>
@@ -26,42 +28,123 @@
           <a class="nav-link" href="{% url 'settings' %}">Settings</a>
         </nav>
 
+        <!-- MAIN CONTENT -->
         <main class="content">
           <div class="content-header">
-            <h2>Create Backup</h2>
+            <div>
+              <h2>Create Backup</h2>
+              <p class="content-subtitle">
+                Run a manual backup and decide whether it should be uploaded to
+                Google Drive.
+              </p>
+            </div>
           </div>
 
           <div class="cards">
-            <div class="form-container">
-              <div class="form-group">
-                <label for="backupName">Backup Name</label>
-                <input
-                  type="text"
-                  id="backupName"
-                  placeholder="Enter backup name"
-                />
-              </div>
+            <!-- LEWA KARTA – FORMULARZ -->
+            <section class="card form-container">
+              <h3 class="card-title">Manual backup</h3>
+              <p class="card-subtitle">
+                Provide source paths and optional destination. You can override
+                Google Drive upload for this single backup.
+              </p>
 
-              <div class="form-group">
-                <label for="sourceFolder">Select Source</label>
-                <select id="sourceFolder">
-                  <option>Choose source folder</option>
-                </select>
-              </div>
+              <form id="create-backup-form" novalidate>
+                <!-- SOURCES -->
+                <div class="form-group">
+                  <label for="sources"
+                    >Source paths<span class="required">*</span></label
+                  >
+                  <textarea
+                    id="sources"
+                    class="input"
+                    placeholder="Example: C:\Projects;D:\ImportantData"
+                  ></textarea>
+                  <p class="hint">
+                    Separate multiple paths with <code>;</code> or put each path
+                    in a new line.
+                  </p>
+                </div>
 
-              <div class="form-group">
-                <label for="backupType">Backup Type</label>
-                <select id="backupType">
-                  <option>Full</option>
-                  <option>Incremental</option>
-                </select>
-              </div>
+                <!-- DESTINATION -->
+                <div class="form-group">
+                  <label for="destination">Destination folder (optional)</label>
+                  <input
+                    type="text"
+                    id="destination"
+                    class="input"
+                    placeholder="If empty, default backup directory from CONFIG will be used"
+                  />
+                </div>
 
-              <button class="btn-primary" type="button">+ Create backup</button>
-            </div>
+                <!-- UPLOAD TO DRIVE -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="uploadToDrive">Google Drive upload</label>
+                    <select id="uploadToDrive" class="input">
+                      <option value="">Use system default (CONFIG)</option>
+                      <option value="true">Force upload to Google Drive</option>
+                      <option value="false">
+                        Do NOT upload to Google Drive
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- AKCJA + KOMUNIKAT -->
+                <div class="form-actions">
+                  <button
+                    class="btn-primary"
+                    type="submit"
+                    id="create-backup-btn"
+                  >
+                    + Create backup
+                  </button>
+                  <p id="form-message" class="form-message"></p>
+                </div>
+              </form>
+            </section>
+
+            <!-- PRAWA KARTA – PODPOWIEDŹ / INFO -->
+            <section class="card info-card">
+              <h3 class="card-title">How it works</h3>
+              <ul class="info-list">
+                <li>
+                  Backups are created by
+                  <code>BackupManager.create_backup()</code> and stored in
+                  SQLite via <code>DatabaseManager</code>.
+                </li>
+                <li>
+                  This form calls <code>/api/backups/run/</code>, which uses
+                  <code>core_service.run_backup_from_sources()</code>.
+                </li>
+                <li>
+                  The <strong>Google Drive upload</strong> behaviour can be:
+                  <ul>
+                    <li>
+                      <strong>Default</strong> – use
+                      <code>CONFIG["enable_drive_upload"]</code>
+                    </li>
+                    <li>
+                      <strong>Forced ON</strong> – upload only for this backup
+                    </li>
+                    <li>
+                      <strong>Forced OFF</strong> – skip Drive just this time
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  You can check the result in the <strong>History</strong> tab
+                  and in email notifications.
+                </li>
+              </ul>
+            </section>
           </div>
         </main>
       </div>
     </div>
+
+    <!-- JS – obsługa formularza i walidacji -->
+    <script src="{% static 'js/createBackup.js' %}"></script>
   </body>
 </html>
