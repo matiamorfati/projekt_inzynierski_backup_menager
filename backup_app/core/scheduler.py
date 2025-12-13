@@ -54,6 +54,7 @@ class BackupScheduler:
         self.running = False
         self.thread = None
         self.frequency = self.config.get("backup_frequency", "daily") # Domyślnie codziennie
+        self.upload_to_drive_override: bool | None = None
 
         # Mozna potem zmienić domyślne na weekly lub monthly !!
 
@@ -169,7 +170,7 @@ class BackupScheduler:
         self.logger.info(f"[{now_str}] Uruchomiono automatyczny backup")
         
         sources: list[str] =[]
-
+        
         # 1. Próba brania ścieżki z profilu DB
         profile = None
         try:
@@ -215,17 +216,24 @@ class BackupScheduler:
         
         # 4. Uruchomienie backupu 
         try:
-            self.backup_manager.create_backup(sources=sources)
+            self.backup_manager.create_backup(sources=sources, upload_to_drive=self.upload_to_drive_override)
             self.logger.info("Automatyczny backup zakończony sukcesem")
         except Exception as e:
             self.logger.error(f"Błąd podczas automatycznego backupu: {e}")
 
     # 3. Uruchamianie  harmonogramu
 
-    def start_scheduler(self):
+    def start_scheduler(self, upload_to_drive: bool | None = None):
         """
         Uruchamia harmonogram w osobnym wątku
+        upload_to_drive:
+        - True: Wysyłka na drvie
+        - False: Brak wysyłki na drive
+        - None: użyje ustawień z CONFIG["enable_drive_upload"]
         """
+        # Zapamiętuj oberride na czas działania schedulera
+        self.upload_to_drive_override = upload_to_drive
+
         if self.running:
             self.logger.warning("Harmonogram juz działa")
             return
@@ -233,7 +241,7 @@ class BackupScheduler:
         self.running = True
         self.thread = threading.Thread(target=self._run_loop, daemon=True)
         self.thread.start()
-        self.logger.info("Harmonogram backupów został uruchomiony w tle")
+        self.logger.info(f"Harmonogram backupów został uruchomiony w tle (upload_to_drive={upload_to_drive})")
         
 
     # 4. Zatrzymywanie harmonogramu
@@ -247,6 +255,7 @@ class BackupScheduler:
             return
         
         self.running = False
+        self.upload_to_drive_override = None
         self.logger.info("Harmonogram backupów został zatrzymany")
 
     def _run_loop(self):
@@ -266,7 +275,7 @@ class BackupScheduler:
             self.logger.info("Raport dzienny wyłączony w konfiguracji")
             return
         time_str = self.config.get("daily_report_time", "8:00")
-        schedule.every(2).minutes.at(time_str).do(self._run_daily_report)
+        # schedule.every(2).minutes.at(time_str).do(self._run_daily_report)
         # To skomentować dla testu szybkiego
         schedule.every().day.at(time_str).do(self._run_daily_report)
         self.logger.info(f"Ustawiono raport dzienny o {time_str}")

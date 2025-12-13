@@ -28,13 +28,6 @@ def settings_view(request):
 def register(request):
     return render(request, 'register.html')
 
-def success_view(request):
-    return render(request, "success.html")
-
-def error_view(request):
-    return render(request, "error.html")
-
-
 # ------------------------------
 # API views — wrappers dla core_service
 # ------------------------------
@@ -49,8 +42,22 @@ def api_run_backup_from_sources(request):
 
     data = json.loads(request.body or "{}")
     sources = data.get("sources", [])
+    # dodaje walidacje source
+    if not isinstance(sources, list) or len([s for s in sources if str(s).strip()]) == 0:
+        return JsonResponse({"ok": False, "error": "sources must be a non-empty list"}, status=400)
     destination = data.get("destination")
-    result = core_service.run_backup_from_sources(sources=sources, destination=destination)
+
+    # To jest nowe związane z logiką wysyłania na drive
+    upload_to_drive = data.get ("upload_to_drive", None)
+    # Dopuszczne jest True/False jak i string "true/false" z frontu
+    if isinstance(upload_to_drive, str):
+        upload_to_drive =upload_to_drive.lower() == "true"
+
+    result = core_service.run_backup_from_sources(
+        sources=sources, 
+        destination=destination,
+        upload_to_drive=upload_to_drive
+    )
     return JsonResponse(result)
 
 
@@ -61,7 +68,16 @@ def api_run_backup_from_profile(request):
 
     data = json.loads(request.body or "{}")
     profile_id = data.get("profile_id")
-    result = core_service.run_backup_from_profile(profile_id=profile_id)
+
+    # Dodajemy nowe tak jak wyzej
+    upload_to_drive = data.get("upload_to_drive", None)
+    if isinstance(upload_to_drive, str):
+        upload_to_drive = upload_to_drive.lower() == "true"
+
+    result = core_service.run_backup_from_profile(
+        profile_id=profile_id,
+        upload_to_drive=upload_to_drive
+    )
     return JsonResponse(result)
 
 
@@ -136,7 +152,12 @@ def api_start_scheduler(request):
         return HttpResponseBadRequest("POST required")
     data = json.loads(request.body or "{}")
     profile_id = data.get("profile_id")
-    result = core_service.start_scheduler(profile_id=profile_id)
+
+    upload_to_drive = data.get("upload_to_drive", None)
+    if isinstance(upload_to_drive, str):
+        upload_to_drive = upload_to_drive.lower() == "true"
+
+    result = core_service.start_scheduler(profile_id=profile_id, upload_to_drive=upload_to_drive)
     return JsonResponse(result)
 
 

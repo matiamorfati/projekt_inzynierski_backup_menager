@@ -76,13 +76,23 @@ def get_system_status() -> Dict[str, Any]:
 # 1. Backupy
 
 
-def run_backup_from_sources(sources: List[str], destination: Optional[str] = None) -> Dict[str, Any]:
+def run_backup_from_sources(sources: List[str], destination: Optional[str] = None, upload_to_drive: Optional[bool] = None) -> Dict[str, Any]:
     """
     Ręczne uruchomienie backupu z podanych ścieżek
+    upload_to_drive:
+    - True: Wysyłka na drvie
+    - False: Brak wysyłki na drive
+    - None: użyje ustawień z CONFIG["enable_drive_upload"]
     Nie używa input()
     """
-    _logger.info(f"Manualny backup from sources: {sources}")
-    _backup_manager.create_backup(sources=sources, destination=destination)
+    _logger.info(f"Manualny backup from sources: {sources}, "
+                 f"to destination={destination}, upload_to_drive={upload_to_drive}"
+    )
+
+    _backup_manager.create_backup(sources=sources, 
+                                  destination=destination,
+                                  upload_to_drive=upload_to_drive,
+    )
 
     history = _db.get_backup_history(limit=1) or []
     last = _backup_row_to_dict(history[0])  if history else None
@@ -93,13 +103,16 @@ def run_backup_from_sources(sources: List[str], destination: Optional[str] = Non
     }
 
 
-def run_backup_from_profile(profile_id: Optional[int] = None) -> Dict[str, Any]:
+def run_backup_from_profile(profile_id: Optional[int] = None, upload_to_drive: Optional[bool] = None) -> Dict[str, Any]:
     """
     Uruchomienie backupu na podstawie profilu (z bazy)
     Jeśli profile_id = None użyje profilu domyślnego
+    upload_to_drive działą tak samo jak w run_backup_from_sources
     """
-    _logger.info(f"Backup from profile (id={profile_id})")
-    _backup_manager.create_backup_from_profile(profile_id)
+    _logger.info(f"Backup from profile (id={profile_id}), upload_to_drive={upload_to_drive}")
+    _backup_manager.create_backup_from_profile(profile_id=profile_id,
+                                               upload_to_drive=upload_to_drive,
+    )
 
     history = _db.get_backup_history(limit=1) or []
     last = _backup_row_to_dict(history[0]) if history else None
@@ -207,16 +220,17 @@ def restore_partial(backup_name: str, selection: List[str], destination: Optiona
 # 4. Scheduler / raporty
 
 
-def start_scheduler(profile_id: Optional[int] = None) -> Dict[str, Any]:
+def start_scheduler(profile_id: Optional[int] = None, upload_to_drive: Optional[bool] = None) -> Dict[str, Any]:
     """
     Startuje harmonogram:
     - ładuje ustawienia z profilu (albo domyslnego)
     - ustawia backupy i raporty dzienne
-    - odpala scheduler w tle    
+    - odpala scheduler w tle
+    upload_to_drive działa jako override na czas działania schedulera
     """
-    _logger.info(f"Starting scheduler (profile_id={profile_id})")
+    _logger.info(f"Starting scheduler (profile_id={profile_id}, upload_to_drive={upload_to_drive})")
     _scheduler.schedule_from_profile(profile_id=profile_id)
-    _scheduler.start_scheduler()
+    _scheduler.start_scheduler(upload_to_drive=upload_to_drive)
     return {"ok": True}
 
 

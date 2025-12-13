@@ -30,8 +30,10 @@ CONFIG = {
 
 
     # Google Drive
+    # Domyślne zachowanie - jeśli upload_to_drive nie zostanie podany z API
     "enable_drive_upload": True,
-    "drive_credentials_path": "credentials/client_secret.json",
+    # Zmieniłem ścieżke i dodalem core na początku
+    "drive_credentials_path": "core/credentials/client_secret.json",
     "drive_folder_name": "BackupMenager_Backups" #folder tworzony dynamicznie przez google drive
 
 }   

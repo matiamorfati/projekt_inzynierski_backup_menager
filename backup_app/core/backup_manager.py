@@ -21,7 +21,7 @@ from .utils.config import CONFIG
 
 # Do google drive
 try:
-    from cloud_storage import GoogleDriveStorage
+    from .utils.cloud_storage import GoogleDriveStorage
 except ImportError:
     GoogleDriveStorage = None
 
@@ -90,12 +90,17 @@ class BackupManager:
             self.logger.info("Integracja z Google Drive jest wyłączona (enable_drive_upload=False).")
 
         
-    def create_backup(self, source: str = None, destination: str = None, sources: list[str] | None = None):
+    def create_backup(self,
+                      source: str | None = None,
+                      destination:str | None = None,
+                      sources: list[str] | None = None,
+                      upload_to_drive: bool | None = None):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
         :param sources: LISTA ścieżek źródłowych
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
+        :param upload_to_bool: Sprawdza czy wysyłamy backup na drive czy nie
         """
 
         # 1. Ustalenie ścieżki 
@@ -153,12 +158,31 @@ class BackupManager:
             
             # 5.5 Opcjonalny upload na Google Drive
             drive_link = None
-            if self.cloud and self.config.get("enable_drive_upload", False):
-                try:
-                    drive_link = self.cloud.upload_file(backup_path)
-                    self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
-                except Exception as e:
-                    self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+
+            # Jeśli upload_to_drive jest podane, traktujemy je jako override
+            # Jeśli None - bierzemy ustawienia z CONFIG
+            should_upload = (
+                upload_to_drive
+                if upload_to_drive is not None
+                else self.config.get("enable_drive_upload", False)
+            )
+
+
+            if should_upload:
+                if self.cloud:
+                    try:
+                        drive_link = self.cloud.upload_file(backup_path)
+                        self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
+                    except Exception as e:
+                        self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+                else:
+                    self.logger.warning("Upload na Drive włączony, ale self.cloud=None "
+                                        "(problem z importem/credentials/paczkami)."
+                    )
+            else:
+                self.logger.info("Upload na Google Drive pominięty dla tego backupu (upload_to_drive=False)")
+
+            
 
 
             # Zapis listy ścieżek w formie tekstu
@@ -380,10 +404,11 @@ class BackupManager:
 
 
     # Nowa metoda do tworzenia backupu z profilu
-    def create_backup_from_profile(self, profile_id: int | None = None):
+    def create_backup_from_profile(self, profile_id: int | None = None, upload_to_drive: bool | None = None):
         """
         Tworzy backup na podstawie profilu backupu zapisanego w bazie
         Jeśli profil_id = None, używa profilu domyslnego (is_default = 1)
+        parametr upload_to_drive tak samo jak w create_backup
         """
         # Upewnienie się że DatabaseManger ma odpowienie metody
         if not hasattr(self.db, "get_backup_profile") or not hasattr(self.db, "get_default_backup_profile"):
@@ -405,24 +430,24 @@ class BackupManager:
         p_id = profile.get("id")
         p_name = profile.get("name")
 
-        # 2. Pobieranie źródła 
+        # 2. Pobieranie źródła i katalogu docelowego
         sources_str = profile.get("sources") or ""
         sources_list = [p.strip() for p in sources_str.split(";") if p.strip()]
 
         if not sources_list:
             self.logger.error(f"Profil backupu (id={p_id}, name={p_name}) nie ma zdefiniowanych źródeł.")
             return 
-
-        # 3. Katalog docelowy
+        
         destination = profile.get("backup_directory") or self.default_backup_dir
 
-        # 4. Nadpisanie konfiguracji mailer 
+        # 3. Nadpisanie konfiguracji z profilu(mail, katalog itp)
         self._apply_profile_overrides(profile)
+
 
         self.logger.info(f"Tworzenie backupu na podstawie profilu (id={p_id}, name={p_name}) do katalogu: {destination}")
 
-        # 5. Użycie creator_backup
-        self.create_backup(destination=destination, sources=sources_list)
+        # 4. Użycie creator_backup
+        self.create_backup(destination=destination, sources=sources_list, upload_to_drive=upload_to_drive)
 """
 Uwagi do struktury:
 - create_backup() - Główna metoda któą będziemy wywoływać w main.py
