@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Error – Backup Manager</title>
+  <link rel="stylesheet" href="{% static 'css/error.css' %}">
+</head>
+
+<body>
+  <div class="app">
+
+    <header class="header">
+      <h1 class="brand">Backup Manager</h1>
+    </header>
+
+    <main class="content content-center">
+      <div class="status-wrapper">
+        <div class="status-card error">
+          <div class="icon">❌</div>
+
+          <h2>Operacja zakończona niepowodzeniem</h2>
+          <p>
+            Wystąpił błąd podczas wykonywania operacji.
+            Proszę spróbować ponownie później.
+          </p>
+
+          <a href="{% url 'dashboard' %}" class="btn-primary">
+            Powrót do dashboard
+          </a>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>

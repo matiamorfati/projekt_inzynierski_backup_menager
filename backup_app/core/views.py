@@ -28,6 +28,13 @@ def settings_view(request):
 def register(request):
     return render(request, 'register.html')
 
+def success_view(request):
+    return render(request, "success.html")
+
+def error_view(request):
+    return render(request, "error.html")
+
+
 # ------------------------------
 # API views — wrappers dla core_service
 # ------------------------------
