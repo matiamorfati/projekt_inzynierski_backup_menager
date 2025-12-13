@@ -141,7 +141,7 @@ class BackupScheduler:
         # Dać tu case zamiast if
         # W wersji 2.0 czas (godzina) będzie pobierany z bazy lub config/ ustawiany na froncie
         if frequency == "daily":
-            schedule.every(1).minutes.do(self._run_backup)
+            # schedule.every(1).minutes.do(self._run_backup)
             # To skomentować dla testu szybkiego
             schedule.every().day.at("8:00").do(self._run_backup)
             self.logger.info("Ustawiono harmonogram: codnienny backup o 8:00")

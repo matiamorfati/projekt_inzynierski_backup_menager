@@ -100,7 +100,7 @@ class BackupManager:
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
         :param sources: LISTA ścieżek źródłowych
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
-        :param upload_to_bool: Sprawdza czy wysyłamy backup na drive czy nie
+        :param upload_to_drive: Sprawdza czy wysyłamy backup na drive czy nie
         """
 
         # 1. Ustalenie ścieżki 
