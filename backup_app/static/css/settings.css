@@ -140,6 +140,19 @@ a:active {
   border: 1px solid rgba(79, 70, 229, 0.08);
 }
 
+/* ikonny w sidebarze */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 /* content */
 .content {
   flex: 1;

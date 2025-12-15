@@ -39,10 +39,78 @@
       <div class="layout">
         <!-- SIDEBAR -->
         <nav class="sidebar">
-          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-          <a class="nav-link active">Create Backup</a>
-          <a class="nav-link" href="{% url 'history' %}">History</a>
-          <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+          <a class="nav-link" href="{% url 'dashboard' %}">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"
+              />
+              <path
+                d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z"
+              />
+            </svg>
+
+            Dashboard
+          </a>
+
+          <a class="nav-link active">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            Create Backup
+          </a>
+
+          <a class="nav-link" href="{% url 'history' %}">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            History
+          </a>
+
+          <a class="nav-link" href="{% url 'settings' %}">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 0 0-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 0 0-2.282.819l-.922 1.597a1.875 1.875 0 0 0 .432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 0 0 0 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 0 0-.432 2.385l.922 1.597a1.875 1.875 0 0 0 2.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 0 0 2.28-.819l.923-1.597a1.875 1.875 0 0 0-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 0 0 0-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 0 0-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 0 0-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 0 0-1.85-1.567h-1.843ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            Settings
+          </a>
         </nav>
 
         <!-- MAIN CONTENT -->
@@ -62,59 +130,76 @@
             <section class="card form-container">
               <h3 class="card-title">Manual backup</h3>
               <p class="card-subtitle">
-                Provide source paths and optional destination. You can override
-                Google Drive upload for this single backup.
+                Select source directories, choose backup destination and
+                optionally add a description.
               </p>
 
               <form id="create-backup-form" novalidate>
-                <!-- SOURCES -->
+                <!-- SOURCE -->
                 <div class="form-group">
                   <label for="sources"
-                    >Source paths<span class="required">*</span></label
+                    >Source directories<span class="required">*</span></label
                   >
-                  <textarea
-                    id="sources"
-                    class="input"
-                    placeholder="Example: C:\Projects;D:\ImportantData"
-                  ></textarea>
+
+                  <div class="file-picker">
+                    <input
+                      type="file"
+                      id="sources"
+                      class="file-input"
+                      webkitdirectory
+                      multiple
+                    />
+                    <button type="button" class="file-btn">
+                      Select folders
+                    </button>
+                    <span class="file-summary" id="sources-summary">
+                      No folders selected
+                    </span>
+                  </div>
+
                   <p class="hint">
-                    Separate multiple paths with <code>;</code> or put each path
-                    in a new line.
+                    You can select one or multiple directories from your file
+                    system.
                   </p>
                 </div>
 
-                <!-- DESTINATION -->
+                <!-- DESCRIPTION -->
                 <div class="form-group">
-                  <label for="destination">Destination folder (optional)</label>
+                  <label for="description">Description (optional)</label>
+                  <textarea
+                    id="description"
+                    class="input"
+                    placeholder="e.g. Monthly work backup before release"
+                  ></textarea>
+                </div>
+
+                <!-- BACKUP TYPE -->
+                <div class="form-group">
+                  <label for="backupType"
+                    >Backup destination<span class="required">*</span></label
+                  >
+                  <select id="backupType" class="input">
+                    <option value="">Select destination</option>
+                    <option value="drive">Google Drive only</option>
+                    <option value="local">Local only</option>
+                    <option value="both">Local + Google Drive</option>
+                  </select>
+                </div>
+
+                <!-- DESTINATION (conditional) -->
+                <div class="form-group hidden" id="destination-group">
+                  <label for="destination">Local destination folder</label>
                   <input
                     type="text"
                     id="destination"
                     class="input"
-                    placeholder="If empty, default backup directory from CONFIG will be used"
+                    placeholder="e.g. D:\Backups"
                   />
                 </div>
 
-                <!-- UPLOAD TO DRIVE -->
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="uploadToDrive">Google Drive upload</label>
-                    <select id="uploadToDrive" class="input">
-                      <option value="">Use system default (CONFIG)</option>
-                      <option value="true">Force upload to Google Drive</option>
-                      <option value="false">
-                        Do NOT upload to Google Drive
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- AKCJA + KOMUNIKAT -->
+                <!-- ACTIONS -->
                 <div class="form-actions">
-                  <button
-                    class="btn-primary"
-                    type="submit"
-                    id="create-backup-btn"
-                  >
+                  <button class="btn-primary" type="submit">
                     + Create backup
                   </button>
                   <p id="form-message" class="form-message"></p>
@@ -181,19 +266,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/createBackup.js' %}"></script>
   </body>
 </html>
