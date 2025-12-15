@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageEl = document.getElementById("form-message");
   const submitBtn = form?.querySelector("button[type='submit']");
 
+  const fileBtn = document.querySelector(".file-btn");
   if (!form) {
     console.warn("create-backup-form not found on page");
     return;
@@ -38,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = isLoading ? "Working..." : "+ Create backup";
   };
 
+  fileBtn?.addEventListener("click", () => {
+    sourcesInput?.click();
+  });
   /* ----------------------------
      Source folders summary
   ---------------------------- */
