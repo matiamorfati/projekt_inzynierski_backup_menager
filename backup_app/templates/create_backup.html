@@ -113,59 +113,76 @@
             <section class="card form-container">
               <h3 class="card-title">Manual backup</h3>
               <p class="card-subtitle">
-                Provide source paths and optional destination. You can override
-                Google Drive upload for this single backup.
+                Select source directories, choose backup destination and
+                optionally add a description.
               </p>
 
               <form id="create-backup-form" novalidate>
-                <!-- SOURCES -->
+                <!-- SOURCE -->
                 <div class="form-group">
                   <label for="sources"
-                    >Source paths<span class="required">*</span></label
+                    >Source directories<span class="required">*</span></label
                   >
-                  <textarea
-                    id="sources"
-                    class="input"
-                    placeholder="Example: C:\Projects;D:\ImportantData"
-                  ></textarea>
+
+                  <div class="file-picker">
+                    <input
+                      type="file"
+                      id="sources"
+                      class="file-input"
+                      webkitdirectory
+                      multiple
+                    />
+                    <button type="button" class="file-btn">
+                      Select folders
+                    </button>
+                    <span class="file-summary" id="sources-summary">
+                      No folders selected
+                    </span>
+                  </div>
+
                   <p class="hint">
-                    Separate multiple paths with <code>;</code> or put each path
-                    in a new line.
+                    You can select one or multiple directories from your file
+                    system.
                   </p>
                 </div>
 
-                <!-- DESTINATION -->
+                <!-- DESCRIPTION -->
                 <div class="form-group">
-                  <label for="destination">Destination folder (optional)</label>
+                  <label for="description">Description (optional)</label>
+                  <textarea
+                    id="description"
+                    class="input"
+                    placeholder="e.g. Monthly work backup before release"
+                  ></textarea>
+                </div>
+
+                <!-- BACKUP TYPE -->
+                <div class="form-group">
+                  <label for="backupType"
+                    >Backup destination<span class="required">*</span></label
+                  >
+                  <select id="backupType" class="input">
+                    <option value="">Select destination</option>
+                    <option value="drive">Google Drive only</option>
+                    <option value="local">Local only</option>
+                    <option value="both">Local + Google Drive</option>
+                  </select>
+                </div>
+
+                <!-- DESTINATION (conditional) -->
+                <div class="form-group hidden" id="destination-group">
+                  <label for="destination">Local destination folder</label>
                   <input
                     type="text"
                     id="destination"
                     class="input"
-                    placeholder="If empty, default backup directory from CONFIG will be used"
+                    placeholder="e.g. D:\Backups"
                   />
                 </div>
 
-                <!-- UPLOAD TO DRIVE -->
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="uploadToDrive">Google Drive upload</label>
-                    <select id="uploadToDrive" class="input">
-                      <option value="">Use system default (CONFIG)</option>
-                      <option value="true">Force upload to Google Drive</option>
-                      <option value="false">
-                        Do NOT upload to Google Drive
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- AKCJA + KOMUNIKAT -->
+                <!-- ACTIONS -->
                 <div class="form-actions">
-                  <button
-                    class="btn-primary"
-                    type="submit"
-                    id="create-backup-btn"
-                  >
+                  <button class="btn-primary" type="submit">
                     + Create backup
                   </button>
                   <p id="form-message" class="form-message"></p>
@@ -232,19 +249,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/createBackup.js' %}"></script>
   </body>
 </html>
