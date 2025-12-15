@@ -1,0 +1,4 @@
+2025-12-15 16:49:01 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 16:49:01 | ERROR    | DriveTest | Nie znaleziono pliku z kluczem Google Drive: core/credentials/client_secret.json
+2025-12-15 17:18:41 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:18:41 | INFO     | DriveTest | Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania

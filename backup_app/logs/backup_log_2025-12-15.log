@@ -1,0 +1,210 @@
+2025-12-15 15:49:41 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 15:49:41 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 15:49:41 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 15:49:41 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 15:49:41 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 15:49:41 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 15:49:41 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: backups
+2025-12-15 15:49:41 | ERROR    | CoreService | enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.
+2025-12-15 15:49:41 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: restored_files
+2025-12-15 15:49:41 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-15 15:49:41 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 15:50:04 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 15:50:04 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 15:50:04 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 15:50:04 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 15:50:04 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 15:50:04 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 15:50:04 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: backups
+2025-12-15 15:50:04 | ERROR    | CoreService | enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.
+2025-12-15 15:50:04 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: restored_files
+2025-12-15 15:50:04 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-15 15:50:04 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 16:43:44 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 16:43:44 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 16:43:44 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 16:43:44 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 16:43:44 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 16:43:44 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 16:43:44 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: backups
+2025-12-15 16:43:44 | ERROR    | CoreService | enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.
+2025-12-15 16:43:44 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: restored_files
+2025-12-15 16:43:44 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-15 16:43:44 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 17:18:31 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:18:31 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:18:31 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 17:18:31 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 17:18:31 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 17:18:31 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 17:18:31 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups
+2025-12-15 17:18:31 | ERROR    | CoreService | enable_drive_upload=True, ale brak modułu cloud_storage / wymaganych paczek Google API.
+2025-12-15 17:18:31 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 17:18:31 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-15 17:18:31 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 17:34:41 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:34:41 | INFO     | DriveTest | Proces OAuth rozpoczęty - otworzy się przeglądarka do logowania
+2025-12-15 17:34:51 | INFO     | DriveTest | Proces OAuth zakończony pomyślnie
+2025-12-15 17:34:51 | INFO     | DriveTest | Zapisano nowy token OAuth do pliku: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 17:34:51 | INFO     | DriveTest | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 17:34:53 | INFO     | DriveTest | Utworzono nowy folder na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 17:34:54 | INFO     | DriveTest | Wysłano plik na Google Drive: name=drive_test_file.txt, id=1NISYuINBNp9z0QVeK0x168WNMT2rX81g
+2025-12-15 17:34:54 | INFO     | DriveTest | Link do pliku: https://drive.google.com/file/d/1NISYuINBNp9z0QVeK0x168WNMT2rX81g/view?usp=drivesdk
+2025-12-15 17:34:54 | INFO     | DriveTest | Testowy plik wysłany. Link/id: https://drive.google.com/file/d/1NISYuINBNp9z0QVeK0x168WNMT2rX81g/view?usp=drivesdk
+2025-12-15 17:39:53 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:39:53 | INFO     | BackupManager | Logger 'BackupManager' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 17:39:53 | INFO     | BackupManager | Połączono z bazą danych: backup_data.db
+2025-12-15 17:39:53 | DEBUG    | BackupManager | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 17:39:53 | DEBUG    | BackupManager | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 17:39:53 | INFO     | BackupManager | MailNotifier zainicjalizowany
+2025-12-15 17:39:53 | INFO     | BackupManager | BackupManager zainicjowany. Folder backupów: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups
+2025-12-15 17:39:53 | DEBUG    | BackupManager | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 17:39:53 | INFO     | BackupManager | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 17:39:54 | INFO     | BackupManager | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 17:39:54 | INFO     | BackupManager | Integracja z Google Drive została zainicjowana pomyslnie.
+2025-12-15 17:46:00 | INFO     | BackupManager | Tworzenie backupu: Backup_2025_12_15-17_46_00.zip
+2025-12-15 17:46:00 | DEBUG    | BackupManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data\Test data 1.txt
+2025-12-15 17:46:00 | DEBUG    | BackupManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data\Test data 1.txt) = f6804dad29083da6a0a6308580507d4fe06ba469c92a4cdb5cde6420aaff57d8
+2025-12-15 17:46:00 | DEBUG    | BackupManager | Zbudowano manifest dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data (plików: 1)
+2025-12-15 17:46:00 | INFO     | BackupManager | Zapisano manifest: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\manifests\manifest_2025_12_15-17_46_00.json
+2025-12-15 17:46:00 | DEBUG    | BackupManager | Zarchiwizowano katalog: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data
+2025-12-15 17:46:00 | DEBUG    | BackupManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 17:46:01 | DEBUG    | BackupManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip) = 9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 17:46:03 | INFO     | BackupManager | Wysłano plik na Google Drive: name=Backup_2025_12_15-17_46_00.zip, id=1urWrN43EDoSaLY45WjPsv1_nDinpEqTG
+2025-12-15 17:46:03 | INFO     | BackupManager | Link do pliku: https://drive.google.com/file/d/1urWrN43EDoSaLY45WjPsv1_nDinpEqTG/view?usp=drivesdk
+2025-12-15 17:46:03 | INFO     | BackupManager | Bakup wysłany na Google Drive: https://drive.google.com/file/d/1urWrN43EDoSaLY45WjPsv1_nDinpEqTG/view?usp=drivesdk
+2025-12-15 17:46:03 | INFO     | BackupManager | Backup zakończony: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip rozmiar=161B, hash=9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 17:46:03 | INFO     | BackupManager | Dodano wpis do bazy: Backup_2025_12_15-17_46_00.zip (OK)
+2025-12-15 17:46:04 | INFO     | BackupManager | E-mail wysłano do: backup.system.receiver@gmail.com ([Backup System] Status: OK (Backup_2025_12_15-17_46_00.zip))
+2025-12-15 18:01:33 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 18:01:33 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 18:01:33 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 18:01:33 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 18:01:33 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 18:01:33 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 18:01:33 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups
+2025-12-15 18:01:33 | DEBUG    | CoreService | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 18:01:33 | INFO     | CoreService | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 18:01:34 | INFO     | CoreService | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 18:01:34 | INFO     | CoreService | Integracja z Google Drive została zainicjowana pomyslnie.
+2025-12-15 18:01:34 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 18:01:34 | ERROR    | CoreService | RostoreManager: enable_drive_upload=True, ale brak modułu cloud_storage / paczek Google API.
+2025-12-15 18:01:34 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 18:08:19 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 18:08:19 | INFO     | CoreService | Logger 'CoreService' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 18:08:19 | INFO     | CoreService | Połączono z bazą danych: backup_data.db
+2025-12-15 18:08:19 | DEBUG    | CoreService | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 18:08:19 | DEBUG    | CoreService | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 18:08:19 | INFO     | CoreService | MailNotifier zainicjalizowany
+2025-12-15 18:08:19 | INFO     | CoreService | BackupManager zainicjowany. Folder backupów: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups
+2025-12-15 18:08:19 | DEBUG    | CoreService | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 18:08:19 | INFO     | CoreService | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 18:08:20 | INFO     | CoreService | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 18:08:20 | INFO     | CoreService | Integracja z Google Drive została zainicjowana pomyslnie.
+2025-12-15 18:08:20 | INFO     | CoreService | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 18:08:20 | DEBUG    | CoreService | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 18:08:20 | INFO     | CoreService | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 18:08:21 | INFO     | CoreService | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 18:08:21 | INFO     | CoreService | RestoreManager: integracja z Google Drive została zainicjowana.
+2025-12-15 18:08:21 | INFO     | CoreService | BackupScheduler zainicjalizowany (tryb: daily)
+2025-12-15 19:24:55 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:24:56 | INFO     | BackupManager | Logger 'BackupManager' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:24:56 | INFO     | BackupManager | Połączono z bazą danych: backup_data.db
+2025-12-15 19:24:56 | DEBUG    | BackupManager | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 19:24:56 | DEBUG    | BackupManager | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 19:24:56 | INFO     | BackupManager | MailNotifier zainicjalizowany
+2025-12-15 19:24:56 | INFO     | BackupManager | BackupManager zainicjowany. Folder backupów: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups
+2025-12-15 19:24:56 | DEBUG    | BackupManager | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 19:24:56 | INFO     | BackupManager | Token OAuth wygasł - próba odświeżenia
+2025-12-15 19:24:56 | INFO     | BackupManager | Token OAuth został odświeżony
+2025-12-15 19:24:56 | INFO     | BackupManager | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 19:24:57 | INFO     | BackupManager | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 19:24:57 | INFO     | BackupManager | Integracja z Google Drive została zainicjowana pomyslnie.
+2025-12-15 19:24:57 | INFO     | BackupManager | Tworzenie backupu: Backup_2025_12_15-19_24_57.zip
+2025-12-15 19:24:57 | DEBUG    | BackupManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data\Test data 1.txt
+2025-12-15 19:24:57 | DEBUG    | BackupManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data\Test data 1.txt) = f6804dad29083da6a0a6308580507d4fe06ba469c92a4cdb5cde6420aaff57d8
+2025-12-15 19:24:57 | DEBUG    | BackupManager | Zbudowano manifest dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data (plików: 1)
+2025-12-15 19:24:57 | INFO     | BackupManager | Zapisano manifest: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\manifests\manifest_2025_12_15-19_24_57.json
+2025-12-15 19:24:57 | DEBUG    | BackupManager | Zarchiwizowano katalog: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\test_data
+2025-12-15 19:24:57 | DEBUG    | BackupManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-19_24_57.zip
+2025-12-15 19:24:57 | DEBUG    | BackupManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-19_24_57.zip) = 9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 19:24:58 | INFO     | BackupManager | Wysłano plik na Google Drive: name=Backup_2025_12_15-19_24_57.zip, id=13EoZztrnnzaHAvXizM148vo9VkVtr9Y-
+2025-12-15 19:24:58 | INFO     | BackupManager | Link do pliku: https://drive.google.com/file/d/13EoZztrnnzaHAvXizM148vo9VkVtr9Y-/view?usp=drivesdk
+2025-12-15 19:24:58 | INFO     | BackupManager | Bakup wysłany na Google Drive: https://drive.google.com/file/d/13EoZztrnnzaHAvXizM148vo9VkVtr9Y-/view?usp=drivesdk
+2025-12-15 19:24:58 | INFO     | BackupManager | Backup zakończony: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-19_24_57.zip rozmiar=161B, hash=9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 19:24:58 | INFO     | BackupManager | Dodano wpis do bazy: Backup_2025_12_15-19_24_57.zip (OK)
+2025-12-15 19:25:00 | INFO     | BackupManager | E-mail wysłano do: backup.system.receiver@gmail.com ([Backup System] Status: OK (Backup_2025_12_15-19_24_57.zip))
+2025-12-15 19:27:28 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:27:28 | INFO     | RestoreManager | Logger 'RestoreManager' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:27:28 | INFO     | RestoreManager | Połączono z bazą danych: backup_data.db
+2025-12-15 19:27:28 | DEBUG    | RestoreManager | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 19:27:28 | DEBUG    | RestoreManager | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 19:27:28 | INFO     | RestoreManager | MailNotifier zainicjalizowany
+2025-12-15 19:27:28 | INFO     | RestoreManager | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:27:28 | DEBUG    | RestoreManager | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 19:27:28 | INFO     | RestoreManager | Token OAuth wygasł - próba odświeżenia
+2025-12-15 19:27:28 | INFO     | RestoreManager | Token OAuth został odświeżony
+2025-12-15 19:27:28 | INFO     | RestoreManager | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 19:27:29 | INFO     | RestoreManager | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 19:27:29 | INFO     | RestoreManager | RestoreManager: integracja z Google Drive została zainicjowana.
+2025-12-15 19:27:29 | INFO     | RestoreManager | Pobrano hash backup z bazy danych
+2025-12-15 19:27:29 | INFO     | RestoreManager | Rozpoczynam przywracanie backupu: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:29 | DEBUG    | RestoreManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:29 | DEBUG    | RestoreManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip) = 9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 19:27:29 | DEBUG    | RestoreManager | Checkum OK dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:29 | INFO     | RestoreManager | Weryfikacja integralności zakończona pomyślnie
+2025-12-15 19:27:29 | INFO     | RestoreManager | Backup został rozpakowany do: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:27:29 | INFO     | RestoreManager | Zarejestrowano operację przywracania: Backup_2025_12_15-17_46_00.zip (OK)
+2025-12-15 19:27:30 | INFO     | RestoreManager | E-mail wysłano do: backup.system.receiver@gmail.com ([Backup SYstem] Restore: OK (Backup_2025_12_15-17_46_00.zip))
+2025-12-15 19:27:45 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:27:45 | INFO     | RestoreManager | Logger 'RestoreManager' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:27:45 | INFO     | RestoreManager | Połączono z bazą danych: backup_data.db
+2025-12-15 19:27:45 | DEBUG    | RestoreManager | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 19:27:45 | DEBUG    | RestoreManager | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 19:27:45 | INFO     | RestoreManager | MailNotifier zainicjalizowany
+2025-12-15 19:27:45 | INFO     | RestoreManager | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:27:45 | DEBUG    | RestoreManager | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 19:27:45 | INFO     | RestoreManager | Token OAuth wygasł - próba odświeżenia
+2025-12-15 19:27:45 | INFO     | RestoreManager | Token OAuth został odświeżony
+2025-12-15 19:27:45 | INFO     | RestoreManager | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 19:27:46 | INFO     | RestoreManager | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 19:27:46 | INFO     | RestoreManager | RestoreManager: integracja z Google Drive została zainicjowana.
+2025-12-15 19:27:46 | INFO     | RestoreManager | Przywracanie backupu z Google Drive: Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:46 | INFO     | RestoreManager | Znaleziono 1 o nazwie Backup_2025_12_15-17_46_00.zip na Google Drive
+2025-12-15 19:27:47 | DEBUG    | RestoreManager | Pobieranie z Drive: 100%
+2025-12-15 19:27:47 | INFO     | RestoreManager | Pobrano plik z Google Drive id=1urWrN43EDoSaLY45WjPsv1_nDinpEqTG -> C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:47 | INFO     | RestoreManager | Pobrano hash backup z bazy danych
+2025-12-15 19:27:47 | INFO     | RestoreManager | Rozpoczynam przywracanie backupu: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:47 | DEBUG    | RestoreManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:47 | DEBUG    | RestoreManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip) = 9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 19:27:47 | DEBUG    | RestoreManager | Checkum OK dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:27:47 | INFO     | RestoreManager | Weryfikacja integralności zakończona pomyślnie
+2025-12-15 19:27:47 | INFO     | RestoreManager | Backup został rozpakowany do: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:27:47 | INFO     | RestoreManager | Zarejestrowano operację przywracania: Backup_2025_12_15-17_46_00.zip (OK)
+2025-12-15 19:27:48 | INFO     | RestoreManager | E-mail wysłano do: backup.system.receiver@gmail.com ([Backup SYstem] Restore: OK (Backup_2025_12_15-17_46_00.zip))
+2025-12-15 19:28:19 | INFO     | Checksum | Logger 'Checksum' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:28:20 | INFO     | RestoreManager | Logger 'RestoreManager' został zainicjalizowany - zapisywanie do pliku: logs\backup_log_2025-12-15.log
+2025-12-15 19:28:20 | INFO     | RestoreManager | Połączono z bazą danych: backup_data.db
+2025-12-15 19:28:20 | DEBUG    | RestoreManager | Tabela 'backups' została utworzona lub już istnieje.
+2025-12-15 19:28:20 | DEBUG    | RestoreManager | Tabela 'backup_profiles' została utworzona lub już istnieje
+2025-12-15 19:28:20 | INFO     | RestoreManager | MailNotifier zainicjalizowany
+2025-12-15 19:28:20 | INFO     | RestoreManager | RestoreManager zainicjalizowany. Folder przywracania: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:28:20 | DEBUG    | RestoreManager | Ładowanie istniejącego tokena z: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\core\credentials\token.json
+2025-12-15 19:28:20 | INFO     | RestoreManager | Token OAuth wygasł - próba odświeżenia
+2025-12-15 19:28:20 | INFO     | RestoreManager | Token OAuth został odświeżony
+2025-12-15 19:28:20 | INFO     | RestoreManager | Zainicjowano połączenie z Google Drive API (OAuth)
+2025-12-15 19:28:21 | INFO     | RestoreManager | Folder istnieje na Drive: BackupManager (id=1cq6vh40GPi2qdsxQcztb5wIAI1H81iLz)
+2025-12-15 19:28:21 | INFO     | RestoreManager | RestoreManager: integracja z Google Drive została zainicjowana.
+2025-12-15 19:28:21 | INFO     | RestoreManager | Przywracanie backupu z Google Drive: Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:28:21 | INFO     | RestoreManager | Znaleziono 1 o nazwie Backup_2025_12_15-17_46_00.zip na Google Drive
+2025-12-15 19:28:22 | DEBUG    | RestoreManager | Pobieranie z Drive: 100%
+2025-12-15 19:28:22 | INFO     | RestoreManager | Pobrano plik z Google Drive id=1urWrN43EDoSaLY45WjPsv1_nDinpEqTG -> C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:28:22 | INFO     | RestoreManager | Pobrano hash backup z bazy danych
+2025-12-15 19:28:22 | INFO     | RestoreManager | Rozpoczynam przywracanie backupu: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:28:22 | DEBUG    | RestoreManager | Liczenie sha256 dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:28:22 | DEBUG    | RestoreManager | sha256(C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip) = 9b72c1bfded82c0d2be1a4086435cd8b7fe8f81dcdde5167d35d89725e533444
+2025-12-15 19:28:22 | DEBUG    | RestoreManager | Checkum OK dla: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\backups\Backup_2025_12_15-17_46_00.zip
+2025-12-15 19:28:22 | INFO     | RestoreManager | Weryfikacja integralności zakończona pomyślnie
+2025-12-15 19:28:22 | INFO     | RestoreManager | Backup został rozpakowany do: C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend2\projekt_inzynierski_backup_menager\backup_app\restored_files
+2025-12-15 19:28:22 | INFO     | RestoreManager | Zarejestrowano operację przywracania: Backup_2025_12_15-17_46_00.zip (OK)
+2025-12-15 19:28:23 | INFO     | RestoreManager | E-mail wysłano do: backup.system.receiver@gmail.com ([Backup SYstem] Restore: OK (Backup_2025_12_15-17_46_00.zip))
