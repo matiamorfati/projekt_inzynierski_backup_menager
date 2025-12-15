@@ -12,12 +12,29 @@
   <div class="app">
     <!-- HEADER -->
     <header class="header">
-      <h1 class="brand">Backup Manager</h1>
-      <div class="header-actions">
-        <button class="icon-btn">🌙</button>
-       <a class="login-btn" href="{% url 'login' %}">Log in</a>
-      </div>
-    </header>
+  <h1 class="brand">Backup Manager</h1>
+
+  <div class="header-actions">
+    <!-- DARK MODE (future) -->
+    <button class="icon-btn" title="Toggle dark mode">
+      🌙
+    </button>
+
+    <!-- USER -->
+    <span class="user-label">
+      {{ request.user.username }}
+    </span>
+
+    <!-- LOGOUT -->
+  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">
+    Log out
+    </button>
+  </form>
+  </div>
+  </header>
+
 
     <div class="layout">
       <!-- SIDEBAR -->
