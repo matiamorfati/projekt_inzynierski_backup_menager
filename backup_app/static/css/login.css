@@ -100,3 +100,32 @@ body {
   font-size: 14px;
   text-align: center;
 }
+
+/* ROW POD HASŁEM */
+.login-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -8px 0 16px;
+  font-size: 0.8rem;
+}
+
+/* LINKI */
+.login-link {
+  color: #3a61ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* REGISTER POD FORM */
+.register-hint {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+

@@ -19,18 +19,28 @@
         {% csrf_token %}
 
         <label class="field-label">Username</label>
-        <input class="login-input"
-               type="text"
-               name="username"
-               placeholder="Enter your username"
-               required />
+        <input
+          class="login-input"
+          type="text"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
 
         <label class="field-label">Password</label>
-        <input class="login-input"
-               type="password"
-               name="password"
-               placeholder="Enter your password"
-               required />
+        <input
+          class="login-input"
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+
+        <!-- FORGOT PASSWORD -->
+        <div class="login-row">
+          <span></span>
+          <a href="#" class="login-link">Forgot password?</a>
+        </div>
 
         <button class="login-btn" type="submit">
           Log in
@@ -44,6 +54,12 @@
           </div>
         {% endfor %}
       {% endif %}
+
+      <!-- REGISTER PLACEHOLDER -->
+      <div class="register-hint">
+        Don’t have an account?
+        <a href="#" class="login-link">Register here</a>
+      </div>
     </section>
 
   </div>
