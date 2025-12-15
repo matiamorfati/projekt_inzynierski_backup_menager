@@ -10,6 +10,9 @@ urlpatterns = [
     path('create-backup/', views.create_backup, name='create_backup'),
     path('settings/', views.settings_view, name='settings'),
     path('register/', views.register, name='register'),
+    path("success/", views.success_view, name="success"),
+    path("error/", views.error_view, name="error"),
+
     # API – system / backups / profiles / restore / scheduler / reports
     path('api/status/', views.api_system_status, name='api_system_status'),
     path('api/backups/run/', views.api_run_backup_from_sources, name='api_run_backup_from_sources'),

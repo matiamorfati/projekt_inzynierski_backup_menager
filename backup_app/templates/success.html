@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Success – Backup Manager</title>
+  <link rel="stylesheet" href="{% static 'css/success.css' %}">
+</head>
+
+<body>
+  <div class="app">
+
+    <header class="header">
+      <h1 class="brand">Backup Manager</h1>
+    </header>
+
+    <main class="content content-center">
+      <div class="status-wrapper">
+        <div class="status-card success">
+          <div class="icon">✅</div>
+
+          <h2>Operacja zakończona sukcesem</h2>
+          <p>
+            Operacja zakończyła się powodzeniem, bez żadnych błędów.
+          </p>
+
+          <a href="{% url 'dashboard' %}" class="btn-primary">
+            Powrót do dashboard
+          </a>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>
