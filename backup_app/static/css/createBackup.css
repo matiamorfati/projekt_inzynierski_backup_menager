@@ -15,7 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #f4f5f7;
   color: #222;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.35;
 }
 
@@ -37,46 +37,49 @@ a:hover {
 
 /* nagłówek */
 .header {
-  height: 64px;
+  height: 84px;
   background: #ffffff;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1.5px solid #e3e6ee;
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 40px;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .brand {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   color: #3a61ff;
+  letter-spacing: 1px;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 18px;
 }
 
 .icon-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-weight: 700;
   color: #374151;
+  font-size: 22px;
 }
 
 .login-btn {
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 14px 20px;
+  border-radius: 10px;
   border: 1px solid #e6e6e6;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
   background: #ffffff;
   color: #374151;
 }
@@ -85,10 +88,11 @@ a:hover {
   background: #3a61ff;
   color: #fff;
   border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 800;
   cursor: pointer;
+  font-size: 20px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 6px 16px rgba(58, 97, 255, 0.18);
 }
@@ -101,7 +105,6 @@ a:hover {
 .logout-btn:active {
   transform: translateY(1px);
 }
-
 
 /* layout */
 .layout {
@@ -167,21 +170,24 @@ a:hover {
 }
 
 .content-header h2 {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 32px;
 }
 
 .content-subtitle {
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 16px;
   color: #6b7280;
 }
 
 /* cards */
 .cards {
   display: flex;
-  gap: 24px;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 2vw;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .card {
@@ -193,24 +199,59 @@ a:hover {
 }
 
 .form-container {
-  flex: 1.1;
-  max-width: 520px;
+  flex: 0 1 60%;
+  max-width: 60vw;
+  min-width: 340px;
+  min-height: 520px;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .info-card {
-  flex: 1;
-  min-height: 220px;
+  flex: 0 1 28%;
+  max-width: 28vw;
+  min-width: 220px;
+  min-height: 420px;
+  padding-top: 20px;
+  padding-bottom: 32px;
+}
+
+@media (max-width: 1200px) {
+  .form-container,
+  .info-card {
+    max-width: 48vw;
+  }
+  .cards {
+    gap: 2vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .cards {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .form-container,
+  .info-card {
+    max-width: none;
+    min-width: 0;
+    width: 100%;
+    min-height: 380px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
 }
 
 /* nagłówki kart */
 .card-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+  margin-top: -4px;
 }
 
 .card-subtitle {
-  font-size: 13px;
+  font-size: 16px;
   color: #6b7280;
   margin-bottom: 18px;
 }
@@ -236,13 +277,21 @@ a:hover {
 
 .input {
   height: 44px;
+  width: 70%;
   border-radius: 10px;
   border: 1px solid #e2e6ea;
   padding: 10px 14px;
-  font-size: 15px;
+  font-size: 17px;
   background: #ffffff;
+  resize: none;
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
+#description {
+  width: 90%;
+}
 .input:focus {
   outline: none;
   border-color: #3a61ff;
@@ -251,6 +300,27 @@ a:hover {
 textarea.input {
   min-height: 90px;
   resize: vertical;
+  width: 70%;
+  font-family: inherit;
+  box-sizing: border-box;
+  line-height: 1.4;
+  transition: min-height 0.2s;
+  font-size: 17px;
+}
+
+@media (max-width: 768px) {
+  textarea.input {
+    min-height: 60px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  textarea.input {
+    min-height: 40px;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
 }
 
 /* file picker */
@@ -266,12 +336,14 @@ textarea.input {
 
 .file-btn {
   padding: 10px 16px;
+  min-width: auto;
   border-radius: 10px;
   border: 1px solid #e2e6ea;
   background: #ffffff;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
+  font-size: 17px;
 }
 
 .file-btn:hover {
@@ -280,15 +352,16 @@ textarea.input {
 }
 
 .file-summary {
+  margin-left: 0.5rem;
   font-size: 14px;
   color: #6b7280;
 }
 
-/* hint text */
-.hint {
-  font-size: 13px;
-  color: #6b7280;
-  margin-top: 4px;
+.file-picker-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 /* hidden fields */
@@ -320,12 +393,15 @@ textarea.input {
 /* przycisk */
 .btn-primary {
   background: #3a61ff;
+  width: 60%;
+  align-self: center;
   color: #ffffff;
   padding: 10px 16px;
+  margin-top: 16px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 700;
 }
 
@@ -335,7 +411,7 @@ textarea.input {
 
 /* komunikaty */
 .form-message {
-  font-size: 13px;
+  font-size: 16px;
   min-height: 16px;
 }
 
@@ -351,7 +427,7 @@ textarea.input {
 .info-list {
   margin-top: 8px;
   padding-left: 18px;
-  font-size: 13px;
+  font-size: 16px;
   color: #4b5563;
 }
 
@@ -369,6 +445,16 @@ textarea.input {
     flex-wrap: wrap;
     width: 100%;
   }
+  .cards {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .form-container,
+  .info-card {
+    max-width: none;
+    min-width: 0;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -383,6 +469,20 @@ textarea.input {
 }
 
 @media (max-width: 640px) {
+  .header {
+    height: 64px;
+    padding: 0 12px;
+  }
+  .brand {
+    font-size: 22px;
+  }
+  .icon-btn,
+  .login-btn,
+  .logout-btn {
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
   .content-header h2 {
     font-size: 22px;
   }

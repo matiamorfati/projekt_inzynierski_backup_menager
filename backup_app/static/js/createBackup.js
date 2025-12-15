@@ -8,11 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const backupTypeSelect = document.getElementById("backupType");
   const destinationGroup = document.getElementById("destination-group");
   const destinationInput = document.getElementById("destination");
+  const textareas = document.querySelectorAll(".auto-resize");
 
   const messageEl = document.getElementById("form-message");
   const submitBtn = form?.querySelector("button[type='submit']");
 
-  const fileBtn = document.querySelector(".file-btn");
+  const sourcePickerBtn = document.getElementById("sources-picker-btn");
+  const sourcePicker = document.getElementById("sourcesPicker");
+
+  const destinationPicker = document.getElementById("destinationPicker");
+  const destinationPickerBtn = document.getElementById(
+    "destination-picker-btn"
+  );
+
   if (!form) {
     console.warn("create-backup-form not found on page");
     return;
@@ -21,6 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ----------------------------
      Helpers
   ---------------------------- */
+
+  // Auto-resize textareas = document.querySelectorAll(".auto-resize");for description
+  textareas.forEach((textarea) => {
+    textarea.addEventListener("input", () => {
+      textarea.style.height = "auto"; // reset
+      textarea.style.height = textarea.scrollHeight + "px";
+    });
+  });
 
   const setMessage = (text, type) => {
     messageEl.textContent = text || "";
@@ -39,27 +55,60 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = isLoading ? "Working..." : "+ Create backup";
   };
 
-  fileBtn?.addEventListener("click", () => {
+  sourcePickerBtn?.addEventListener("click", () => {
     sourcesInput?.click();
   });
+
+  // Source picker button opens file input
+  sourcePickerBtn?.addEventListener("click", () => {
+    sourcePicker?.click();
+  });
+
+  // After picking folders, add root folder(s) to the textarea (append, unique, each in new line)
+  sourcePicker?.addEventListener("change", () => {
+    if (!sourcePicker.files.length) {
+      return;
+    }
+    // Get unique root folders from picker
+    const pickedRoots = Array.from(
+      new Set(
+        Array.from(sourcePicker.files).map(
+          (file) => file.webkitRelativePath.split("/")[0]
+        )
+      )
+    );
+    // Get current paths from textarea (split by new lines or semicolons)
+    const current = sourcesInput.value
+      .split(/[;\n]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    // Merge and deduplicate
+    const all = Array.from(new Set([...current, ...pickedRoots]));
+    sourcesInput.value = all.join("\n");
+  });
+
   /* ----------------------------
      Source folders summary
   ---------------------------- */
 
-  sourcesInput.addEventListener("change", () => {
-    if (!sourcesInput.files.length) {
-      sourcesSummary.textContent = "No folders selected";
-      return;
-    }
+  // Show summary of how many folders are in the textarea
+  const updateSourcesSummary = () => {
+    const folders = sourcesInput.value
+      .split(/[\n;]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    sourcesSummary.textContent =
+      folders.length > 0
+        ? `${folders.length} folder(s) selected`
+        : "No folders selected";
+  };
 
-    const uniqueRoots = new Set(
-      Array.from(sourcesInput.files).map(
-        (file) => file.webkitRelativePath.split("/")[0]
-      )
-    );
+  sourcesInput.addEventListener("input", updateSourcesSummary);
+  // Also update summary after picking folders
+  sourcePicker?.addEventListener("change", updateSourcesSummary);
 
-    sourcesSummary.textContent = `${uniqueRoots.size} folder(s) selected`;
-  });
+  // Initial summary update (in case of pre-filled textarea)
+  updateSourcesSummary();
 
   /* ----------------------------
      Backup type → destination toggle
@@ -72,6 +121,22 @@ document.addEventListener("DOMContentLoaded", () => {
     destinationGroup.classList.toggle("hidden", !needsLocal);
   });
 
+  destinationPickerBtn?.addEventListener("click", () => {
+    destinationPicker?.click();
+  });
+
+  destinationPicker?.addEventListener("change", () => {
+    if (!destinationPicker.files.length) {
+      destinationInput.value = "";
+      return;
+    }
+
+    const rootFolder =
+      destinationPicker.files[0].webkitRelativePath.split("/")[0];
+
+    destinationInput.value = rootFolder;
+  });
+
   /* ----------------------------
      Submit
   ---------------------------- */
@@ -82,8 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* -------- validation -------- */
 
-    if (!sourcesInput.files.length) {
-      setMessage("Please select at least one source directory.", "error");
+    // Parse all folders from textarea (prefer new lines)
+    const rawSources = sourcesInput.value.trim();
+    const sources = rawSources
+      .split(/[\n;]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
+    if (sources.length === 0) {
+      setMessage("Please provide at least one source directory.", "error");
+      sourcesInput.focus();
       return;
     }
 
@@ -102,12 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
       destinationInput.focus();
       return;
     }
-
-    /* -------- build sources -------- */
-
-    const sources = Array.from(sourcesInput.files)
-      .map((file) => file.webkitRelativePath.split("/")[0])
-      .filter((value, index, self) => self.indexOf(value) === index);
 
     /* -------- payload -------- */
 

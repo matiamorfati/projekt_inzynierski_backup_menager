@@ -13,48 +13,29 @@
       <!-- HEADER -->
       <header class="header">
         <h1 class="brand">Backup Manager</h1>
+
         <div class="header-actions">
-          <button class="icon-btn">🌙</button>
-          <a class="login-btn" href="{% url 'login' %}">Log in</a>
-<body>
-  <div class="app">
-    <!-- HEADER -->
-    <header class="header">
-  <h1 class="brand">Backup Manager</h1>
+          <!-- DARK MODE (future) -->
+          <button class="icon-btn" title="Toggle dark mode">🌙</button>
 
-  <div class="header-actions">
-    <!-- DARK MODE (future) -->
-    <button class="icon-btn" title="Toggle dark mode">
-      🌙
-    </button>
+          <!-- USER -->
+          <span class="user-label"> {{ request.user.username }} </span>
 
-    <!-- USER -->
-    <span class="user-label">
-      {{ request.user.username }}
-    </span>
-
-    <!-- LOGOUT -->
-  <form method="post" action="{% url 'logout' %}" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="logout-btn">
-    Log out
-    </button>
-  </form>
-  </div>
-  </header>
-
-
-    <div class="layout">
-      <!-- SIDEBAR -->
-
-      <!-- MAIN CONTENT -->
-      <main class="content">
-        <div class="content-header">
-          <h2>Dashboard</h2>
+          <!-- LOGOUT -->
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Log out</button>
+          </form>
         </div>
       </header>
 
       <div class="layout">
+        <!-- MAIN CONTENT -->
+
         <!-- SIDEBAR -->
         <nav class="sidebar">
           <a class="nav-link active">
@@ -133,7 +114,13 @@
         <!-- MAIN CONTENT -->
         <main class="content">
           <div class="content-header">
-            <h2>Dashboard</h2>
+            <div>
+              <h2>Here is the Dashboard</h2>
+              <p class="content-subtitle">
+                Check your latest backup activities, statistics, and settings
+                summary
+              </p>
+            </div>
           </div>
 
           <div class="cards">

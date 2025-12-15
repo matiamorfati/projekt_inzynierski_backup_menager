@@ -12,29 +12,26 @@
     <div class="app">
       <!-- header -->
       <header class="header">
-    <h1 class="brand">Backup Manager</h1>
+        <h1 class="brand">Backup Manager</h1>
 
-    <div class="header-actions">
-    <!-- DARK MODE (future) -->
-    <button class="icon-btn" title="Toggle dark mode">
-      🌙
-    </button>
+        <div class="header-actions">
+          <!-- DARK MODE (future) -->
+          <button class="icon-btn" title="Toggle dark mode">🌙</button>
 
-    <!-- USER -->
-    <span class="user-label">
-      {{ request.user.username }}
-    </span>
+          <!-- USER -->
+          <span class="user-label"> {{ request.user.username }} </span>
 
-    <!-- LOGOUT -->
-  <form method="post" action="{% url 'logout' %}" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="logout-btn">
-    Log out
-    </button>
-  </form>
-  </div>
-</header>
-
+          <!-- LOGOUT -->
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Log out</button>
+          </form>
+        </div>
+      </header>
 
       <div class="layout">
         <!-- sidebar -->
@@ -115,7 +112,13 @@
         <!-- main content -->
         <main class="content">
           <div class="content-header">
-            <h2>Settings</h2>
+            <div>
+              <h2>Here are Settings to be set</h2>
+              <p class="content-subtitle">
+                Configure your backup preferences, including frequency, storage
+                location, and notification settings.
+              </p>
+            </div>
           </div>
 
           <div class="settings-row">

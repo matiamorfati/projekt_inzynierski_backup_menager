@@ -11,29 +11,26 @@
   <body>
     <div class="app">
       <header class="header">
-    <h1 class="brand">Backup Manager</h1>
+        <h1 class="brand">Backup Manager</h1>
 
-    <div class="header-actions">
-    <!-- DARK MODE (future) -->
-    <button class="icon-btn" title="Toggle dark mode">
-      🌙
-    </button>
+        <div class="header-actions">
+          <!-- DARK MODE (future) -->
+          <button class="icon-btn" title="Toggle dark mode">🌙</button>
 
-    <!-- USER -->
-    <span class="user-label">
-      {{ request.user.username }}
-    </span>
+          <!-- USER -->
+          <span class="user-label"> {{ request.user.username }} </span>
 
-    <!-- LOGOUT -->
-  <form method="post" action="{% url 'logout' %}" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="logout-btn">
-    Log out
-    </button>
-  </form>
-  </div>
-</header>
-
+          <!-- LOGOUT -->
+          <form
+            method="post"
+            action="{% url 'logout' %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Log out</button>
+          </form>
+        </div>
+      </header>
 
       <div class="layout">
         <nav class="sidebar">
@@ -113,8 +110,12 @@
 
         <main class="content">
           <div class="content-header">
-            <h2>Backup History</h2>
-            <button class="primary-btn">Clear History</button>
+            <div>
+              <h2>Here is our History</h2>
+              <p class="content-subtitle">
+                Review your past backup activities, including statuses and logs.
+              </p>
+            </div>
           </div>
 
           <section class="history-container">
