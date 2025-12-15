@@ -45,16 +45,21 @@
             <section class="card form-container">
               <h3 class="card-title">Manual backup</h3>
               <p class="card-subtitle">
-                Provide source paths and optional destination. You can override
-                Google Drive upload for this single backup.
+                Provide source paths, select where the backup should land and
+                override Google Drive upload only for this run.
               </p>
 
               <form id="create-backup-form" novalidate>
                 <!-- SOURCES -->
                 <div class="form-group">
-                  <label for="sources"
-                    >Source paths<span class="required">*</span></label
-                  >
+                  <div class="form-label-row">
+                    <label for="sources"
+                      >Source paths<span class="required">*</span></label
+                    >
+                    <button type="button" class="ghost-btn" id="browse-sources">
+                      Browse...
+                    </button>
+                  </div>
                   <textarea
                     id="sources"
                     class="input"
@@ -62,33 +67,57 @@
                   ></textarea>
                   <p class="hint">
                     Separate multiple paths with <code>;</code> or put each path
-                    in a new line.
+                    in a new line. Use <strong>Browse</strong> to open your file
+                    explorer and pick folders or files.
+                  </p>
+                </div>
+
+                <!-- DESTINATION MODE -->
+                <div class="form-group">
+                  <label>Backup destination</label>
+                  <div class="chip-group" id="destination-modes">
+                    <label class="chip">
+                      <input
+                        type="radio"
+                        name="destinationMode"
+                        value="drive"
+                        checked
+                      />
+                      <span>Google Drive</span>
+                    </label>
+                    <label class="chip">
+                      <input type="radio" name="destinationMode" value="local" />
+                      <span>Local only</span>
+                    </label>
+                    <label class="chip">
+                      <input type="radio" name="destinationMode" value="both" />
+                      <span>Both</span>
+                    </label>
+                  </div>
+                  <p class="hint">
+                    Decide whether this backup should be uploaded to Google Drive,
+                    saved locally, or both.
                   </p>
                 </div>
 
                 <!-- DESTINATION -->
-                <div class="form-group">
-                  <label for="destination">Destination folder (optional)</label>
+                <div class="form-group" id="destination-row" hidden>
+                  <div class="form-label-row">
+                    <label for="destination">Destination folder</label>
+                    <button
+                      type="button"
+                      class="ghost-btn"
+                      id="browse-destination"
+                    >
+                      Choose folder
+                    </button>
+                  </div>
                   <input
                     type="text"
                     id="destination"
                     class="input"
                     placeholder="If empty, default backup directory from CONFIG will be used"
                   />
-                </div>
-
-                <!-- UPLOAD TO DRIVE -->
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="uploadToDrive">Google Drive upload</label>
-                    <select id="uploadToDrive" class="input">
-                      <option value="">Use system default (CONFIG)</option>
-                      <option value="true">Force upload to Google Drive</option>
-                      <option value="false">
-                        Do NOT upload to Google Drive
-                      </option>
-                    </select>
-                  </div>
                 </div>
 
                 <!-- AKCJA + KOMUNIKAT -->
@@ -119,18 +148,11 @@
                   <code>core_service.run_backup_from_sources()</code>.
                 </li>
                 <li>
-                  The <strong>Google Drive upload</strong> behaviour can be:
+                  Backup destination options:
                   <ul>
-                    <li>
-                      <strong>Default</strong> – use
-                      <code>CONFIG["enable_drive_upload"]</code>
-                    </li>
-                    <li>
-                      <strong>Forced ON</strong> – upload only for this backup
-                    </li>
-                    <li>
-                      <strong>Forced OFF</strong> – skip Drive just this time
-                    </li>
+                    <li><strong>Google Drive</strong> – upload only.</li>
+                    <li><strong>Local only</strong> – store on disk, skip Drive.</li>
+                    <li><strong>Both</strong> – keep a local copy and upload.</li>
                   </ul>
                 </li>
                 <li>
@@ -138,6 +160,16 @@
                   and in email notifications.
                 </li>
               </ul>
+
+              <div class="callout">
+                <h4>Suggested manual backup options</h4>
+                <ul>
+                  <li>Exclude patterns (e.g., <code>node_modules</code>, temp files).</li>
+                  <li>Compression level toggle (fast vs. maximum).</li>
+                  <li>Post-backup verification (hash comparison).</li>
+                  <li>Automatic cleanup of old backups per retention policy.</li>
+                </ul>
+              </div>
             </section>
           </div>
         </main>
@@ -164,19 +196,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/createBackup.js' %}"></script>
   </body>
 </html>

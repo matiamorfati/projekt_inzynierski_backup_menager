@@ -50,7 +50,25 @@ def api_run_backup_from_sources(request):
     data = json.loads(request.body or "{}")
     sources = data.get("sources", [])
     destination = data.get("destination")
-    result = core_service.run_backup_from_sources(sources=sources, destination=destination)
+    upload_to_drive = data.get("upload_to_drive")
+    store_local_raw = data.get("store_local", True)
+
+    if isinstance(upload_to_drive, str):
+        upload_to_drive = upload_to_drive.lower() in ("true", "1", "yes", "on")
+    elif upload_to_drive not in (None, True, False):
+        upload_to_drive = None
+
+    if isinstance(store_local_raw, str):
+        store_local = store_local_raw.lower() in ("true", "1", "yes", "on")
+    else:
+        store_local = bool(store_local_raw)
+
+    result = core_service.run_backup_from_sources(
+        sources=sources,
+        destination=destination,
+        upload_to_drive=upload_to_drive,
+        store_local=store_local,
+    )
     return JsonResponse(result)
 
 

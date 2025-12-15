@@ -187,6 +187,13 @@ a:hover {
   margin-bottom: 16px;
 }
 
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
 .form-group label {
   font-size: 14px;
   font-weight: 600;
@@ -196,6 +203,24 @@ a:hover {
 .required {
   color: #b91c1c;
   margin-left: 4px;
+}
+
+.ghost-btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.ghost-btn:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
 }
 
 .input {
@@ -224,6 +249,34 @@ textarea.input {
 .input-error {
   border-color: #b91c1c !important;
   background-color: #fef2f2;
+}
+
+.chip-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-size: 14px;
+}
+
+.chip input {
+  accent-color: #2563eb;
+}
+
+.chip:hover {
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.14);
 }
 
 /* wiersze formularza */
@@ -296,6 +349,29 @@ textarea.input {
 }
 
 .info-list li + li {
+  margin-top: 4px;
+}
+
+.callout {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+.callout h4 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.callout ul {
+  padding-left: 18px;
+  color: #4b5563;
+  font-size: 13px;
+}
+
+.callout li + li {
   margin-top: 4px;
 }
 

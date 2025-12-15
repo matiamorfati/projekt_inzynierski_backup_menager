@@ -76,13 +76,23 @@ def get_system_status() -> Dict[str, Any]:
 # 1. Backupy
 
 
-def run_backup_from_sources(sources: List[str], destination: Optional[str] = None) -> Dict[str, Any]:
+def run_backup_from_sources(
+    sources: List[str],
+    destination: Optional[str] = None,
+    upload_to_drive: Optional[bool] = None,
+    store_local: bool = True,
+) -> Dict[str, Any]:
     """
     Ręczne uruchomienie backupu z podanych ścieżek
     Nie używa input()
     """
     _logger.info(f"Manualny backup from sources: {sources}")
-    _backup_manager.create_backup(sources=sources, destination=destination)
+    _backup_manager.create_backup(
+        sources=sources,
+        destination=destination,
+        upload_to_drive=upload_to_drive,
+        store_local=store_local,
+    )
 
     history = _db.get_backup_history(limit=1) or []
     last = _backup_row_to_dict(history[0])  if history else None

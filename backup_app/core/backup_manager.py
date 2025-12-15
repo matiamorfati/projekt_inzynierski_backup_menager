@@ -8,6 +8,7 @@
 import os
 import zipfile
 from datetime import datetime
+from typing import Optional
 
 # moduły projektu
 from .db_manager import DatabaseManager
@@ -90,7 +91,14 @@ class BackupManager:
             self.logger.info("Integracja z Google Drive jest wyłączona (enable_drive_upload=False).")
 
         
-    def create_backup(self, source: str = None, destination: str = None, sources: list[str] | None = None):
+    def create_backup(
+        self,
+        source: str = None,
+        destination: str = None,
+        sources: list[str] | None = None,
+        upload_to_drive: Optional[bool] = None,
+        store_local: bool = True,
+    ):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
@@ -111,6 +119,20 @@ class BackupManager:
         # 2. Ustalenie katalogu docelowego
         destination = destination or self.default_backup_dir
         os.makedirs(destination, exist_ok=True)
+
+        # Czy wysyłamy na Drive dla tego backupu
+        should_upload = (
+            upload_to_drive
+            if upload_to_drive is not None
+            else self.config.get("enable_drive_upload", False)
+        )
+
+        # Jeśli wybrano tylko upload i brak kopii lokalnej, a upload jest niemożliwy, wymuś kopię lokalną
+        if not store_local and not should_upload:
+            self.logger.warning(
+                "store_local=False bez uploadu na Drive — wymuszam zapis lokalny, aby nie utracić backupu."
+            )
+            store_local = True
 
         
         
@@ -153,12 +175,14 @@ class BackupManager:
             
             # 5.5 Opcjonalny upload na Google Drive
             drive_link = None
-            if self.cloud and self.config.get("enable_drive_upload", False):
+            if self.cloud and should_upload:
                 try:
                     drive_link = self.cloud.upload_file(backup_path)
                     self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
                 except Exception as e:
                     self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+            elif should_upload and not self.cloud:
+                self.logger.error("Wybrano upload na Drive, ale integracja nie jest dostępna.")
 
 
             # Zapis listy ścieżek w formie tekstu
@@ -167,13 +191,18 @@ class BackupManager:
             # Zapis do logów i bazy
             self.logger.info(f"Backup zakończony: {backup_path} rozmiar={size_bytes}B, hash={file_hash}")
 
+            record_path = backup_path
+
+            if drive_link and not store_local:
+                record_path = drive_link
+
             self.db.add_backup_record(
                 name=backup_name,
-                path=backup_path,
+                path=record_path,
                 size=size_bytes,
                 hash_value=file_hash,
                 status="OK",
-                sources=sources_str        
+                sources=sources_str
             )
 
             # Powiadomienie e-mail
@@ -185,6 +214,15 @@ class BackupManager:
 
             if drive_link:
                 details += f"\nLink Google Drive: {drive_link}"
+
+            if drive_link and not store_local:
+                try:
+                    os.remove(backup_path)
+                    self.logger.info(
+                        "Usunięto lokalną kopię backupu zgodnie z wyborem tylko Google Drive."
+                    )
+                except Exception as e:
+                    self.logger.error(f"Nie udało się usunąć lokalnego backupu: {e}")
 
             attachments = []
 
