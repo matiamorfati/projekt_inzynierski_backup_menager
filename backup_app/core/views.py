@@ -5,23 +5,27 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 import json
 
 from . import core_service
 
+@login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+@login_required
 def history(request):
     return render(request, 'backup_history.html')
 
-def login_view(request):
-    return render(request, 'login.html')
 
+@login_required
 def create_backup(request):
     return render(request, 'create_backup.html')
 
+@login_required
 def settings_view(request):
     return render(request, 'settings.html')
 

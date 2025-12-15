@@ -1,0 +1,53 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# Dependency and build artifacts
+.Python
+build/
+dist/
+.eggs/
+*.egg-info/
+pip-wheel-metadata/
+
+# Django files
+*.log
+*.pot
+*.pyc
+*.sqlite3
+*.db
+local_settings.py
+staticfiles/
+media/
+backup_app/logs/
+
+# Credentials and secrets
+credentials/
+backup_app/core/credentials/
+*.pem
+*.key
+credentials/**/*.json
+backup_app/core/credentials/**/*.json
+
+# Testing and coverage
+.coverage
+.coverage.*
+.cache/
+.pytest_cache/
+htmlcov/
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db

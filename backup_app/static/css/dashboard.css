@@ -17,7 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #f4f5f7;
   color: #222;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.35;
   font-weight: 400;
 }
@@ -31,43 +31,49 @@ body {
 
 /* nagłówek */
 .header {
-  height: 64px;
+  height: 84px;
   background: #fff;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1.5px solid #e3e6ee;
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 40px;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 .brand {
   color: #3a61ff;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: 1px;
 }
 
 /* przyciski w nagłówku */
 .header-actions {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 18px;
 }
-.icon-btn,
-.login-btn {
+.icon-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-weight: 700;
   color: #374151;
+  font-size: 22px;
 }
 .login-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
   border: 1px solid #e6e6e6;
+  font-size: 20px;
+  font-weight: 700;
   background: #fff;
+  color: #374151;
 }
 
 a:link {
@@ -84,6 +90,28 @@ a:hover {
 
 a:active {
   text-decoration: none;
+}
+
+.logout-btn {
+  background: #3a61ff;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 16px rgba(58, 97, 255, 0.18);
+}
+
+.logout-btn:hover {
+  background: #2f53e6;
+  box-shadow: 0 8px 20px rgba(58, 97, 255, 0.28);
+}
+
+.logout-btn:active {
+  transform: translateY(1px);
 }
 
 /* layout*/
@@ -103,15 +131,19 @@ a:active {
   gap: 12px;
 }
 .nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
-  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
   color: #374151;
   background: #eef1ff;
-  font-weight: 600;
-  font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
 }
 .nav-link:hover {
   background: #e8ebff;
@@ -120,6 +152,13 @@ a:active {
   background: #e9edff;
   color: #2b2b8f;
   border: 1px solid rgba(79, 70, 229, 0.08);
+}
+
+/* ikonny w sidebarze */
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* obszar treści */
@@ -137,9 +176,14 @@ a:active {
   align-items: center;
 }
 .content-header h2 {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   color: #111827;
+}
+.content-subtitle {
+  margin-top: 4px;
+  font-size: 16px;
+  color: #6b7280;
 }
 
 /* przycisk akcji */
@@ -151,6 +195,7 @@ a:active {
   border: none;
   cursor: pointer;
   font-weight: 700;
+  font-size: 17px;
 }
 
 .cards {
@@ -167,11 +212,12 @@ a:active {
   box-shadow: 0 8px 30px rgba(15, 15, 15, 0.04);
   flex: 1;
   min-width: 280px;
+  font-size: 17px;
 }
 
 /* nagłówki w kartach */
 .card h3 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 12px;
 }
@@ -181,7 +227,7 @@ a:active {
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 17px;
 }
 .history-table th,
 .history-table td,
@@ -206,6 +252,7 @@ a:active {
 /* statusy */
 .status {
   font-weight: 700;
+  font-size: 16px;
 }
 .status.success {
   color: #16a34a;
@@ -222,6 +269,7 @@ a:active {
   display: flex;
   align-items: center;
   gap: 6px;
+  font-size: 16px;
 }
 .view-log:hover {
   text-decoration: underline;
@@ -232,6 +280,7 @@ a:active {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-size: 16px;
 }
 .input,
 select {
@@ -250,13 +299,14 @@ select {
   background: #f0fff6;
   color: #134e28;
   font-weight: 700;
+  font-size: 16px;
 }
 
 /* helper */
 .last-backup {
   color: #6b7280;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* formularze w kartach */
@@ -286,6 +336,7 @@ select {
   border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
+  font-size: 17px;
 }
 
 /* responsywność  */
@@ -313,6 +364,20 @@ select {
   }
 }
 @media (max-width: 640px) {
+  .header {
+    height: 64px;
+    padding: 0 12px;
+  }
+  .brand {
+    font-size: 22px;
+  }
+  .icon-btn,
+  .login-btn,
+  .logout-btn {
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
   .content-header h2 {
     font-size: 22px;
   }
