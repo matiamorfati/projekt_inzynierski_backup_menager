@@ -1,189 +1,102 @@
-/* prosty reset */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-html,
-body {
+
+html, body {
   height: 100%;
 }
 
-/* podstawowe fonty */
+/* TŁO */
 body {
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   background: #f4f5f7;
-  color: #222;
-  font-size: 16px;
-  line-height: 1.35;
-  font-weight: 400;
+  color: #111827;
 }
 
-/* layout */
-.app {
-  display: flex;
-  flex-direction: column;
+/* WYŚRODKOWANIE */
+.login-page {
   min-height: 100vh;
-}
-
-/* nagłówek*/
-.header {
-  height: 64px;
-  background: #fff;
-  border-bottom: 1px solid #ececec;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  position: sticky;
-  top: 0;
-}
-.brand {
-  color: #3a61ff;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* header buttons */
-.header-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.icon-btn,
-.login-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-}
-.login-btn {
-  border: 1px solid #e6e6e6;
-  background: #fff;
-  font-weight: 700;
-}
-
-/* content */
-.content {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  flex: 1;
-  padding: 28px 24px;
-}
-.content-center {
   align-items: center;
 }
 
-/* karta logowania  */
+/* KARTA */
 .login-card {
   width: 100%;
-  max-width: 540px;
+  max-width: 420px;
   background: #fff;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 8px 30px rgba(15, 15, 15, 0.04);
+  border-radius: 14px;
+  padding: 32px;
   border: 1px solid #eef0f3;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-/* tytuł karty */
+/* TEKST */
 .login-title {
+  text-align: center;
   font-size: 22px;
   font-weight: 700;
-  color: #2b2b2b;
-  text-align: center;
+  color: #3a61ff;
 }
+
 .sub {
   text-align: center;
   color: #6b7280;
-  margin: 8px 0 18px;
+  margin: 8px 0 24px;
 }
 
-/* pola formularza */
+/* INPUTY */
 .field-label {
-  display: block;
-  margin-bottom: 6px;
   font-weight: 600;
-  color: #111827;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
 }
-.login-card input[type="email"],
-.login-card input[type="password"] {
+
+.login-input {
   width: 100%;
   padding: 12px 14px;
   border-radius: 8px;
-  border: 1px solid #e6e9ec;
-  background: #fafafa;
-  margin-bottom: 14px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  margin-bottom: 16px;
   font-size: 15px;
-  color: #111827;
+}
+
+.login-input:focus {
   outline: none;
+  border-color: #3a61ff;
+  background: #fff;
 }
 
-/* checkbox */
-.checkboxContainer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-}
-.checkboxContainer input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #3a61ff;
-}
-
-/* przycisk logowania */
-.save-btn {
-  display: block;
-  width: 220px;
-  margin: 10px auto 0;
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
   background: #3a61ff;
   color: #fff;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(59, 97, 255, 0.12);
+  transition: background 0.15s ease;
 }
-.save-btn:hover {
+
+.login-btn:hover {
   background: #2f53e6;
 }
 
-/* linki pomocnicze */
-.register-link,
-.forget-password {
+/* ERROR */
+.login-error {
+  margin-top: 16px;
+  padding: 10px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
   font-size: 14px;
-  color: #374151;
   text-align: center;
-  margin-top: 14px;
-}
-.forget-password {
-  color: #3366ff;
-  text-decoration: none;
-}
-.forget-password:hover {
-  text-decoration: underline;
-}
-.register-link a {
-  color: #3366ff;
-  text-decoration: none;
-}
-.register-link a:hover {
-  text-decoration: underline;
-}
-
-/* mala responsywnosc jak na razie */
-@media (max-width: 640px) {
-  .login-card {
-    padding: 20px;
-  }
-  .save-btn {
-    width: 100%;
-  }
 }
