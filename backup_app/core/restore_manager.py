@@ -23,7 +23,7 @@ from .utils.checksum import verify_checksum
 from .utils.config import CONFIG
 
 try:
-    from cloud_storage import GoogleDriveStorage
+    from .utils.cloud_storage import GoogleDriveStorage
 except ImportError:
     GoogleDriveStorage = None
 
