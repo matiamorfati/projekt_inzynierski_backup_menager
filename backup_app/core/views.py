@@ -41,6 +41,7 @@ def api_run_backup_from_sources(request):
         return HttpResponseBadRequest("POST required")
 
     data = json.loads(request.body or "{}")
+    description = data.get("description")
     sources = data.get("sources", [])
     # dodaje walidacje source
     if not isinstance(sources, list) or len([s for s in sources if str(s).strip()]) == 0:
@@ -56,7 +57,8 @@ def api_run_backup_from_sources(request):
     result = core_service.run_backup_from_sources(
         sources=sources, 
         destination=destination,
-        upload_to_drive=upload_to_drive
+        upload_to_drive=upload_to_drive,
+        description=description
     )
     return JsonResponse(result)
 

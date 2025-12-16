@@ -94,13 +94,15 @@ class BackupManager:
                       source: str | None = None,
                       destination:str | None = None,
                       sources: list[str] | None = None,
-                      upload_to_drive: bool | None = None):
+                      upload_to_drive: bool | None = None,
+                      description: str | None = None):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
         :param sources: LISTA ścieżek źródłowych
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
         :param upload_to_drive: Sprawdza czy wysyłamy backup na drive czy nie
+        :param description: jest to opis backupu    
         """
 
         # 1. Ustalenie ścieżki 
@@ -197,7 +199,8 @@ class BackupManager:
                 size=size_bytes,
                 hash_value=file_hash,
                 status="OK",
-                sources=sources_str        
+                sources=sources_str,
+                description=description     
             )
 
             # Powiadomienie e-mail
@@ -241,7 +244,8 @@ class BackupManager:
                 size=0,
                 hash_value=None,
                 status="FAILED",
-                sources=sources_str
+                sources=sources_str,
+                description=description
             )
             self.mailer.notify_backup_result(
                 backup_name,

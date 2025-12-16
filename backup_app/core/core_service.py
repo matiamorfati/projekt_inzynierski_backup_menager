@@ -45,7 +45,7 @@ def _backup_row_to_dict(row: tuple) -> Dict[str, Any]:
     (name, date, path, size, status, sources)
     na słownik wygodny do JSON
     """
-    name, date, path, size, status, sources = row
+    name, date, path, size, status, sources, description = row
     return {
         "name": name,
         "date": date,
@@ -53,6 +53,7 @@ def _backup_row_to_dict(row: tuple) -> Dict[str, Any]:
         "size": size,
         "status": status,
         "sources": sources,
+        "description": description # Ewentualnie to usunąc
     }
 
 
@@ -76,7 +77,10 @@ def get_system_status() -> Dict[str, Any]:
 # 1. Backupy
 
 
-def run_backup_from_sources(sources: List[str], destination: Optional[str] = None, upload_to_drive: Optional[bool] = None) -> Dict[str, Any]:
+def run_backup_from_sources(sources: List[str], 
+                            destination: Optional[str] = None, 
+                            upload_to_drive: Optional[bool] = None,
+                            description: Optional[str] = None) -> Dict[str, Any]:
     """
     Ręczne uruchomienie backupu z podanych ścieżek
     upload_to_drive:
@@ -92,6 +96,7 @@ def run_backup_from_sources(sources: List[str], destination: Optional[str] = Non
     _backup_manager.create_backup(sources=sources, 
                                   destination=destination,
                                   upload_to_drive=upload_to_drive,
+                                  description=description,
     )
 
     history = _db.get_backup_history(limit=1) or []
