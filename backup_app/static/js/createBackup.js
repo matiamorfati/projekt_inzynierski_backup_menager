@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "destination-picker-btn"
   );
 
+  const nameInput = document.getElementById("name");
+
   if (!form) {
     console.warn("create-backup-form not found on page");
     return;
@@ -154,9 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
 
-    if (sources.length === 0) {
-      setMessage("Please provide at least one source directory.", "error");
-      sourcesInput.focus();
+    // Now obsługa pola name
+    const name = nameInput.value.trim();
+    if (!name) {
+      setMessage("Please provide a backup name.", "error");
+      nameInput.focus();
       return;
     }
 
@@ -179,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* -------- payload -------- */
 
     const payload = {
+      name,
       sources,
       backup_type: backupType,
     };
