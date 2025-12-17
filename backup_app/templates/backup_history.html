@@ -165,35 +165,7 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Photos</td>
-                  <td>2024-10-09</td>
-                  <td>holy backup very important</td>
-                  <td class="status confirmed">✔ <span>Succed</span></td>
-                  <td>
-                    <button class="btn-primary restore-btn">Restore</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Documents</td>
-                  <td>2024-10-09</td>
-                  <td>holy backup very important</td>
-                  <td class="status confirmed">✔ <span>Succed</span></td>
-                  <td>
-                    <button class="btn-primary restore-btn">Restore</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Project</td>
-                  <td>2024-10-09</td>
-                  <td>holy backup very important</td>
-                  <td class="status failed">✖ <span>Failed</span></td>
-                  <td>
-                    <button class="btn-primary restore-btn">Restore</button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="history-table-body"></tbody>
             </table>
           </section>
         </main>
@@ -220,19 +192,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/backupHistory.js' %}" defer></script>
   </body>
 </html>
