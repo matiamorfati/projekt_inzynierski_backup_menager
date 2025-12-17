@@ -3,14 +3,14 @@ from django.urls import path
 from core import views
 
 urlpatterns = [
+    # Widoki HTML
     path('', views.dashboard, name='dashboard'),
     path('history/', views.history, name='history'),
+    path('login/', views.login_view, name='login'),
     path('create-backup/', views.create_backup, name='create_backup'),
     path('settings/', views.settings_view, name='settings'),
-
-
-
-    # API
+    path('register/', views.register, name='register'),
+    # API – system / backups / profiles / restore / scheduler / reports
     path('api/status/', views.api_system_status, name='api_system_status'),
     path('api/backups/run/', views.api_run_backup_from_sources, name='api_run_backup_from_sources'),
     path('api/backups/run-profile/', views.api_run_backup_from_profile, name='api_run_backup_from_profile'),
