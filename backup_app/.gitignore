@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+core/utils/__pycache__/
 
 # Virtual environments
 .env
