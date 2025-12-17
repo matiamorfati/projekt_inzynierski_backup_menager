@@ -10,6 +10,7 @@ Każde działanine jest logowane przy pomocy utils/logger.py
 # Edit 3. 17.11 dodajemy metode do pobierania nazw danych w backupie (get_backup_name)
 # EDIT 4  29.11 dodanie logiki związaniem z tworzeniem tabeli do obsłógi urzytkowników
 # Edit 5. 16.12 dodanie dodawania opisu do backupu
+# Edit 6. 17.12 Dodanie customowej nazwy backupu (do wyśwetlenia w historii): custom_name
 
 import os
 import sqlite3
@@ -54,6 +55,7 @@ class DatabaseManager:
                 CREATE TABLE IF NOT EXISTS backups (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
+                    custom_name TEXT,
                     date TEXT NOT NULL,
                     path TEXT NOT NULL,
                     size INTEGER,
@@ -69,6 +71,7 @@ class DatabaseManager:
 
             # Wywołanie funkcji do tabeli urzytkowników
             self._create_backup_profiles_table()
+            self._ensure_backup_profile_columns()
 
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas tworzenia tabeli: {e}")
@@ -90,7 +93,12 @@ class DatabaseManager:
             if "description" not in cols:
                 self.cursor.execute("ALTER TABLE backups ADD COLUMN description TEXT")
                 self.conn.commit()
-                self.logger.info("Dodano kolumnę 'description' do tabeli 'backups'.")                 
+                self.logger.info("Dodano kolumnę 'description' do tabeli 'backups'.")  
+
+            if "custom_name" not in cols:
+                self.cursor.execute("ALTER TABLE backups ADD COLUMN custom_name TEXT")
+                self.conn.commit()
+                self.logger.info("Dodano kolumnę 'custom_name' do tabeli 'backups'.")  
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas sprawdzania/aktualizacji schematu tabeli 'backups': {e}")
             
@@ -107,6 +115,8 @@ class DatabaseManager:
                 CREATE TABLE IF NOT EXISTS backup_profiles (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
+                    custom_name TEXT,
+                    description  TEXT,
                     sources TEXT NOT NULL,
                     backup_directory TEXT,
                     restore_directory TEXT,
@@ -124,6 +134,24 @@ class DatabaseManager:
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas tworzenia tabeli 'backup_profiles': {e}")
 
+    def _ensure_backup_profile_columns(self):
+        """
+        Upewnia się że w tabeli są custom_name i description
+        """
+        try:
+            self.cursor.execute("PRAGMA table_info(backup_profiles)")
+            cols = [row[1] for row in self.cursor.fetchall()]
+            if "custom_name" not in cols:
+                self.cursor.execute("ALTER TABLE backup_profiles ADD COLUMN custom_name TEXT")
+                self.conn.commit()
+                self.logger.info("Dodano kolumne 'custom_name' do 'backup_profiles'")
+            if "description" not in cols:
+                self.cursor.execute("ALTER TABLE backup_profiles ADD COLUMN description TEXT")
+                self.conn.commit()
+                self.logger.info("Dodano kolumne 'description' do 'backup_profiles'")
+        except sqlite3.Error as e:
+            self.logger.error(f"Błąd podczas aktualizowania schematu 'backup_profiles': {e}")
+
     # Funkcja do tworzenia profilu
     def create_backup_profile(
             self,
@@ -135,7 +163,9 @@ class DatabaseManager:
             daily_report_enable: bool = False,
             daily_report_time: str | None = None,
             recipient_email: str | None = None,
-            is_default: bool = False
+            is_default: bool = False,
+            custom_name: str | None = None,
+            description: str | None = None
     ) -> int | None:
         """
         Tworzymy nowy profil w tabeli 'backup_profiles'
@@ -154,6 +184,8 @@ class DatabaseManager:
             self.cursor.execute("""
                 INSERT INTO backup_profiles (
                     name,
+                    custom_name,
+                    description,
                     sources,
                     backup_directory,
                     restore_directory,
@@ -165,9 +197,11 @@ class DatabaseManager:
                     created_at,
                     updated_at
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,(
                 name,
+                custom_name,
+                description,
                 sources,
                 backup_directory,
                 restore_directory,
@@ -198,6 +232,8 @@ class DatabaseManager:
                 SELECT
                     id,
                     name,
+                    custom_name,
+                    description,
                     sources,
                     backup_directory,
                     restore_directory,
@@ -220,16 +256,18 @@ class DatabaseManager:
             return {
                 "id": row[0],
                 "name": row[1],
-                "sources": row[2],
-                "backup_directory": row[3],
-                "restore_directory": row[4],
-                "backup_frequency": row[5],
-                "daily_report_enable": bool(row[6]),
-                "daily_report_time": row[7],
-                "recipient_email": row[8],
-                "is_default": bool(row[9]),
-                "created_at": row[10],
-                "updated_at": row[11]
+                "custom_name": row[2],
+                "description": row[3],
+                "sources": row[4],
+                "backup_directory": row[5],
+                "restore_directory": row[6],
+                "backup_frequency": row[7],
+                "daily_report_enable": bool(row[8]),
+                "daily_report_time": row[9],
+                "recipient_email": row[10],
+                "is_default": bool(row[11]),
+                "created_at": row[12],
+                "updated_at": row[13]
             }
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas pobierania profilu backupu (id={profile_id}): {e}")
@@ -247,6 +285,8 @@ class DatabaseManager:
                 SELECT
                     id,
                     name,
+                    custom_name,
+                    description,
                     sources,
                     backup_directory,
                     restore_directory,
@@ -270,16 +310,18 @@ class DatabaseManager:
             return {
                 "id": row[0],
                 "name": row[1],
-                "sources": row[2],
-                "backup_directory": row[3],
-                "restore_directory": row[4],
-                "backup_frequency": row[5],
-                "daily_report_enable": bool(row[6]),
-                "daily_report_time": row[7],
-                "recipient_email": row[8],
-                "is_default": bool(row[9]),
-                "created_at": row[10],
-                "updated_at": row[11]
+                "custom_name": row[2],
+                "description": row[3],
+                "sources": row[4],
+                "backup_directory": row[5],
+                "restore_directory": row[6],
+                "backup_frequency": row[7],
+                "daily_report_enable": bool(row[8]),
+                "daily_report_time": row[9],
+                "recipient_email": row[10],
+                "is_default": bool(row[11]),
+                "created_at": row[12],
+                "updated_at": row[13]
             }
         except sqlite3.Error as e:
             self.logger.error(f"Bład podczas pobierania profilu domyślnego: {e}")
@@ -296,6 +338,7 @@ class DatabaseManager:
                 SELECT
                     id,
                     name,
+                    custom_name,
                     backup_frequency,
                     is_default
                 FROM backup_profiles
@@ -309,8 +352,9 @@ class DatabaseManager:
                 profiles.append({
                     "id": row[0],
                     "name": row[1],
-                    "backup_frequency": row[2],
-                    "is_default": bool(row[3])
+                    "custom_name": row[2],
+                    "backup_frequency": row[3],
+                    "is_default": bool(row[4])
                 })
 
             self.logger.debug(f"Pobrano {len(profiles)} profili backupu z bazy.")
@@ -329,25 +373,27 @@ class DatabaseManager:
                           hash_value: str = None, 
                           status: str = "OK", 
                           sources: str | None = None,
-                          description: str | None = None):
+                          description: str | None = None,
+                          custom_name: str | None = None):
         """
         Dodaje nowy wpis o backupie do bazy danych.
         :param name: nazwa pliku backupu
-        :param: path: ścieżka do pliku backupu
-        :param: size: rozmiar pliku (w bajtach)
-        :param: hash_value: suma kontrolna pliku (obcjonalnie)
-        :param: status : status (np.: 'OK', 'FAILED')
-        :param: sources: lista ścieżek źródłowych jako teskt
-        :param: description: opis dodany do backupu
+        :param path: ścieżka do pliku backupu
+        :param size: rozmiar pliku (w bajtach)
+        :param hash_value: suma kontrolna pliku (obcjonalnie)
+        :param status : status (np.: 'OK', 'FAILED')
+        :param sources: lista ścieżek źródłowych jako teskt
+        :param description: opis dodany do backupu
+        :param custom_name: dodatkowa customowa nazwa backupu
         """
 
         date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         try:
             self.cursor.execute("""
-                INSERT INTO backups (name, date, path, size, hash, status, sources, description)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """, (name, date_str, path, size, hash_value, status, sources, description))
+                INSERT INTO backups (name, custom_name, date, path, size, hash, status, sources, description)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (name, custom_name, date_str, path, size, hash_value, status, sources, description))
             self.conn.commit()
             self.logger.info(f"Dodano wpis do bazy: {name} ({status})")
         except sqlite3.Error as e:
@@ -363,7 +409,7 @@ class DatabaseManager:
 
         try:
             self.cursor.execute("""
-                SELECT name, date, path, size, status, sources, description FROM backups
+                SELECT name, custom_name, date, path, size, status, sources, description FROM backups
                 ORDER BY id DESC
                 LIMIT ?
             """, (limit,))
@@ -382,7 +428,7 @@ class DatabaseManager:
         """
         try:
             self.cursor.execute("""
-                SELECT name, date, path, size, hash, status, sources, description
+                SELECT name, custom_name, date, path, size, hash, status, sources, description
                 FROM backups
                 WHERE name = ?
                 ORDER BY id DESC
@@ -394,13 +440,14 @@ class DatabaseManager:
 
             return {
                 "name": row[0],
-                "date": row[1],
-                "path": row[2],
-                "size": row[3],
-                "hash": row[4],
-                "status": row[5],
-                "sources": row[6],
-                "description": row[7]
+                "custom_name": row[1],
+                "date": row[2],
+                "path": row[3],
+                "size": row[4],
+                "hash": row[5],
+                "status": row[6],
+                "sources": row[7],
+                "description": row[8]
             }
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas pobierania backupu '{name}' z bazy: {e}")
@@ -426,6 +473,7 @@ if __name__ == "__main__":
     # 1. Dodanie testowego wpisu
     db.add_backup_record(
         name="Backup_2025_10_23.zip",
+        custom_name="Test_Backup",
         path="backups/Backup_2025_10_23.zip",
         size=2048,
         hash_value="abc123def456",
@@ -441,32 +489,34 @@ if __name__ == "__main__":
         print(record)
 
 
-    # # 3. Tworzenie testowego profilu
-    # profile_id = db.create_backup_profile(
-    #     name="Profil testowy",
-    #     sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
-    #     r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2",   
-    #     backup_directory="backups",
-    #     restore_directory="restored_files",
-    #     backup_frequency="daily",
-    #     daily_report_enable=False,
-    #     daily_report_time="08:00",
-    #     recipient_email="backup.system.receiver@gmail.com",
-    #     is_default=True,  # ten profil będzie domyślny
-    # )
+    # 3. Tworzenie testowego profilu
+    profile_id = db.create_backup_profile(
+        name="Profil testowy",
+        custom_name="Testowa nazwa profilu",
+        description="Opis profilu",
+        sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
+        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2",   
+        backup_directory="backups",
+        restore_directory="restored_files",
+        backup_frequency="daily",
+        daily_report_enable=False,
+        daily_report_time="08:00",
+        recipient_email="backup.system.receiver@gmail.com",
+        is_default=True,  # ten profil będzie domyślny
+    )
 
-    # # 4. Wyświetlenie profilu
-    # profile = db.get_backup_profile(profile_id)
-    # print(profile)
+    # 4. Wyświetlenie profilu
+    profile = db.get_backup_profile(profile_id)
+    print(profile)
 
-    # # 5. profil domyślny
-    # default_profile = db.get_default_backup_profile()
-    # print(default_profile)
+    # 5. profil domyślny
+    default_profile = db.get_default_backup_profile()
+    print(default_profile)
 
-    # # 6. lista profili
-    # profiles = db.list_backup_profiles(limit=10)
-    # for p in profiles:
-    #     print(p)
+    # 6. lista profili
+    profiles = db.list_backup_profiles(limit=10)
+    for p in profiles:
+        print(p)
 
     # 7. Zamykami połączenia
     db.close()

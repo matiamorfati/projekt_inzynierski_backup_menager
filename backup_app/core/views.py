@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from django.shortcuts import render
-
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from django.views.decorators.csrf import csrf_exempt
@@ -42,6 +40,7 @@ def api_run_backup_from_sources(request):
 
     data = json.loads(request.body or "{}")
     description = data.get("description")
+    custom_name = data.get("custom_name")
     sources = data.get("sources", [])
     # dodaje walidacje source
     if not isinstance(sources, list) or len([s for s in sources if str(s).strip()]) == 0:
@@ -58,7 +57,8 @@ def api_run_backup_from_sources(request):
         sources=sources, 
         destination=destination,
         upload_to_drive=upload_to_drive,
-        description=description
+        description=description,
+        custom_name=custom_name
     )
     return JsonResponse(result)
 
@@ -121,6 +121,8 @@ def api_create_backup_profile(request):
         daily_report_time=data.get("daily_report_time"),
         recipient_email=data.get("recipient_email"),
         is_default=data.get("is_default", False),
+        custom_name=data.get("custom_name"),
+        description=data.get("description")
     )
     return JsonResponse({"profile": profile})
 

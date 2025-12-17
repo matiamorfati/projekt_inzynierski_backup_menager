@@ -36,8 +36,8 @@ except ImportError:
 # Edit 9. 13.11.2025 Ogolne poprawki, dodanie usuwania manifestów
 # Edit 10. 15.11.2025 Dodanie wyboru wielu źródeł i zapis ścieżek do bazy danych
 # Edit 11. 29.11.2025 Dodanie logiki do obsługi nowych funkcji bazy danych
-# Edit 12. 30.11.2025 Dodanie funkcji wysyłania backupu na Google Drive urzywając nowgo skryptu c;oud_storage.py
-
+# Edit 12. 30.11.2025 Dodanie funkcji wysyłania backupu na Google Drive urzywając nowgo skryptu cloud_storage.py
+# Edit 13. 17.12.2025 Dodanie kolumny custom_name i description (16.12)
 
 """
 Notka 1. z 04.11.2025 17:20 odapalając test wybierania folderu nie zkomentowałem usuwania starych backupów
@@ -95,14 +95,16 @@ class BackupManager:
                       destination:str | None = None,
                       sources: list[str] | None = None,
                       upload_to_drive: bool | None = None,
-                      description: str | None = None):
+                      description: str | None = None,
+                      custom_name: str | None = None):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
         :param sources: LISTA ścieżek źródłowych
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
         :param upload_to_drive: Sprawdza czy wysyłamy backup na drive czy nie
-        :param description: jest to opis backupu    
+        :param description: jest to opis backupu
+        :param custom_name: customowa nazwa backupu 
         """
 
         # 1. Ustalenie ścieżki 
@@ -200,7 +202,8 @@ class BackupManager:
                 hash_value=file_hash,
                 status="OK",
                 sources=sources_str,
-                description=description     
+                description=description,
+                custom_name=custom_name
             )
 
             # Powiadomienie e-mail
@@ -245,7 +248,8 @@ class BackupManager:
                 hash_value=None,
                 status="FAILED",
                 sources=sources_str,
-                description=description
+                description=description,
+                custom_name=custom_name
             )
             self.mailer.notify_backup_result(
                 backup_name,
@@ -455,12 +459,15 @@ class BackupManager:
 
         # 3. Nadpisanie konfiguracji z profilu(mail, katalog itp)
         self._apply_profile_overrides(profile)
-
+        
+        # 3.5. Dodatki do profilu
+        friendly = profile.get("custom_name") or profile.get("name")
+        describ = profile.get("description")
 
         self.logger.info(f"Tworzenie backupu na podstawie profilu (id={p_id}, name={p_name}) do katalogu: {destination}")
 
         # 4. Użycie creator_backup
-        self.create_backup(destination=destination, sources=sources_list, upload_to_drive=upload_to_drive)
+        self.create_backup(destination=destination, sources=sources_list, custom_name=friendly, description=describ, upload_to_drive=upload_to_drive)
 """
 Uwagi do struktury:
 - create_backup() - Główna metoda któą będziemy wywoływać w main.py

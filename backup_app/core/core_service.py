@@ -42,12 +42,13 @@ _scheduler = BackupScheduler(config=_config, logger=_logger, db=_db, backup_mana
 def _backup_row_to_dict(row: tuple) -> Dict[str, Any]:
     """
     Mapuje rekordy z backups:
-    (name, date, path, size, status, sources)
+    (name, custom_name, date, path, size, status, sources, description)
     na słownik wygodny do JSON
     """
-    name, date, path, size, status, sources, description = row
+    name, custom_name, date, path, size, status, sources, description = row
     return {
         "name": name,
+        "custom_name": custom_name,
         "date": date,
         "path": path,
         "size": size,
@@ -80,7 +81,8 @@ def get_system_status() -> Dict[str, Any]:
 def run_backup_from_sources(sources: List[str], 
                             destination: Optional[str] = None, 
                             upload_to_drive: Optional[bool] = None,
-                            description: Optional[str] = None) -> Dict[str, Any]:
+                            description: Optional[str] = None,
+                            custom_name: Optional[str] = None) -> Dict[str, Any]:
     """
     Ręczne uruchomienie backupu z podanych ścieżek
     upload_to_drive:
@@ -97,6 +99,7 @@ def run_backup_from_sources(sources: List[str],
                                   destination=destination,
                                   upload_to_drive=upload_to_drive,
                                   description=description,
+                                  custom_name=custom_name,
     )
 
     history = _db.get_backup_history(limit=1) or []
@@ -141,7 +144,7 @@ def get_backup_history(limit: int = 20) -> List[Dict[str, Any]]:
 
 def list_backup_profiles(limit: int = 50) -> List[Dict[str, Any]]:
     """
-    Zwraca listę profili backupu (id, name, backup_frequency, is_default)
+    Zwraca listę profili backupu (id, name, custom_name, backup_frequency, is_default)
     """
     return _db.list_backup_profiles(limit=limit)
 
@@ -163,6 +166,8 @@ def create_backup_profile(
         daily_report_time: Optional[str] = None,
         recipient_email: Optional[str] = None,
         is_default: bool = False,
+        custom_name: Optional[str] = None,
+        description: Optional[str] = None,
 ) -> Optional[Dict[str, Any]]:
     """
     Tworzy nowy profili backupu i zwraca go jako dict
@@ -178,6 +183,8 @@ def create_backup_profile(
         daily_report_time=daily_report_time,
         recipient_email=recipient_email,
         is_default=is_default,
+        custom_name=custom_name,
+        description=description
     )
 
     if profile_id is None:
