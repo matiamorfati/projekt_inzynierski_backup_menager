@@ -9,6 +9,7 @@ Każde działanine jest logowane przy pomocy utils/logger.py
 # Edit 2. 15.11 Dodajemy kolumne sources do bazy danych
 # Edit 3. 17.11 dodajemy metode do pobierania nazw danych w backupie (get_backup_name)
 # EDIT 4  29.11 dodanie logiki związaniem z tworzeniem tabeli do obsłógi urzytkowników
+# Edit 5. 16.12 dodanie dodawania opisu do backupu
 
 import os
 import sqlite3
@@ -58,7 +59,8 @@ class DatabaseManager:
                     size INTEGER,
                     hash TEXT,
                     status TEXT,
-                    sources TEXT
+                    sources TEXT,
+                    description TEXT
                 )
             """)
             self.conn.commit()
@@ -74,7 +76,7 @@ class DatabaseManager:
 
     def _ensure_sources_column(self):
         """
-        Upewnia się, że w tabeli 'backups' istnieje kolumna 'sources'.
+        Upewnia się, że w tabeli 'backups' istnieje kolumna 'sources' oraz description.
         Jeśli baza była utworzona wcześniej, dodaje kolumnę ALTER TABLE.
         """
         try:
@@ -84,8 +86,14 @@ class DatabaseManager:
                 self.cursor.execute("ALTER TABLE backups ADD COLUMN sources TEXT")
                 self.conn.commit()
                 self.logger.info("Dodano kolumnę 'sources' do tabeli 'backups'.")
+
+            if "description" not in cols:
+                self.cursor.execute("ALTER TABLE backups ADD COLUMN description TEXT")
+                self.conn.commit()
+                self.logger.info("Dodano kolumnę 'description' do tabeli 'backups'.")                 
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas sprawdzania/aktualizacji schematu tabeli 'backups': {e}")
+            
 
     # Funkcja z tworzeniem tabel urzytkowników
     def _create_backup_profiles_table(self):
@@ -314,7 +322,14 @@ class DatabaseManager:
 
 
 
-    def add_backup_record(self, name: str, path: str, size: int, hash_value: str = None, status: str = "OK", sources: str | None = None):
+    def add_backup_record(self, 
+                          name: str, 
+                          path: str, 
+                          size: int, 
+                          hash_value: str = None, 
+                          status: str = "OK", 
+                          sources: str | None = None,
+                          description: str | None = None):
         """
         Dodaje nowy wpis o backupie do bazy danych.
         :param name: nazwa pliku backupu
@@ -323,15 +338,16 @@ class DatabaseManager:
         :param: hash_value: suma kontrolna pliku (obcjonalnie)
         :param: status : status (np.: 'OK', 'FAILED')
         :param: sources: lista ścieżek źródłowych jako teskt
+        :param: description: opis dodany do backupu
         """
 
         date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         try:
             self.cursor.execute("""
-                INSERT INTO backups (name, date, path, size, hash, status, sources)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (name, date_str, path, size, hash_value, status, sources))
+                INSERT INTO backups (name, date, path, size, hash, status, sources, description)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """, (name, date_str, path, size, hash_value, status, sources, description))
             self.conn.commit()
             self.logger.info(f"Dodano wpis do bazy: {name} ({status})")
         except sqlite3.Error as e:
@@ -347,7 +363,7 @@ class DatabaseManager:
 
         try:
             self.cursor.execute("""
-                SELECT name, date, path, size, status, sources FROM backups
+                SELECT name, date, path, size, status, sources, description FROM backups
                 ORDER BY id DESC
                 LIMIT ?
             """, (limit,))
@@ -366,7 +382,7 @@ class DatabaseManager:
         """
         try:
             self.cursor.execute("""
-                SELECT name, date, path, size, hash, status, sources
+                SELECT name, date, path, size, hash, status, sources, description
                 FROM backups
                 WHERE name = ?
                 ORDER BY id DESC
@@ -383,7 +399,8 @@ class DatabaseManager:
                 "size": row[3],
                 "hash": row[4],
                 "status": row[5],
-                "sources": row[6]
+                "sources": row[6],
+                "description": row[7]
             }
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas pobierania backupu '{name}' z bazy: {e}")
@@ -413,7 +430,8 @@ if __name__ == "__main__":
         size=2048,
         hash_value="abc123def456",
         status="OK",
-        sources="/C/test"
+        sources="/C/test",
+        description="Testowy backup"
     )
 
 
@@ -423,32 +441,32 @@ if __name__ == "__main__":
         print(record)
 
 
-    # 3. Tworzenie testowego profilu
-    profile_id = db.create_backup_profile(
-        name="Profil testowy",
-        sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
-        r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2",   
-        backup_directory="backups",
-        restore_directory="restored_files",
-        backup_frequency="daily",
-        daily_report_enable=False,
-        daily_report_time="08:00",
-        recipient_email="backup.system.receiver@gmail.com",
-        is_default=True,  # ten profil będzie domyślny
-    )
+    # # 3. Tworzenie testowego profilu
+    # profile_id = db.create_backup_profile(
+    #     name="Profil testowy",
+    #     sources=r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip;"
+    #     r"C:\Users\Admin\Desktop\STUDIA\Inzynierka\Skrypty\Backend\for zip2",   
+    #     backup_directory="backups",
+    #     restore_directory="restored_files",
+    #     backup_frequency="daily",
+    #     daily_report_enable=False,
+    #     daily_report_time="08:00",
+    #     recipient_email="backup.system.receiver@gmail.com",
+    #     is_default=True,  # ten profil będzie domyślny
+    # )
 
-    # 4. Wyświetlenie profilu
-    profile = db.get_backup_profile(profile_id)
-    print(profile)
+    # # 4. Wyświetlenie profilu
+    # profile = db.get_backup_profile(profile_id)
+    # print(profile)
 
-    # 5. profil domyślny
-    default_profile = db.get_default_backup_profile()
-    print(default_profile)
+    # # 5. profil domyślny
+    # default_profile = db.get_default_backup_profile()
+    # print(default_profile)
 
-    # 6. lista profili
-    profiles = db.list_backup_profiles(limit=10)
-    for p in profiles:
-        print(p)
+    # # 6. lista profili
+    # profiles = db.list_backup_profiles(limit=10)
+    # for p in profiles:
+    #     print(p)
 
     # 7. Zamykami połączenia
     db.close()

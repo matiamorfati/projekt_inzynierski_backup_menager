@@ -1,4 +1,4 @@
-# Backup_manager
+﻿# Backup_manager
 # moduł odpowiedzialny za tworzenie kopi zapasowych 
 # Główny segment Całego porgramu
 
@@ -21,7 +21,7 @@ from .utils.config import CONFIG
 
 # Do google drive
 try:
-    from cloud_storage import GoogleDriveStorage
+    from .utils.cloud_storage import GoogleDriveStorage
 except ImportError:
     GoogleDriveStorage = None
 
@@ -90,12 +90,19 @@ class BackupManager:
             self.logger.info("Integracja z Google Drive jest wyłączona (enable_drive_upload=False).")
 
         
-    def create_backup(self, source: str = None, destination: str = None, sources: list[str] | None = None):
+    def create_backup(self,
+                      source: str | None = None,
+                      destination:str | None = None,
+                      sources: list[str] | None = None,
+                      upload_to_drive: bool | None = None,
+                      description: str | None = None):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
         :param sources: LISTA ścieżek źródłowych
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
+        :param upload_to_drive: Sprawdza czy wysyłamy backup na drive czy nie
+        :param description: jest to opis backupu    
         """
 
         # 1. Ustalenie ścieżki 
@@ -153,12 +160,31 @@ class BackupManager:
             
             # 5.5 Opcjonalny upload na Google Drive
             drive_link = None
-            if self.cloud and self.config.get("enable_drive_upload", False):
-                try:
-                    drive_link = self.cloud.upload_file(backup_path)
-                    self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
-                except Exception as e:
-                    self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+
+            # Jeśli upload_to_drive jest podane, traktujemy je jako override
+            # Jeśli None - bierzemy ustawienia z CONFIG
+            should_upload = (
+                upload_to_drive
+                if upload_to_drive is not None
+                else self.config.get("enable_drive_upload", False)
+            )
+
+
+            if should_upload:
+                if self.cloud:
+                    try:
+                        drive_link = self.cloud.upload_file(backup_path)
+                        self.logger.info(f"Bakup wysłany na Google Drive: {drive_link}")
+                    except Exception as e:
+                        self.logger.error(f"Błąd podczas wysyłania backupu na Google Drive {e}")
+                else:
+                    self.logger.warning("Upload na Drive włączony, ale self.cloud=None "
+                                        "(problem z importem/credentials/paczkami)."
+                    )
+            else:
+                self.logger.info("Upload na Google Drive pominięty dla tego backupu (upload_to_drive=False)")
+
+            
 
 
             # Zapis listy ścieżek w formie tekstu
@@ -173,7 +199,8 @@ class BackupManager:
                 size=size_bytes,
                 hash_value=file_hash,
                 status="OK",
-                sources=sources_str        
+                sources=sources_str,
+                description=description     
             )
 
             # Powiadomienie e-mail
@@ -217,7 +244,8 @@ class BackupManager:
                 size=0,
                 hash_value=None,
                 status="FAILED",
-                sources=sources_str
+                sources=sources_str,
+                description=description
             )
             self.mailer.notify_backup_result(
                 backup_name,
@@ -230,41 +258,50 @@ class BackupManager:
         Zbiera liste ścieżek do backupu na podstawie:
         - parametrów funkcji (source / sources)
         - confingu
-        - interaktytwnego inputu
         """
 
         result: list[str] = []
 
         # 1. Jeśli jawnie podano listę źródeł - używamy jej
         if sources:
-            result.extend(sources)
+            for s in sources:
+                s_str = str(s).strip()
+                if s_str:
+                    result.append(s_str)
 
         # 2. Zgodność wsteczna: pojedyńczy 'source' (pn. z config lub wywołania)
-        if source and source not in result:
-            result.append(source)
+        if source:
+            s_str = str(source).strip()
+            if s_str and s_str not in result:
+                result.append(s_str)
 
         # 3. Jeśli nadal nic nie mamy - biezemy z config
         if not result:
             cfg_cource = self.config.get("source_directory")
-            if cfg_cource:
-                use_cfg = input(f"Użyć ścieżki z config ({cfg_cource}) jako źródła backupa? [T/n]: ").strip().lower()
-                if use_cfg in ("", "t", "tak", "y", "yes"):
-                    result.append(cfg_cource)
+            items: list[str] = []
+            if isinstance(cfg_cource, (list, tuple)):
+                items = cfg_cource
+            elif cfg_cource:
+                items = str(cfg_cource).split(";")
 
-        # 4. Tryb interaktywny: pozwala dodać wiele ścieżęk
-        if not result:
-            self.logger.info("Tryb wyboru wielu ścieżęk. Pusta linia kończy dodawanie")
-            while True:
-                path = input("Podaj ścieżkę do pliku/folderu (ENTER kończy): ").strip()
-                if not path:
-                    break
-                result.append(path)
+            for item in items:
+                s_str = str(item).strip()
+                if s_str and s_str not in result:
+                    result.append(s_str)
+                
+
+      
         
-        # 5. Walidacja - zostawiamy tylko istniejące ścieżki
+        # 5. Walidacja i deduplikacja - zostawiamy tylko istniejące ścieżki
         valid_sources: list[str] = []
+        seen: set[str] = set()
         for path in result:
-            if os.path.exists(path):
-                valid_sources.append(path)
+            norm = os.path.abspath(path)
+            if norm in seen:
+                continue
+            if os.path.exists(norm):
+                valid_sources.append(norm)
+                seen.add(norm)
             else:
                 self.logger.error(f"Ścieżka źródłowa nie istnieje i zostanie pominięta: {path}")
 
@@ -380,10 +417,11 @@ class BackupManager:
 
 
     # Nowa metoda do tworzenia backupu z profilu
-    def create_backup_from_profile(self, profile_id: int | None = None):
+    def create_backup_from_profile(self, profile_id: int | None = None, upload_to_drive: bool | None = None):
         """
         Tworzy backup na podstawie profilu backupu zapisanego w bazie
         Jeśli profil_id = None, używa profilu domyslnego (is_default = 1)
+        parametr upload_to_drive tak samo jak w create_backup
         """
         # Upewnienie się że DatabaseManger ma odpowienie metody
         if not hasattr(self.db, "get_backup_profile") or not hasattr(self.db, "get_default_backup_profile"):
@@ -405,24 +443,24 @@ class BackupManager:
         p_id = profile.get("id")
         p_name = profile.get("name")
 
-        # 2. Pobieranie źródła 
+        # 2. Pobieranie źródła i katalogu docelowego
         sources_str = profile.get("sources") or ""
         sources_list = [p.strip() for p in sources_str.split(";") if p.strip()]
 
         if not sources_list:
             self.logger.error(f"Profil backupu (id={p_id}, name={p_name}) nie ma zdefiniowanych źródeł.")
             return 
-
-        # 3. Katalog docelowy
+        
         destination = profile.get("backup_directory") or self.default_backup_dir
 
-        # 4. Nadpisanie konfiguracji mailer 
+        # 3. Nadpisanie konfiguracji z profilu(mail, katalog itp)
         self._apply_profile_overrides(profile)
+
 
         self.logger.info(f"Tworzenie backupu na podstawie profilu (id={p_id}, name={p_name}) do katalogu: {destination}")
 
-        # 5. Użycie creator_backup
-        self.create_backup(destination=destination, sources=sources_list)
+        # 4. Użycie creator_backup
+        self.create_backup(destination=destination, sources=sources_list, upload_to_drive=upload_to_drive)
 """
 Uwagi do struktury:
 - create_backup() - Główna metoda któą będziemy wywoływać w main.py

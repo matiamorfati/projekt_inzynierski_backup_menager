@@ -1,9 +1,0 @@
-2025-12-12 19:36:48 | INFO     | DriveTest | Logger 'DriveTest' został zainicjalizowany - zapisywanie do pliku: logs/backup_log_2025-12-12.log
-2025-12-12 19:36:48 | DEBUG    | DriveTest | Ładowanie istniejącego tokena z: credentials/token.json
-2025-12-12 19:36:48 | INFO     | DriveTest | Token OAuth wygasł - próba odświeżenia
-2025-12-12 19:36:48 | INFO     | DriveTest | Token OAuth został odświeżony
-2025-12-12 19:36:48 | INFO     | DriveTest | Zainicjowano połączenie z Google Drive API (OAuth)
-2025-12-12 19:36:49 | INFO     | DriveTest | Folder istnieje na Drive: BackupManager (id=1NYZW52f_LfRgfN42f-9z_kpAhecrSK5R)
-2025-12-12 19:36:51 | INFO     | DriveTest | Wysłano plik na Google Drive: name=drive_test_file.txt, id=1uKojWiBIpLES1ZLFePG7d55oNdEwZBtq
-2025-12-12 19:36:51 | INFO     | DriveTest | Link do pliku: https://drive.google.com/file/d/1uKojWiBIpLES1ZLFePG7d55oNdEwZBtq/view?usp=drivesdk
-2025-12-12 19:36:51 | INFO     | DriveTest | Testowy plik wysłany. Link/id: https://drive.google.com/file/d/1uKojWiBIpLES1ZLFePG7d55oNdEwZBtq/view?usp=drivesdk
