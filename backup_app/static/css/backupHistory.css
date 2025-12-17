@@ -275,6 +275,12 @@ a:active {
   flex: 1;
 }
 
+.search:focus {
+  outline: none;
+  border: 1.5px solid #3a61ff;
+  box-shadow: 0 0 0 2px rgba(58, 97, 255, 0.1);
+}
+
 /* tabela */
 .table {
   width: 100%;
