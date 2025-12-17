@@ -12,8 +12,8 @@ py -m pip install google-api-python-client google-auth google-auth-httplib2 goog
 
 from __future__ import annotations
 
-from utils.logger import get_logger
-from utils.config import CONFIG
+from .logger import get_logger
+from .config import CONFIG
 
 import os
 import io
