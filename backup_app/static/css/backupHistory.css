@@ -8,15 +8,31 @@ html,
 body {
   height: 100%;
 }
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 body {
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #222;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f4f5f7;
-  color: #222;
-  font-size: 18px;
-  line-height: 1.35;
 }
 
 @font-face {
@@ -25,6 +41,24 @@ body {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+/* Typografia globalna */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  font-weight: 700;
+}
+em,
+i {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  font-style: italic;
 }
 
 /* prosty layout */
@@ -135,25 +169,29 @@ a:active {
   width: 220px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: 15px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 19px;
   font-weight: 600;
   color: #374151;
   background: #eef1ff;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: 0 8px 30px rgba(15, 15, 15, 0.06);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0.2, 0.2, 1), background 0.18s,
+    color 0.18s;
 }
 .nav-link:hover {
   background: #e8ebff;
+  box-shadow: 0 12px 36px rgba(15, 15, 15, 0.09);
 }
 .nav-link.active {
   background: #e9edff;
@@ -163,8 +201,8 @@ a:active {
 
 /* ikonny w sidebarze */
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
 }
 
