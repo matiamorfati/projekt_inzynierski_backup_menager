@@ -8,8 +8,7 @@ urlpatterns = [
     path('create-backup/', views.create_backup, name='create_backup'),
     path('settings/', views.settings_view, name='settings'),
 
-    path("success/", views.success_view, name="success"),
-    path("error/", views.error_view, name="error"),
+
 
     # API
     path('api/status/', views.api_system_status, name='api_system_status'),
