@@ -79,26 +79,30 @@ document.addEventListener("DOMContentLoaded", () => {
      USER CONFIG FORM
   ============================ */
 
+
   const userForm = document.getElementById("user-config-form");
 
   if (userForm) {
     userForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // Pobierz dane z formularza
       const payload = {
-        mail_notifier_enabled: document.getElementById("mail-notifier-enabled")
-          ?.checked,
-        notification_email: document
-          .getElementById("mail-notifier-email")
-          ?.value.trim(),
-        default_local_path: document
-          .getElementById("user-local-path")
-          ?.value.trim(),
-        theme: document.getElementById("theme-mode")?.value,
+        name: document.getElementById("profile-name")?.value.trim(),
+        sources: document.getElementById("profile-sources")?.value.trim().split(';').map(s => s.trim()).filter(Boolean),
+        backup_directory: document.getElementById("profile-backup-directory")?.value.trim(),
+        restore_directory: document.getElementById("profile-restore-directory")?.value.trim(),
+        backup_frequency: document.getElementById("profile-backup-frequency")?.value,
+        daily_report_enable: document.getElementById("profile-daily-report-enable")?.checked,
+        daily_report_time: document.getElementById("profile-daily-report-time")?.value,
+        recipient_email: document.getElementById("profile-recipient-email")?.value.trim(),
+        is_default: document.getElementById("profile-is-default")?.checked,
+        custom_name: document.getElementById("profile-custom-name")?.value.trim(),
+        description: document.getElementById("profile-description")?.value.trim(),
       };
 
       try {
-        const res = await fetch("/api/settings/user/", {
+        const res = await fetch("/api/create_backup_profile/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -107,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) throw new Error("User settings save failed");
+        if (!res.ok) throw new Error("Profile creation failed");
 
         showSuccess();
       } catch (err) {
