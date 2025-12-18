@@ -146,48 +146,85 @@
             </div>
           </div>
 
-          <div class="cards">
-            <section class="card">
-              <h3>Backup History</h3>
+          <div class="cards dashboard-cards">
+            <section class="card history-card">
+              <div class="card-header">
+                <h3>Backup History</h3>
+                <p class="muted">Ostatnie 5 backupów z bazy</p>
+              </div>
+
+              {% if history %}
               <table class="history-table">
-                <tr>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-                <tr>
-                  <td>Photos</td>
-                  <td>2025-11-12</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Documents</td>
-                  <td>2025-11-11</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Project</td>
-                  <td>2025-11-09</td>
-                  <td class="status failed">Failed</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Nazwa</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for backup in history %}
+                  <tr>
+                    <td>
+                      <div class="backup-name">
+                        {{ backup.custom_name|default:backup.name }}
+                      </div>
+                      {% if backup.description %}
+                      <p class="muted small">{{ backup.description }}</p>
+                      {% endif %}
+                    </td>
+                    <td>{{ backup.date }}</td>
+                    <td class="status {{ backup.status|lower }}">
+                      {{ backup.status }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
               </table>
+              {% else %}
+              <div class="empty-state">
+                <p>Brak jeszcze zarejestrowanych backupów.</p>
+                <p class="muted">Historia zapełni się automatycznie przy kolejnych zadaniach.</p>
+              </div>
+              {% endif %}
             </section>
 
-            <section class="card">
-              <h3>Settings Summary</h3>
-              <div class="setting">
-                <label>Backup Frequency</label>
-                <select class="input">
-                  <option>Every 24h</option>
-                </select>
+            <section class="card actions-card">
+              <h3>Szybkie akcje</h3>
+              <p class="muted">
+                Dashboard jest tylko do podglądu. Akcje zostaną włączone w dedykowanych
+                widokach.
+              </p>
+              <div class="action-buttons">
+                <button class="primary-btn ghost-action" type="button" disabled aria-disabled="true">
+                  Run backup
+                </button>
+                <button class="secondary-btn ghost-action" type="button" disabled aria-disabled="true">
+                  Restore backup
+                </button>
+              </div>
+            </section>
+
+            <section class="card schedule-card">
+              <div class="card-header">
+                <h3>Next scheduled backup</h3>
+                <p class="muted">Przybliżony termin według ustawień profilu</p>
               </div>
 
-              <div class="setting">
-                <label>Automatic Backups</label>
-                <div class="toggle">Enabled</div>
+              {% if next_backup %}
+              <div class="next-run">
+                <div class="next-run-label">Kolejne uruchomienie</div>
+                <div class="next-run-value">
+                  {{ next_backup.next_run|date:"Y-m-d" }} o {{ next_backup.next_run|date:"H:i" }}
+                </div>
+                <p class="muted">Częstotliwość: {{ next_backup.frequency|capfirst }}</p>
               </div>
-
-              <p class="last-backup">Last backup: Feb 1, 2025</p>
+              {% else %}
+              <div class="empty-state">
+                <p>Brak zaplanowanego backupu.</p>
+                <p class="muted">Ustaw harmonogram w profilu, aby zobaczyć kolejną datę.</p>
+              </div>
+              {% endif %}
             </section>
           </div>
         </main>
