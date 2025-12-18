@@ -145,51 +145,98 @@
               </p>
             </div>
           </div>
-
+          <div class="card-rows">
           <div class="cards">
             <section class="card">
-              <h3>Backup History</h3>
-              <table class="history-table">
-                <tr>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-                <tr>
-                  <td>Photos</td>
-                  <td>2025-11-12</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Documents</td>
-                  <td>2025-11-11</td>
-                  <td class="status success">Confirmed</td>
-                </tr>
-                <tr>
-                  <td>Project</td>
-                  <td>2025-11-09</td>
-                  <td class="status failed">Failed</td>
-                </tr>
-              </table>
+              <div class="card-header">
+                <h3>Latest backups</h3>
+                 <a class="restore-btn" href="{% url 'history' %}">
+            Restore backup
+            </a>
+              </div>
+              <section class="history-container">
+                <table
+                  class="table"
+                  role="table"
+                  aria-label="Backup history table"
+                >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="history-table-body"></tbody>
+                </table>
+              </section>
             </section>
-
             <section class="card">
               <h3>Settings Summary</h3>
-              <div class="setting">
-                <label>Backup Frequency</label>
-                <select class="input">
-                  <option>Every 24h</option>
-                </select>
-              </div>
 
               <div class="setting">
-                <label>Automatic Backups</label>
+                <h4>Automatic Backups</h4>
                 <div class="toggle">Enabled</div>
+              <div class="info-container">
+                <p class="last-backup">Last backup: Feb 1, 2025</p>
+                <p class="last-backup">
+                  Status: <span class="status confirmed">✔ Succeeded</span>
+                </p>
+                </div>
               </div>
+              <div class="setting">
+                <h4>Backup Locations</h4>
 
-              <p class="last-backup">Last backup: Feb 1, 2025</p>
+                <div class="storage-info-container">
+                  <p class="backup-storage-info"> <span class="colorBlue">Local:</span> /backups/local</p>
+                  <p class="backup-storage-info"> <span class="colorBlue">Cloud:</span> mati@gmail.com</p>
+                </div>
+              </div>
+              </div>
             </section>
           </div>
+<section class="card system-status-card">
+  <div class="card-header">
+    <h3>System Status</h3>
+    <span class="system-status-badge ok">All systems operational</span>
+  </div>
+
+  <div class="system-status-grid">
+    <div class="status-item">
+      <span class="status-dot ok"></span>
+      <div>
+        <strong>Backup Engine</strong>
+        <p>Running</p>
+      </div>
+    </div>
+
+    <div class="status-item">
+      <span class="status-dot ok"></span>
+      <div>
+        <strong>Scheduler</strong>
+        <p>Active</p>
+      </div>
+    </div>
+
+    <div class="status-item">
+      <span class="status-dot ok"></span>
+      <div>
+        <strong>Database</strong>
+        <p>Connected</p>
+      </div>
+    </div>
+
+    <div class="status-item">
+      <span class="status-dot ok"></span>
+      <div>
+        <strong>Cloud Provider</strong>
+        <p>Authenticated</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
         </main>
       </div>
     </div>
@@ -215,19 +262,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
   </body>
 </html>
