@@ -14,6 +14,7 @@ Dodajemy do tego proste funkcje które łatwo będzie wywołać z API
 
 from __future__ import annotations
 
+from datetime import datetime, time as time_class, timedelta
 from typing import Any, Dict, List, Optional
 
 from .utils.config import CONFIG
@@ -56,6 +57,19 @@ def _backup_row_to_dict(row: tuple) -> Dict[str, Any]:
         "sources": sources,
         "description": description # Ewentualnie to usunąc
     }
+
+
+def _parse_time_string(value: Optional[str]) -> time_class:
+    """
+    Bezpiecznie parsuje string HH:MM do obiektu time.
+    W razie błędu zwraca godzinę 08:00 jako domyślną.
+    """
+
+    try:
+        hours, minutes = str(value).split(":", 1)
+        return time_class(int(hours), int(minutes))
+    except Exception:
+        return time_class(8, 0)
 
 
 # Funkcje dla API
@@ -137,6 +151,59 @@ def get_backup_history(limit: int = 20) -> List[Dict[str, Any]]:
     """
     rows = _db.get_backup_history(limit=limit) or []
     return [_backup_row_to_dict(r) for r in rows]
+
+
+def get_next_scheduled_backup(reference_time: Optional[datetime] = None) -> Optional[Dict[str, Any]]:
+    """
+    Zwraca przybliżony termin kolejnego zaplanowanego backupu na podstawie
+    ustawień schedulera lub domyślnego profilu. Dashboard jest "read-only",
+    więc pokazujemy wyłącznie informację.
+    """
+
+    now = reference_time or datetime.now()
+
+    profile = None
+    try:
+        profile = _db.get_default_backup_profile()
+    except Exception:
+        profile = None
+
+    frequency = (
+        (profile or {}).get("backup_frequency")
+        or _scheduler.frequency
+        or _config.get("backup_frequency")
+        or "daily"
+    )
+
+    schedule_time = _parse_time_string(
+        (profile or {}).get("daily_report_time") or _config.get("daily_report_time")
+    )
+
+    today_target = now.replace(
+        hour=schedule_time.hour,
+        minute=schedule_time.minute,
+        second=0,
+        microsecond=0,
+    )
+
+    frequency_lower = str(frequency).lower()
+
+    if frequency_lower == "daily":
+        next_run = today_target if today_target > now else today_target + timedelta(days=1)
+    elif frequency_lower == "weekly":
+        days_ahead = (0 - now.weekday()) % 7  # poniedziałek = 0
+        candidate = today_target + timedelta(days=days_ahead)
+        next_run = candidate if candidate > now else candidate + timedelta(days=7)
+    elif frequency_lower == "monthly":
+        next_run = today_target + timedelta(days=30)
+    else:
+        return None
+
+    return {
+        "frequency": frequency_lower,
+        "next_run": next_run,
+        "time_of_day": schedule_time,
+    }
 
 
 # 2. Profile backupów
@@ -262,4 +329,3 @@ def send_daily_report_now() -> Dict[str, Any]:
     _logger.info("Manual daily report trigger")
     ok = _mailer.send_daily_report()
     return {"ok": ok}
-

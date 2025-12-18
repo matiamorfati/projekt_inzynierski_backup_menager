@@ -9,7 +9,17 @@ import json
 from . import core_service
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    history = core_service.get_backup_history(limit=5)
+    next_backup = core_service.get_next_scheduled_backup()
+
+    return render(
+        request,
+        'dashboard.html',
+        {
+            "history": history,
+            "next_backup": next_backup,
+        },
+    )
 
 def history(request):
     return render(request, 'backup_history.html')
