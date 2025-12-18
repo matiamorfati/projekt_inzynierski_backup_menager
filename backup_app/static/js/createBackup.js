@@ -28,11 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  /* ----------------------------
-     Helpers
-  ---------------------------- */
-
-  // Auto-resize textareas = document.querySelectorAll(".auto-resize");for description
   textareas.forEach((textarea) => {
     textarea.addEventListener("input", () => {
       textarea.style.height = "auto"; // reset
@@ -61,17 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
     sourcesInput?.click();
   });
 
-  // Source picker button opens file input
   sourcePickerBtn?.addEventListener("click", () => {
     sourcePicker?.click();
   });
 
-  // After picking folders, add root folder(s) to the textarea (append, unique, each in new line)
   sourcePicker?.addEventListener("change", () => {
     if (!sourcePicker.files.length) {
       return;
     }
-    // Get unique root folders from picker
     const pickedRoots = Array.from(
       new Set(
         Array.from(sourcePicker.files).map(
@@ -79,21 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       )
     );
-    // Get current paths from textarea (split by new lines or semicolons)
     const current = sourcesInput.value
       .split(/[;\n]+/)
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
-    // Merge and deduplicate
     const all = Array.from(new Set([...current, ...pickedRoots]));
     sourcesInput.value = all.join("\n");
   });
 
-  /* ----------------------------
-     Source folders summary
-  ---------------------------- */
-
-  // Show summary of how many folders are in the textarea
   const updateSourcesSummary = () => {
     const folders = sourcesInput.value
       .split(/[\n;]+/)
@@ -106,15 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   sourcesInput.addEventListener("input", updateSourcesSummary);
-  // Also update summary after picking folders
   sourcePicker?.addEventListener("change", updateSourcesSummary);
 
-  // Initial summary update (in case of pre-filled textarea)
   updateSourcesSummary();
-
-  /* ----------------------------
-     Backup type → destination toggle
-  ---------------------------- */
 
   backupTypeSelect.addEventListener("change", () => {
     const value = backupTypeSelect.value;
@@ -139,24 +118,16 @@ document.addEventListener("DOMContentLoaded", () => {
     destinationInput.value = rootFolder;
   });
 
-  /* ----------------------------
-     Submit
-  ---------------------------- */
-
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     setMessage("");
 
-    /* -------- validation -------- */
-
-    // Parse all folders from textarea (prefer new lines)
     const rawSources = sourcesInput.value.trim();
     const sources = rawSources
       .split(/[\n;]+/)
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
 
-    // Now obsługa pola name
     const name = nameInput.value.trim();
     if (!name) {
       setMessage("Please provide a backup name.", "error");
@@ -179,8 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
       destinationInput.focus();
       return;
     }
-
-    /* -------- payload -------- */
 
     const payload = {
       name,
@@ -205,8 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
       payload.upload_to_drive = false;
     }
 
-    /* -------- request -------- */
-
     setLoading(true);
 
     try {
@@ -226,8 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.ok) {
         setMessage("Backup has been started successfully.", "success");
-        // form.reset(); // opcjonalnie
-        // sourcesSummary.textContent = "No folders selected";
       } else {
         setMessage(
           "Backup did not start correctly. Check logs and history.",
