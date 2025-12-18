@@ -136,87 +136,122 @@
         <main class="content">
           <div class="content-header">
             <div>
-              <h2>Here are Settings to be set</h2>
+              <h2>Settings</h2>
               <p class="content-subtitle">
-                Configure your backup preferences, including frequency, storage
-                location, and notification settings.
+                Configure your backup preferences and user settings.
               </p>
             </div>
           </div>
 
           <div class="settings-row">
-            <section class="settings-card card">
-              <h3>Backup Configuration</h3>
-
-              <label for="frequency">Backup Frequency</label>
-              <select id="frequency" class="input">
-                <option>Daily</option>
-                <option>Weekly</option>
-                <option>Monthly</option>
-              </select>
-
-              <label class="toggle-label">
+            <!-- AUTOMATIC BACKUP CONFIGURATION CARD -->
+            <form class="settings-card card" id="auto-backup-form">
+              <h3>Automatic backup configuration</h3>
+              <label class="toggle-label toggle-label-large">
                 <div class="toggle-switch" id="autoWrap">
-                  <input type="checkbox" id="auto-backup" checked />
+                  <input type="checkbox" id="auto-backup-enabled" checked />
                   <span class="knob"></span>
                 </div>
                 <span class="toggle-text">Enable automatic backups</span>
               </label>
 
-              <label for="admin-email">Admin email</label>
-              <input type="email" id="admin-email" value="admin@example.com" />
+              <label for="auto-backup-type">Backup destination</label>
+              <select id="auto-backup-type" class="input">
+                <option value="local">Local only</option>
+                <option value="drive">Google Drive only</option>
+                <option value="both">Local + Google Drive</option>
+              </select>
 
-              <label for="storage-path">Storage path</label>
-              <input type="text" id="storage-path" value="/var/backups" />
+              <label for="auto-local-path">Path for local backups</label>
+              <input
+                type="text"
+                id="auto-local-path"
+                class="input"
+                placeholder="e.g. /var/backups"
+              />
 
-              <button class="save-btn" id="saveSettings">Save changes</button>
-            </section>
+              <label for="auto-source-path">Source path for backups</label>
+              <input
+                type="text"
+                id="auto-source-path"
+                class="input"
+                placeholder="e.g. /home/user/Documents"
+              />
 
-            <section class="system-info card">
-              <h3>System Info</h3>
-              <p><strong>System:</strong> <span class="muted">Windows</span></p>
-              <p>
-                <strong>Last backup date:</strong>
-                <span class="muted">2024-10-09</span>
-              </p>
-              <p>
-                <strong>Next scheduled backup:</strong>
-                <span class="muted">2024-10-10</span>
-              </p>
-            </section>
+              <label for="auto-frequency">Frequency of automatic backups</label>
+              <select id="auto-frequency" class="input">
+                <option value="everyday">Everyday</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+
+              <label for="auto-time">Backup time</label>
+              <input type="time" id="auto-time" class="input" value="02:00" />
+
+              <button class="save-btn" type="submit">Save changes</button>
+            </form>
+
+            <div class="settings-right-col">
+              <!-- LAST BACKUP CARD -->
+              <div class="backup-info-container">
+                <div class="card backup-info">
+                  <h4>Last backup date</h4>
+                  <p class="muted">2025-12-18 17:27</p>
+                </div>
+                <div class="card backup-info">
+                  <h4>Next backup date</h4>
+                  <p class="muted">2025-12-25 17:27</p>
+                </div>
+              </div>
+
+              <!-- USER CONFIGURATION CARD -->
+              <form class="settings-card card" id="user-config-form">
+                <h3>User configuration</h3>
+                <label class="toggle-label toggle-label-large">
+                  <div class="toggle-switch" id="mailWrap">
+                    <input type="checkbox" id="mail-notifier-enabled" />
+                    <span class="knob"></span>
+                  </div>
+                  <span class="toggle-text">Mail notifier</span>
+                </label>
+                <div id="mail-notifier-email-group">
+                  <label for="mail-notifier-email">Notification email</label>
+                  <input
+                    type="email"
+                    id="mail-notifier-email"
+                    class="input"
+                    placeholder="e.g. admin@example.com"
+                  />
+                </div>
+                <label for="user-local-path"
+                  >Default path for local backups</label
+                >
+                <input
+                  type="text"
+                  id="user-local-path"
+                  class="input"
+                  placeholder="e.g. /var/backups"
+                />
+                <div class="drive-row">
+                  <button type="button" class="file-btn">
+                    Change Google Drive
+                  </button>
+                  <span class="muted" id="user-drive-email"
+                    >user@gmail.com</span
+                  >
+                </div>
+                <label for="theme-mode">Theme</label>
+                <select id="theme-mode" class="input">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+                <button class="save-btn" type="submit">Save changes</button>
+              </form>
+            </div>
           </div>
         </main>
       </div>
     </div>
-
-    <script>
-      // podświetlanie aktywnego linku w sidebarze
-
-      // toggle: ustawiam klasę .on na wrapperze, żeby móc zmienić kolor toru
-      const autoCheckbox = document.getElementById("auto-backup");
-      const autoWrap = document.getElementById("autoWrap");
-
-      function updateToggle() {
-        if (autoCheckbox.checked) autoWrap.classList.add("on");
-        else autoWrap.classList.remove("on");
-      }
-      // initial
-      updateToggle();
-      // listener
-      autoCheckbox.addEventListener("change", updateToggle);
-
-      //jak na razie demo save
-      document.getElementById("saveSettings").addEventListener("click", () => {
-        const data = {
-          freq: document.getElementById("frequency").value,
-          auto: document.getElementById("auto-backup").checked,
-          email: document.getElementById("admin-email").value,
-          path: document.getElementById("storage-path").value,
-        };
-        alert("Zapisuję ustawienia:\n" + JSON.stringify(data, null, 2));
-        // tu możesz dodać fetch() do backendu
-      });
-    </script>
     <div id="status-success" class="status-overlay">
       <div class="status-card success">
         <div class="icon">✅</div>
@@ -238,19 +273,6 @@
         <button class="btn-primary" onclick="hideStatus()">Powrót</button>
       </div>
     </div>
-    <script>
-      function showSuccess() {
-        document.getElementById("status-success").style.display = "flex";
-      }
-
-      function showError() {
-        document.getElementById("status-error").style.display = "flex";
-      }
-
-      function hideStatus() {
-        document.getElementById("status-success").style.display = "none";
-        document.getElementById("status-error").style.display = "none";
-      }
-    </script>
+    <script src="{% static 'js/settings.js' %}" defer></script>
   </body>
 </html>
