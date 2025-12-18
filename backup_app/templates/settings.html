@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings – Backup Manager</title>
     <link rel="stylesheet" href="{% static 'css/settings.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}" />
     <style>
       body {
         font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -39,7 +40,7 @@
 
         <div class="header-actions">
           <!-- DARK MODE (future) -->
-          <button class="icon-btn" title="Toggle dark mode">🌙</button>
+          <button class="icon-btn" id="theme-toggle" title="Toggle dark mode">🌙</button>
 
           <!-- USER -->
           <span class="user-label"> {{ request.user.username }} </span>
@@ -252,5 +253,6 @@
         document.getElementById("status-error").style.display = "none";
       }
     </script>
+    <script src="{% static 'js/theme.js' %}"></script>
   </body>
 </html>
