@@ -205,46 +205,46 @@
               </div>
 
               <!-- USER CONFIGURATION CARD -->
-
               <form class="settings-card card" id="user-config-form">
-                <h3>User configuration / Create profile</h3>
-                <label for="profile-name">Profile name</label>
-                <input type="text" id="profile-name" class="input" placeholder="e.g. Adam Mickiewicz" />
-
-                <label for="profile-sources">Sources (separated by ;)</label>
-                <input type="text" id="profile-sources" class="input" placeholder="e.g. C:/folder1;C:/folder2" />
-
-                <label for="profile-backup-directory">Backup directory</label>
-                <input type="text" id="profile-backup-directory" class="input" placeholder="e.g. backups" />
-
-                <label for="profile-restore-directory">Restore directory</label>
-                <input type="text" id="profile-restore-directory" class="input" placeholder="e.g. restored_files" />
-
-                <label for="profile-backup-frequency">Backup frequency</label>
-                <select id="profile-backup-frequency" class="input">
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
+                <h3>User configuration</h3>
+                <label class="toggle-label toggle-label-large">
+                  <div class="toggle-switch" id="mailWrap">
+                    <input type="checkbox" id="mail-notifier-enabled" />
+                    <span class="knob"></span>
+                  </div>
+                  <span class="toggle-text">Mail notifier</span>
+                </label>
+                <div id="mail-notifier-email-group">
+                  <label for="mail-notifier-email">Notification email</label>
+                  <input
+                    type="email"
+                    id="mail-notifier-email"
+                    class="input"
+                    placeholder="e.g. admin@example.com"
+                  />
+                </div>
+                <label for="user-local-path"
+                  >Default path for local backups</label
+                >
+                <input
+                  type="text"
+                  id="user-local-path"
+                  class="input"
+                  placeholder="e.g. /var/backups"
+                />
+                <div class="drive-row">
+                  <button type="button" class="file-btn">
+                    Change Google Drive
+                  </button>
+                  <span class="muted" id="user-drive-email"
+                    >user@gmail.com</span
+                  >
+                </div>
+                <label for="theme-mode">Theme</label>
+                <select id="theme-mode" class="input">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
                 </select>
-
-                <label for="profile-daily-report-enable">Enable daily report</label>
-                <input type="checkbox" id="profile-daily-report-enable" />
-
-                <label for="profile-daily-report-time">Daily report time</label>
-                <input type="time" id="profile-daily-report-time" class="input" value="08:00" />
-
-                <label for="profile-recipient-email">Recipient email</label>
-                <input type="email" id="profile-recipient-email" class="input" placeholder="e.g. backup.system.receiver@gmail.com" />
-
-                <label for="profile-is-default">Set as default profile</label>
-                <input type="checkbox" id="profile-is-default" />
-
-                <label for="profile-custom-name">Custom name</label>
-                <input type="text" id="profile-custom-name" class="input" placeholder="e.g. My Backup Profile" />
-
-                <label for="profile-description">Description</label>
-                <input type="text" id="profile-description" class="input" placeholder="e.g. Backup for important files" />
-
                 <button class="save-btn" type="submit">Save changes</button>
               </form>
             </div>
