@@ -65,7 +65,7 @@ body {
   line-height: 1.35;
 }
 
-/* ----- główny układ aplikacji ----- */
+/* główny układ aplikacji  */
 .app {
   display: flex;
   flex-direction: column;
@@ -268,6 +268,9 @@ a:active {
 
 .card-header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 .restore-btn {
@@ -330,7 +333,7 @@ a:active {
 .table tbody tr {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 5px rgba(58, 97, 255, 0.346);
+  box-shadow: 0 6px 18px rgba(58, 97, 255, 0.08);
 }
 
 .table tbody tr td:first-child {
@@ -344,12 +347,17 @@ a:active {
 }
 
 .restore-btn {
-  margin: 0 auto;
+  margin: 0;
   min-width: 110px;
+  margin-left: auto;
 }
 
 .table tbody tr + tr td {
-  border-top: 10px solid transparent;
+  border-top: none;
+}
+
+.table tbody td {
+  line-height: 1.6;
 }
 
 .status.confirmed {
@@ -389,7 +397,6 @@ a:active {
   text-decoration: underline;
 }
 
-/* drobne pola/ustawienia (prawa kolumna) */
 .setting {
   display: flex;
   flex-direction: column;
@@ -502,12 +509,6 @@ select {
   }
 }
 
-/* ================================
-   SYSTEM STATUS / HEALTH
-================================ */
-/* ================================
-   SYSTEM STATUS / HEALTH – CARD STYLE
-================================ */
 
 .card-rows {
   display: flex;
@@ -523,7 +524,7 @@ select {
   box-shadow: 0 8px 30px rgba(15, 15, 15, 0.04);
   align-self: center;
   width: 100%;
-  max-width: 1200px; /* ← TUTAJ regulujesz „jak szeroki ma być” */
+  max-width: 1200px;
 }
 
 .system-status-card .card-header {
