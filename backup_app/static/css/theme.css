@@ -1,0 +1,424 @@
+/* =========================
+   ZMIENNE MOTYWU – LIGHT
+   ========================= */
+:root {
+  /* tła */
+  --bg-main: #f4f5f7;
+  --bg-card: #ffffff;
+  --bg-header: #ffffff;
+  --bg-sidebar: #eef1ff;
+
+  /* tekst */
+  --text-main: #222222;
+  --text-muted: #6b7280;
+  --text-strong: #111827;
+
+  /* obramowania */
+  --border-light: #e3e6ee;
+
+  /* kolor główny */
+  --primary: #3a61ff;
+
+  /* formularze */
+  --input-bg: #ffffff;
+  --input-text: #111827;
+  --input-border: #e2e6ea;
+
+  /* status ENABLED */
+  --enabled-bg: #f0fff6;
+  --enabled-text: #134e28;
+}
+
+/* =========================
+   ZMIENNE MOTYWU – DARK
+   ========================= */
+body.dark {
+  /* tła */
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: #020617;
+  --bg-sidebar: #1e293b;
+
+  /* tekst */
+  --text-main: #d2d5dc;
+  --text-muted: #9ca3af;
+  --text-strong: #d8dce0;
+
+  /* obramowania */
+  --border-light: #334155;
+
+  /* kolor główny */
+  --primary: #6366f1;
+
+  /* formularze */
+  --input-bg: #1f2937;
+  --input-text: #e5e7eb;
+  --input-border: #374151;
+
+  /* status ENABLED */
+  --enabled-bg: #064e3b;
+  --enabled-text: #a7f3d0;
+}
+
+/* =========================
+   GLOBAL
+   ========================= */
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.header {
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+.sidebar .nav-link {
+  background: var(--bg-sidebar);
+  color: var(--text-main);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* hover na element menu */
+.sidebar .nav-link:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--text-strong);
+}
+
+/* aktywny element menu */
+.sidebar .nav-link.active {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--primary);
+}
+
+/* ikony w sidebarze */
+.sidebar .nav-link .icon {
+  color: currentColor;
+  opacity: 0.95;
+}
+
+/* =========================
+   KARTY
+   ========================= */
+.card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+}
+
+/* =========================
+   TEKSTY
+   ========================= */
+.content-header h2 {
+  color: var(--text-strong);
+}
+
+.content-subtitle,
+.last-backup {
+  color: var(--text-muted);
+}
+
+/* =========================
+   FORMULARZE
+   ========================= */
+select,
+.input {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+}
+
+select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* =========================
+   STATUS / BADGE
+   ========================= */
+.toggle {
+  background: var(--enabled-bg);
+  color: var(--enabled-text);
+}
+
+/* =========================
+   DARK MODE – IKONA 🌙 / ☀️
+   ========================= */
+.icon-btn {
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* hover – light mode */
+.icon-btn:hover {
+  background: rgba(58, 97, 255, 0.12);
+  transform: scale(1.08);
+}
+
+/* hover – dark mode */
+body.dark .icon-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+/* poprawki dla ciemnego motywu - usuwają jaskrawe białe pola */
+body.dark .card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.2);
+}
+
+/* nagłówek tabeli i wiersze - użyj ciemnych paneli */
+body.dark .table thead th {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-strong);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+
+/* zachowaj zaokrąglenia nagłówka tabeli jak w light mode */
+body.dark .table thead th:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+body.dark .table thead th:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* upewnij się, że w trybie ciemnym wiersze mają takie same paddingi i tło jak w light */
+/* Make each row appear as one rounded panel (like light mode):
+   remove per-cell borders and let the row's rounded container show.
+*/
+body.dark .table tbody td {
+  padding: 18px 20px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: none;
+  border-radius: 0;
+  vertical-align: middle;
+  line-height: 1.6;
+}
+
+/* Ensure the row acts as the rounded panel container */
+body.dark .table tbody tr {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(2,6,23,0.12);
+  background: transparent;
+}
+
+/* zamiast jasnego niebieskiego glow użylem cienia */
+body.dark .table tbody tr {
+  box-shadow: 0 6px 16px rgba(2,6,23,0.18);
+}
+
+/* Sidebar links (override light-specific backgrounds) */
+body.dark .nav-link {
+  background: var(--bg-sidebar);
+  color: var(--text-main);
+  box-shadow: none;
+}
+
+body.dark .nav-link:hover {
+  background: rgba(99,102,241,0.06);
+}
+
+body.dark .nav-link.active {
+  background: rgba(99,102,241,0.08);
+  color: var(--primary);
+}
+
+/* pola informacyjne w prawej kolumnie */
+body.dark .backup-info, body.dark .backup-info-container .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+/* Make restore buttons stand out on dark backgrounds */
+body.dark .restore-btn,
+body.dark .primary-btn,
+body.dark .logout-btn {
+  box-shadow: 0 6px 18px rgba(58,97,255,0.18);
+}
+
+/* Inputs & selects already use variables; ensure placeholders remain readable */
+body.dark input::placeholder, body.dark textarea::placeholder {
+  color: rgba(229,231,235,0.6);
+}
+
+/* kolor statusu sukcesu w trybie ciemnym */
+body.dark .status.confirmed,
+body.dark .status.success {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* nagłówki w kartach mają być czytelne */
+body.dark .card h4,
+body.dark .card h3 {
+  color: var(--text-strong);
+}
+
+/* pola Local/Cloud - ujednolicenie wyglądu w trybie ciemnym */
+body.dark .backup-storage-info {
+  display: inline-block;
+  background: var(--input-bg);
+  color: var(--input-text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  margin-bottom: 8px;
+}
+
+body.dark .backup-storage-info .colorBlue {
+  color: var(--primary);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* prosty override dla formularzy na stronie create backup */
+body.dark .form-group label {
+  color: var(--text-strong);
+}
+
+/* przycisk wybierania folderów - dopasowany do dark theme */
+body.dark .file-btn {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  box-shadow: none;
+}
+
+body.dark .file-btn:hover {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--primary);
+}
+
+body.dark .file-summary {
+  color: var(--text-muted);
+}
+
+/* upewnij się, że pola input/textarea mają ciemne tło z zmiennych */
+body.dark .input,
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+}
+
+
+/* system status - nadpisania dla ciemnego motywu */
+body.dark .system-status-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 8px 26px rgba(2,6,23,0.45);
+}
+
+body.dark .system-status-card .card-header h3,
+body.dark .system-status-card .card-header h2 {
+  color: var(--text-strong);
+}
+
+body.dark .system-status-grid {
+  gap: 18px;
+}
+
+/* dopasowane tło jak w polach Local/Cloud */
+body.dark .status-item {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+}
+
+body.dark .status-item strong {
+  color: var(--text-strong);
+}
+
+body.dark .status-item p {
+  color: var(--text-muted);
+}
+
+/* kropki statusu - ten sam kolor + subtelny pierścień */
+body.dark .status-dot.ok { box-shadow: 0 0 0 4px rgba(34,197,94,0.06); }
+body.dark .status-dot.warn { box-shadow: 0 0 0 4px rgba(245,158,11,0.06); }
+body.dark .status-dot.error { box-shadow: 0 0 0 4px rgba(239,68,68,0.06); }
+
+/* odznaki statusu - delikatne tło i czytelny tekst */
+body.dark .system-status-badge.ok {
+  background: rgba(22,165,74,0.10);
+  color: #bbf7d0;
+}
+body.dark .system-status-badge.warn {
+  background: rgba(245,158,11,0.08);
+  color: #fef3c7;
+}
+body.dark .system-status-badge.error {
+  background: rgba(239,68,68,0.08);
+  color: #fee2e2;
+}
+
+/* ustawienia dla widoku historii (prostszym stylem) */
+body.dark .history-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 8px 26px rgba(2,6,23,0.45);
+  color: var(--text-main);
+}
+
+body.dark .history-top .search,
+body.dark .history-top .status-filter {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+}
+
+/* nagłówki tabeli i wiersze już nadpisane globalnie, tutaj tylko drobne poprawki */
+body.dark .table thead th {
+  background: rgba(255,255,255,0.03);
+}
+
+/* ===== Settings visibility fixes ===== */
+/* Ensure labels and small helper text in settings are readable in dark mode */
+body.dark .settings-card label,
+body.dark .settings-row label,
+body.dark #auto-backup-form label,
+body.dark #user-config-form label,
+body.dark .settings-card .toggle-label,
+body.dark .settings-card .toggle-text {
+  color: var(--text-strong);
+}
+
+/* Keep muted small text slightly lighter but readable */
+body.dark .settings-card .muted,
+body.dark .settings-right-col .muted {
+  color: var(--text-muted);
+}
+
+/* Make time input text and picker icon visible */
+body.dark input[type="time"] {
+  color: var(--input-text);
+}
+body.dark input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.8) contrast(1.1);
+  opacity: 0.95;
+}
+body.dark input[type="time"]::-webkit-datetime-edit,
+body.dark input[type="time"]::-webkit-datetime-edit-text {
+  color: var(--input-text);
+}
+
+
+
