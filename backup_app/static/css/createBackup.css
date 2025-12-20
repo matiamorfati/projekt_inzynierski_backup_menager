@@ -292,10 +292,10 @@ a:hover {
 
 /* nagłówki kart */
 .card-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 3px;
-  margin-top: -4px;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  font-size: 25px;
+  line-height: 1.3;
 }
 
 .card-subtitle {
@@ -313,7 +313,7 @@ a:hover {
 }
 
 .form-group label {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #1d2636;
 }

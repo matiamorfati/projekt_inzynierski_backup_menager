@@ -271,28 +271,49 @@ a:active {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  min-height: 64px;
+  padding: 9px 24px 18px 24px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card-header .primary-btn,
+.card-header .header-action-btn {
+  margin-left: auto;
+  margin-right: 18px;
+  align-self: center;
+}
+
+.card-header h3,
+.setting h3 {
+  line-height: 1.3;
+}
+.card-header h3 {
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 25px;
+}
+
+.setting h3 {
+  font-weight: 300;
+  font-size: 22px;
 }
 
 .restore-btn {
   background: #3a61ff;
   color: #fff;
   border: none;
-  padding: 8px 16px;
+  padding: 9px 17px;
   border-radius: 10px;
   font-weight: 500;
   cursor: pointer;
   font-size: 17px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1rem;
 }
 
 .restore-btn:hover {
   background: #2f53e6;
-}
-/* nagłówki w kartach */
-.card h3 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 12px;
 }
 
 /* tabela */
@@ -307,10 +328,13 @@ a:active {
 .table thead th {
   text-align: left;
   font-weight: 700;
-  padding: 18px 20px 14px 20px;
   font-size: 18px;
   background: #e9edff;
   color: #2b2b8f;
+  min-height: 64px;
+  height: 64px;
+  padding: 0 24px;
+  vertical-align: middle;
 }
 
 .table thead th:first-child {
@@ -402,22 +426,19 @@ a:active {
   flex-direction: column;
   gap: 8px;
   font-size: 16px;
-  margin: 12px;
-}
-
-.backup-storage-info {
-  font-size: 17px;
-  color: #374151;
+  margin: 0 25px 12px;
 }
 
 .backup-storage-info {
   display: flex;
   background: #e8ebff;
-
+  font-size: 17px;
+  color: #374151;
   width: 350px;
   margin: 0 0 8px 6px;
   padding: 6px 12px;
   border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(15, 15, 15, 0.06);
 }
 
 .colorBlue {
@@ -425,10 +446,7 @@ a:active {
   margin-right: 10px;
   font-weight: 600;
 }
-.setting h4 {
-  font-weight: 500;
-  color: #1f2937;
-}
+
 .input,
 select {
   padding: 10px 12px;
@@ -447,17 +465,48 @@ select {
   color: #134e28;
   font-weight: 700;
   font-size: 16px;
+  width: 50%;
 }
 
 .info-container {
   display: flex;
+  flex-direction: column;
   gap: 16px;
+  background: #e8ebff;
+  font-size: 17px;
+  color: #374151;
+  width: 60%;
+  margin: 0 0 8px 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
-.last-backup {
-  color: #6b7280;
-  margin-top: 10px;
-  font-size: 17px;
+.enable-autobackup-setting {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  background: #e9edff;
+  border-radius: 10px;
+  max-height: 64px;
+  padding: 18px 24px 18px 24px;
+  margin-bottom: 16px;
+}
+.enable-autobackup-setting h4 {
+  font-size: 21px;
+  font-weight: 700;
+  color: #2b2b8f;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+.enable-autobackup-setting .toggle {
+  font-size: 19px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: #d1fae5;
+  color: #15803d;
+  box-shadow: 0 1px 4px rgba(22, 130, 61, 0.08);
+  margin-left: 8px;
 }
 
 /* formularze w kartach */
@@ -508,7 +557,6 @@ select {
     font-size: 18px;
   }
 }
-
 
 .card-rows {
   display: flex;

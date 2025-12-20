@@ -153,10 +153,7 @@ select:focus,
    DARK MODE – IKONA 🌙 / ☀️
    ========================= */
 .icon-btn {
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.15s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 /* hover – light mode */
@@ -174,15 +171,15 @@ body.dark .icon-btn:hover {
 body.dark .card {
   background: var(--bg-card);
   color: var(--text-main);
-  border: 1px solid rgba(255,255,255,0.02);
-  box-shadow: 0 8px 20px rgba(2,6,23,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.2);
 }
 
 /* nagłówek tabeli i wiersze - użyj ciemnych paneli */
 body.dark .table thead th {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-strong);
-  border-bottom: 1px solid rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 /* zachowaj zaokrąglenia nagłówka tabeli jak w light mode */
@@ -213,13 +210,13 @@ body.dark .table tbody td {
 body.dark .table tbody tr {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 16px rgba(2,6,23,0.12);
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.12);
   background: transparent;
 }
 
 /* zamiast jasnego niebieskiego glow użylem cienia */
 body.dark .table tbody tr {
-  box-shadow: 0 6px 16px rgba(2,6,23,0.18);
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.18);
 }
 
 /* Sidebar links (override light-specific backgrounds) */
@@ -230,16 +227,17 @@ body.dark .nav-link {
 }
 
 body.dark .nav-link:hover {
-  background: rgba(99,102,241,0.06);
+  background: rgba(99, 102, 241, 0.06);
 }
 
 body.dark .nav-link.active {
-  background: rgba(99,102,241,0.08);
+  background: rgba(99, 102, 241, 0.08);
   color: var(--primary);
 }
 
 /* pola informacyjne w prawej kolumnie */
-body.dark .backup-info, body.dark .backup-info-container .card {
+body.dark .backup-info,
+body.dark .backup-info-container .card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
 }
@@ -248,12 +246,13 @@ body.dark .backup-info, body.dark .backup-info-container .card {
 body.dark .restore-btn,
 body.dark .primary-btn,
 body.dark .logout-btn {
-  box-shadow: 0 6px 18px rgba(58,97,255,0.18);
+  box-shadow: 0 6px 18px rgba(58, 97, 255, 0.18);
 }
 
 /* Inputs & selects already use variables; ensure placeholders remain readable */
-body.dark input::placeholder, body.dark textarea::placeholder {
-  color: rgba(229,231,235,0.6);
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: rgba(229, 231, 235, 0.6);
 }
 
 /* kolor statusu sukcesu w trybie ciemnym */
@@ -300,7 +299,7 @@ body.dark .file-btn {
 }
 
 body.dark .file-btn:hover {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-color: var(--primary);
 }
 
@@ -318,12 +317,11 @@ body.dark select {
   border: 1px solid var(--input-border);
 }
 
-
 /* system status - nadpisania dla ciemnego motywu */
 body.dark .system-status-card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
-  box-shadow: 0 8px 26px rgba(2,6,23,0.45);
+  box-shadow: 0 8px 26px rgba(2, 6, 23, 0.45);
 }
 
 body.dark .system-status-card .card-header h3,
@@ -340,7 +338,7 @@ body.dark .status-item {
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   color: var(--text-main);
-  box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.25);
 }
 
 body.dark .status-item strong {
@@ -352,21 +350,27 @@ body.dark .status-item p {
 }
 
 /* kropki statusu - ten sam kolor + subtelny pierścień */
-body.dark .status-dot.ok { box-shadow: 0 0 0 4px rgba(34,197,94,0.06); }
-body.dark .status-dot.warn { box-shadow: 0 0 0 4px rgba(245,158,11,0.06); }
-body.dark .status-dot.error { box-shadow: 0 0 0 4px rgba(239,68,68,0.06); }
+body.dark .status-dot.ok {
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.06);
+}
+body.dark .status-dot.warn {
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.06);
+}
+body.dark .status-dot.error {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.06);
+}
 
 /* odznaki statusu - delikatne tło i czytelny tekst */
 body.dark .system-status-badge.ok {
-  background: rgba(22,165,74,0.10);
+  background: rgba(22, 165, 74, 0.1);
   color: #bbf7d0;
 }
 body.dark .system-status-badge.warn {
-  background: rgba(245,158,11,0.08);
+  background: rgba(245, 158, 11, 0.08);
   color: #fef3c7;
 }
 body.dark .system-status-badge.error {
-  background: rgba(239,68,68,0.08);
+  background: rgba(239, 68, 68, 0.08);
   color: #fee2e2;
 }
 
@@ -374,7 +378,7 @@ body.dark .system-status-badge.error {
 body.dark .history-container {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
-  box-shadow: 0 8px 26px rgba(2,6,23,0.45);
+  box-shadow: 0 8px 26px rgba(2, 6, 23, 0.45);
   color: var(--text-main);
 }
 
@@ -387,7 +391,7 @@ body.dark .history-top .status-filter {
 
 /* nagłówki tabeli i wiersze już nadpisane globalnie, tutaj tylko drobne poprawki */
 body.dark .table thead th {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 /* ===== Settings visibility fixes ===== */
@@ -420,5 +424,11 @@ body.dark input[type="time"]::-webkit-datetime-edit-text {
   color: var(--input-text);
 }
 
+/* DARK MODE: tło suwaka (toggle-switch) na kolor tła aplikacji */
+body.dark .toggle-switch {
+  background: var(--bg-main);
+}
 
-
+body.dark .toggle-switch.on {
+  background: #3a61ff;
+}
