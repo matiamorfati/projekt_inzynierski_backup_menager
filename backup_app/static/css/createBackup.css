@@ -538,3 +538,24 @@ textarea.input {
     font-size: 18px;
   }
 }
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  font-size: 16px;
+  background: #e8ebff;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 17px;
+}
+.summary-item p {
+  color: #3a61ff;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.highlight {
+  color: #1d2636;
+  font-weight: 700;
+}

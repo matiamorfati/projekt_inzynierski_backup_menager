@@ -1,7 +1,6 @@
 let allBackups = [];
 
 function formatDateNoSeconds(dateString) {
-  // Obsługuje formaty ISO i inne typowe
   const date = new Date(dateString);
   if (isNaN(date)) return dateString;
   // yyyy-mm-dd HH:MM
@@ -35,7 +34,7 @@ function renderHistory(backups) {
       const description = backup.description?.trim()
         ? backup.description
         : "Brak opisu";
-      // Format date without seconds
+
       const formattedDate = formatDateNoSeconds(backup.date);
       return `
               <tr>

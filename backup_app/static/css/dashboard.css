@@ -481,6 +481,10 @@ select {
   border-radius: 8px;
 }
 
+.marginminus {
+  margin-top: -6px;
+}
+
 .enable-autobackup-setting {
   display: flex;
   align-items: center;

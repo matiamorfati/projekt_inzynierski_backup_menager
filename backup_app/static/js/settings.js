@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ============================
-     TOGGLES – wizualny stan
-  ============================ */
-
   function bindToggle(wrapperId, checkboxId) {
     const wrap = document.getElementById(wrapperId);
     const checkbox = document.getElementById(checkboxId);
@@ -20,10 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   bindToggle("autoWrap", "auto-backup-enabled");
   bindToggle("mailWrap", "mail-notifier-enabled");
 
-  /* ============================
-     MAIL NOTIFIER – pokaż/ukryj email
-  ============================ */
-
   const mailCheckbox = document.getElementById("mail-notifier-enabled");
   const mailGroup = document.getElementById("mail-notifier-email-group");
 
@@ -35,10 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateMailVisibility();
     mailCheckbox.addEventListener("change", updateMailVisibility);
   }
-
-  /* ============================
-     AUTO BACKUP FORM
-  ============================ */
 
   const autoForm = document.getElementById("auto-backup-form");
 
@@ -74,10 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  /* ============================
-     USER CONFIG FORM
-  ============================ */
 
   const userForm = document.getElementById("user-config-form");
 
@@ -118,10 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ============================
-   STATUS OVERLAYS
-============================ */
-
 function showSuccess() {
   const el = document.getElementById("status-success");
   if (el) el.style.display = "flex";
@@ -139,10 +119,6 @@ function hideStatus() {
   if (success) success.style.display = "none";
   if (error) error.style.display = "none";
 }
-
-/* ============================
-   CSRF – Django helper
-============================ */
 
 function getCSRFToken() {
   return document.cookie

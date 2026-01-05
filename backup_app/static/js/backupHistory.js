@@ -33,7 +33,7 @@ function renderHistory(backups) {
       const description = backup.description?.trim()
         ? backup.description
         : "Brak opisu";
-      // Format date without seconds
+
       const formattedDate = formatDateNoSeconds(backup.date);
       return `
               <tr>
