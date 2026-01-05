@@ -118,6 +118,69 @@ document.addEventListener("DOMContentLoaded", () => {
     destinationInput.value = rootFolder;
   });
 
+  const summaryName = document.getElementById("summary-name");
+  if (nameInput && summaryName) {
+    nameInput.addEventListener("input", () => {
+      summaryName.textContent = nameInput.value || "your backup";
+    });
+  }
+
+  const summarySources = document.querySelectorAll("#summary-sources");
+  if (sourcesInput && summarySources.length) {
+    const updateSummarySources = () => {
+      const dirs = sourcesInput.value
+        .split(/\n|;/)
+        .map((x) => x.trim())
+        .filter((x) => x.length > 0);
+      summarySources.forEach((el, idx) => {
+        if (dirs[idx]) {
+          el.textContent = dirs[idx];
+          el.style.display = "";
+        } else {
+          el.textContent = "";
+          el.style.display = "none";
+        }
+      });
+    };
+    sourcesInput.addEventListener("input", updateSummarySources);
+
+    updateSummarySources();
+  }
+
+  const summaryLocal = document.getElementById(
+    "summary-destination-path-local"
+  );
+  const summaryDrive = document.getElementById(
+    "summary-destination-path-google-drive"
+  );
+  if (backupTypeSelect && summaryLocal && summaryDrive) {
+    const updateSummaryDestination = () => {
+      const value = backupTypeSelect.value;
+      if (value === "local") {
+        summaryLocal.parentElement.style.display = "";
+        summaryDrive.parentElement.style.display = "none";
+      } else if (value === "drive") {
+        summaryLocal.parentElement.style.display = "none";
+        summaryDrive.parentElement.style.display = "";
+      } else if (value === "both") {
+        summaryLocal.parentElement.style.display = "";
+        summaryDrive.parentElement.style.display = "";
+      } else {
+        summaryLocal.parentElement.style.display = "none";
+        summaryDrive.parentElement.style.display = "none";
+      }
+    };
+    backupTypeSelect.addEventListener("change", updateSummaryDestination);
+
+    updateSummaryDestination();
+  }
+
+  if (destinationInput && summaryLocal) {
+    destinationInput.addEventListener("input", () => {
+      summaryLocal.textContent = destinationInput.value || "somewhere";
+    });
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     setMessage("");
@@ -142,17 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (
-      (backupType === "local" || backupType === "both") &&
-      !destinationInput.value.trim()
-    ) {
-      setMessage("Please provide local destination folder.", "error");
-      destinationInput.focus();
-      return;
-    }
-
     const payload = {
-      name,
+      custom_name: name, // zamiast name
       sources,
       backup_type: backupType,
     };

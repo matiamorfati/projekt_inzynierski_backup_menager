@@ -187,6 +187,12 @@
                       multiple
                     />
                     <div class="file-picker-btn-wrapper">
+                            <span
+                  class="ui-badge"
+                  title="UI prototype / planned feature"
+                >
+                  Prototype
+                </span>
                       <button
                         type="button"
                         class="file-btn"
@@ -222,9 +228,9 @@
                   </select>
                 </div>
 
-                <!-- DESTINATION (conditional) -->
+             
                 <div class="form-group hidden" id="destination-group">
-                  <label for="destination">Local destination folder</label>
+                  <label for="destination">Local destination folder <span class="card-subtitle">(when left empty, default destination from settings will be used)</span></label>
                   <div class="file-picker">
                     <input
                       type="text"
@@ -264,25 +270,46 @@
               <div class="summary-details">
                 <div class="summary-item">
                   <p>Name:</p>
-                   <div id="summary-name">your backup</div>
+                   <div id="summary-name"></div>
                 </div>
                 <div class="summary-item">
                   <p>Source directories:</p>
-                  <div id="summary-sources">1 source</div>
-                  <div id="summary-sources">2 source</div>
-                  <div id="summary-sources">3 source</div>
+                  <div id="summary-sources"></div>
+                  <div id="summary-sources"></div>
+                  <div id="summary-sources"></div>
                 </div>
                 <div class="summary-item">
+            
                   <p>Total data size:</p>
                   <div id="summary-size">42.3 GB</div>
+                        <span
+                  class="ui-badge"
+                  title="UI prototype / planned feature"
+                >
+                  Prototype
+                </span>
                 </div>
                 <div class="summary-item">
+               
                   <p>Files:</p>
                   <div id="summary-files">17231</div>
+                     <span
+                  class="ui-badge ui-badge--prototype"
+                  title="UI prototype / planned feature"
+                >
+                  Prototype
+                </span>
                 </div>
                 <div class="summary-item">
+                
                   <p>Estimated backup size:</p>
                   <div id="summary-estimated-size"> ~20 GB</div>
+                    <span
+                  class="ui-badge ui-badge--prototype"
+                  title="UI prototype / planned feature"
+                >
+                  Prototype
+                </span>
                 </div>
                 <div class="summary-item">
                   <p>Backup destination:</p>

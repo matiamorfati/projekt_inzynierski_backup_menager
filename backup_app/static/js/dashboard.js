@@ -25,7 +25,7 @@ function renderHistory(backups) {
     return;
   }
 
-  const limitedBackups = backups.slice(0, 5);
+  const limitedBackups = backups.slice(0, 3);
   tableBody.innerHTML = limitedBackups
     .map((backup) => {
       const statusOk = (backup.status || "").toUpperCase() === "OK";
