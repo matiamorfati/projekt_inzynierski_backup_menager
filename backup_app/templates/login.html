@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<!-- strona logowania -->
 <head>
   <meta charset="UTF-8" />
   <title>Login – Backup Manager</title>
@@ -9,14 +10,17 @@
 </head>
 
 <body>
+  <!-- panel logowania -->
   <div class="login-page">
 
+    <!-- karta -->
     <section class="login-card">
       <h2 class="login-title">Backup Manager</h2>
       <p class="sub">Login to your account</p>
 
       <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
+        {!-- poля formularza -->
+        <% csrf_token %}
 
         <label class="field-label">Username</label>
         <input

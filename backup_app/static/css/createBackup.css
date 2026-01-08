@@ -78,11 +78,11 @@ a:hover {
   flex-direction: column;
 }
 
-/* nagłówek */
+/* nagłówek - sticky na górze */
 .header {
   height: 84px;
-  background: #ffffff;
-  border-bottom: 1.5px solid #e3e6ee;
+  background: var(--bg-header);
+  border-bottom: 1.5px solid var(--border-light);
   box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.06);
   display: flex;
   align-items: center;
@@ -112,11 +112,16 @@ a:hover {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 14px 18px;
-  border-radius: 10px;
+  padding: 16px 20px;
+  border-radius: 12px;
   font-weight: 700;
   color: #374151;
-  font-size: 22px;
+  font-size: 26px;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
 }
 
 .login-btn {
@@ -160,18 +165,103 @@ a:hover {
   flex: 1;
 }
 
-/* sidebar */
+/* sidebar - lewy panel nawigacji */
 .sidebar {
   width: 260px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   background: #ffffff;
-  padding: 28px 20px;
+  padding: 28px 20px 20px;
   border-radius: 0;
   border-right: 1.5px solid #e3e6ee;
   box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
-  align-self: stretch;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* profil użytkownika na dnie sidebaru */
+.user-section {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #e3e6ee;
+  width: 100%;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #5b7fff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  grid-row: 1;
+}
+
+.user-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #222;
+  font-size: 15px;
+}
+
+.user-email {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.logout-form {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+/* przycisk wylogowania */
+
+.logout-link {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin-top: 12px;
+  font-family: inherit;
+  border-radius: 8px;
+  font-weight: 500;
+  width: calc(100% - 12px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logout-link:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.logout-link:active {
+  transform: translateY(1px);
 }
 
 .nav-link {
@@ -244,6 +334,7 @@ a:hover {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
+/* karty - główne panele treści */
 }
 
 .card {
@@ -345,6 +436,7 @@ a:hover {
 .required {
   color: #b91c1c;
   margin-left: 4px;
+/* pola formularzy */
 }
 
 .input {
@@ -461,6 +553,7 @@ textarea.input {
   display: flex;
   flex-direction: column;
   gap: 8px;
+/* główny przycisk */
 }
 
 /* przycisk */

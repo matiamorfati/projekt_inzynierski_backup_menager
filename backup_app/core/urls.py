@@ -6,7 +6,6 @@ urlpatterns = [
     # Widoki HTML
     path('', views.dashboard, name='dashboard'),
     path('history/', views.history, name='history'),
-    path('login/', views.login_view, name='login'),
     path('create-backup/', views.create_backup, name='create_backup'),
     path('settings/', views.settings_view, name='settings'),
     

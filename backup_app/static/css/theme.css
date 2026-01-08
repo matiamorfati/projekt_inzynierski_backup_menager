@@ -1,6 +1,4 @@
-/* =========================
-   ZMIENNE MOTYWU – LIGHT
-   ========================= */
+/* zmienne - light mode */
 :root {
   /* tła */
   --bg-main: #f4f5f7;
@@ -29,14 +27,12 @@
   --enabled-text: #134e28;
 }
 
-/* =========================
-   ZMIENNE MOTYWU – DARK
-   ========================= */
+/* zmienne - dark mode */
 body.dark {
   /* tła */
   --bg-main: #0f172a;
   --bg-card: #1e293b;
-  --bg-header: #020617;
+  --bg-header: #1e293b;
   --bg-sidebar: #1e293b;
 
   /* tekst */
@@ -62,28 +58,27 @@ body.dark {
 
 /* =========================
    GLOBAL
-   ========================= */
+   global - tła i tekst */
 body {
   background: var(--bg-main);
   color: var(--text-main);
 }
 
-/* =========================
-   HEADER
-   ========================= */
-.header {
-  background: var(--bg-header);
+/* nagłówekr);
   border-bottom: 1px solid var(--border-light);
 }
 
 /* =========================
    SIDEBAR
    ========================= */
-.sidebar .nav-link {
-  background: var(--bg-sidebar);
-  color: var(--text-main);
-  transition: background 0.2s ease, color 0.2s ease;
+.sidebar {
+  bsidebar */
+.sidebar {
+  background: var(--bg-card);
+  border-right: 1.5px solid var(--border-light);
 }
+
+/* menu w sidebaru */}
 
 /* hover na element menu */
 .sidebar .nav-link:hover {
@@ -162,20 +157,7 @@ select:focus,
 /* =========================
    DARK MODE – IKONA 🌙 / ☀️
    ========================= */
-.icon-btn {
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
-}
-
-/* hover – light mode */
-.icon-btn:hover {
-  background: rgba(58, 97, 255, 0.12);
-  transform: scale(1.08);
-}
-
-/* hover – dark mode */
-body.dark .icon-btn:hover {
-  background: rgba(99, 102, 241, 0.25);
-}
+/* Icon button styles moved to individual page CSS files */
 
 /* poprawki dla ciemnego motywu - usuwają jaskrawe białe pola */
 body.dark .card {
@@ -229,20 +211,144 @@ body.dark .table tbody tr {
   box-shadow: 0 6px 16px rgba(2, 6, 23, 0.18);
 }
 
+/* Dashboard stat cards - ciemne tło */
+body.dark .stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.25);
+}
+
+body.dark .stat-card h4 {
+  color: var(--text-muted);
+}
+
+body.dark .stat-value {
+  color: var(--text-strong);
+}
+
+body.dark .icon-wrapper {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+}
+
+/* Settings summary card - ciemne tło */
+body.dark .settings-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+body.dark .settings-section {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+/* Settings section details - jaśniejsza czcionka */
+body.dark .detail-item {
+  color: var(--text-muted);
+}
+
+body.dark .settings-section-header h4 {
+  color: var(--text-strong);
+}
+
+/* Backup locations - ciemne tło */
+body.dark .location-item {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+body.dark .location-label {
+  color: var(--primary);
+}
+
+body.dark .location-value {
+  color: var(--text-main);
+}
+
+body.dark .locations-title {
+  color: var(--text-strong);
+}
+
+/* Toggle/Enabled badge - ciemniejsze tło */
+body.dark .toggle {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+body.dark .status-badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* System Status - ciemne tła ikonek */
+body.dark .status-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+body.dark .status-icon-wrapper {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+body.dark .status-icon {
+  color: var(--primary);
+}
+
+body.dark .status-content strong {
+  color: var(--text-strong);
+}
+
+body.dark .status-content p {
+  color: #4ade80;
+}
+
 /* Sidebar links (override light-specific backgrounds) */
+body.dark .sidebar {
+  background: var(--bg-card);
+  border-right: 1.5px solid var(--border-light);
+  box-shadow: 2px 0 8px rgba(2, 6, 23, 0.4);
+}
+
 body.dark .nav-link {
-  background: var(--bg-sidebar);
+  background: transparent;
   color: var(--text-main);
   box-shadow: none;
 }
 
 body.dark .nav-link:hover {
-  background: rgba(99, 102, 241, 0.06);
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-strong);
 }
 
 body.dark .nav-link.active {
-  background: rgba(99, 102, 241, 0.08);
+  background: rgba(99, 102, 241, 0.15);
   color: var(--primary);
+}
+
+body.dark .user-section {
+  border-top: 1px solid var(--border-light);
+}
+
+body.dark .user-name {
+  color: var(--text-strong);
+}
+
+body.dark .user-email {
+  color: var(--text-muted);
+}
+
+body.dark .logout-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+}
+
+body.dark .logout-link:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
 }
 
 /* pola informacyjne w prawej kolumnie */
@@ -303,14 +409,15 @@ body.dark .form-group label {
 /* przycisk wybierania folderów - dopasowany do dark theme */
 body.dark .file-btn {
   /* keep Select folders as primary action in dark mode as well */
-  background: var(--primary);
+  background: #3a61ff !important;
   color: #fff;
   border: none;
   box-shadow: 0 6px 18px rgba(58, 97, 255, 0.12);
 }
 
 body.dark .file-btn:hover {
-  background: #2f52d9;
+  background: #2f53e6 !important;
+  box-shadow: 0 8px 22px rgba(58, 97, 255, 0.25);
 }
 
 body.dark .file-summary {
@@ -516,17 +623,36 @@ body.dark .btn-primary { box-shadow: 0 6px 18px rgba(58,97,255,0.12); }
 /* small responsive tweak kept from original pages */
 @media (max-width: 1024px) { body.dark .sidebar { background: transparent; } }
 
+/* scrollbar - ciemny w dark mode */
+body.dark ::-webkit-scrollbar {
+  width: 12px;
+}
+
+body.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 6px;
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
 /* koniec przeniesionych nadpisów */
 
 /* Force Select folders to use primary accent in dark mode (more specific to override other page CSS) */
 body.dark .file-picker-btn-wrapper .file-btn,
 body.dark .file-btn.special-primary {
-  background: var(--primary);
+  background: #3a61ff !important;
   color: #fff;
   border: none;
   box-shadow: 0 6px 18px rgba(58, 97, 255, 0.12);
 }
 body.dark .file-picker-btn-wrapper .file-btn:hover,
 body.dark .file-btn.special-primary:hover {
-  background: #2f52d9;
+  background: #2f53e6 !important;
+  box-shadow: 0 8px 22px rgba(58, 97, 255, 0.25);
 }

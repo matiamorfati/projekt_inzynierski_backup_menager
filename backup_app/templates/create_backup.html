@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <!-- meta i style -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,19 +42,6 @@
         <div class="header-actions">
           <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
-
-          <!-- USER -->
-          <span class="user-label"> {{ request.user.username }} </span>
-
-          <!-- LOGOUT -->
-          <form
-            method="post"
-            action="{% url 'logout' %}"
-            style="display: inline"
-          >
-            {% csrf_token %}
-            <button type="submit" class="logout-btn">Log out</button>
-          </form>
         </div>
       </header>
 
@@ -132,6 +120,19 @@
 
             Settings
           </a>
+
+          <!-- USER SECTION -->
+          <div class="user-section">
+            <div class="user-avatar">{{ request.user.username|first|upper }}</div>
+            <div class="user-info">
+              <div class="user-name">{{ request.user.username }}</div>
+              <div class="user-email">{{ request.user.email }}</div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="logout-link">→ Log out</button>
+            </form>
+          </div>
         </nav>
 
         <!-- MAIN CONTENT -->

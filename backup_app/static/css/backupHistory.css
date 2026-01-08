@@ -71,8 +71,8 @@ i {
 /* nagłówek */
 .header {
   height: 84px;
-  background: #fff;
-  border-bottom: 1.5px solid #e3e6ee;
+  background: var(--bg-header);
+  border-bottom: 1.5px solid var(--border-light);
   box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.06);
   display: flex;
   align-items: center;
@@ -101,11 +101,16 @@ i {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 14px 18px;
-  border-radius: 10px;
+  padding: 16px 20px;
+  border-radius: 12px;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 26px;
   color: #374151;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
 }
 .login-btn {
   padding: 14px 20px;
@@ -171,11 +176,94 @@ a:active {
   flex-direction: column;
   gap: 15px;
   background: #ffffff;
-  padding: 28px 20px;
+  padding: 28px 20px 20px;
   border-radius: 0;
   border-right: 1.5px solid #e3e6ee;
   box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
-  align-self: stretch;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.user-section {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #e3e6ee;
+  width: 100%;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #5b7fff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  grid-row: 1;
+}
+
+.user-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #222;
+  font-size: 15px;
+}
+
+.user-email {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.logout-form {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.logout-link {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin-top: 12px;
+  font-family: inherit;
+  border-radius: 8px;
+  font-weight: 500;
+  width: calc(100% - 12px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logout-link:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.logout-link:active {
+  transform: translateY(1px);
 }
 .nav-link {
   display: flex;
@@ -295,7 +383,7 @@ a:active {
   box-shadow: 0 0 0 2px rgba(58, 97, 255, 0.1);
 }
 
-/* tabela */
+/* tabela backupów */
 .table {
   width: 100%;
   border-collapse: separate;
@@ -304,6 +392,7 @@ a:active {
   background: transparent;
 }
 
+/* nagłówek tabeli */
 .table thead th {
   text-align: left;
   font-weight: 700;
@@ -321,6 +410,7 @@ a:active {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+/* komórki tabeli */
 
 .table tbody td {
   padding: 18px 20px;
@@ -329,6 +419,7 @@ a:active {
   font-size: 17px;
   vertical-align: middle;
 }
+/* wiersze tabeli */
 
 .table tbody tr {
   border-radius: 12px;
