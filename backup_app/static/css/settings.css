@@ -150,17 +150,23 @@ a {
 
 .layout {
   display: flex;
-  gap: 24px;
-  padding: 28px 24px;
+  gap: 0;
+  padding: 0;
   flex: 1;
   align-items: flex-start;
 }
 
 .sidebar {
-  width: 220px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  background: #ffffff;
+  padding: 28px 20px;
+  border-radius: 0;
+  border-right: 1.5px solid #e3e6ee;
+  box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
+  align-self: stretch;
 }
 
 .nav-link {
@@ -207,6 +213,24 @@ a {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  align-items: center;
+  padding: 28px 24px;
+}
+
+.content-header {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* panel podobny do dashboard */
+.settings-panel {
+  max-width: 1180px;
+  margin: 0;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #eef0f3;
 }
 
 .content-header h2 {
@@ -227,7 +251,10 @@ a {
   display: flex;
   gap: 40px;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: auto;
 }
 
 .card {
@@ -239,9 +266,17 @@ a {
 
 /* lewy card – delikatnie węższy */
 .settings-card {
-  flex: 1 1;
+  flex: 1 1 0;
   max-width: 900px;
-  min-width: 550px;
+  min-width: 620px;
+}
+
+/* prawa kolumna z backup-info i user config */
+.settings-right-col {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .settings-card.card {
@@ -255,6 +290,45 @@ a {
   line-height: 1.3;
   font-weight: 500;
   font-size: 25px;
+}
+
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0.2rem;
+}
+
+.card-header-icon {
+  width: 24px;
+  height: 24px;
+  color: #3a61ff;
+  flex-shrink: 0;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  color: #ffffff;
+  flex-shrink: 0;
+  margin-right: 6px;
+  min-width: 18px;
+  min-height: 18px;
+  margin-bottom: 1px;
+}
+
+.drive-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drive-row .file-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================================================
@@ -371,6 +445,7 @@ a {
 
 .backup-info-container {
   display: flex;
+  gap: 12px;
 }
 
 .backup-info-tittle {
@@ -382,13 +457,11 @@ a {
 
 .card.backup-info {
   padding: 16px 20px;
-  margin: 20px 20px 20px 0;
-  max-width: 200px;
+  margin: 0;
   background: #e8ebff;
   font-size: 17px;
   color: #374151;
-  width: 60%;
-
+  width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(58, 97, 255, 0.07);
 }

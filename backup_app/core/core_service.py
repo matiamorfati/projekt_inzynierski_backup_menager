@@ -83,9 +83,9 @@ def _format_bytes(size: int) -> str:
         return "0 B"
     for unit in ["B", "KB", "MB", "GB", "TB"]:
         if size < 1024:
-            return f"{size} {unit}"
+            return f"{size:.2f} {unit}"
         size = size / 1024
-    return f"{size:.1f} PB"
+    return f"{size:.2f} PB"
 
 
 def get_dashboard_stats() -> Dict[str, Any]:
