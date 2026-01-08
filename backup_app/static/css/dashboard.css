@@ -507,10 +507,10 @@ select {
   font-weight: 700;
   padding: 8px 18px;
   border-radius: 8px;
-  background: #d1fae5;
-  color: #15803d;
+  background: var(--enabled-bg);
+  color: var(--enabled-text);
   box-shadow: 0 1px 4px rgba(22, 130, 61, 0.08);
-  margin-left: 8px;
+  margin-left: auto;
 }
 
 /* formularze w kartach */
@@ -563,9 +563,9 @@ select {
 }
 
 .card-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 2vw;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 24px;
 }
 
 .system-status-card {
@@ -687,3 +687,67 @@ select {
 .ui-badge:hover {
   background: #fffb0065;
 }
+
+/* Dark-mode overrides moved to theme.css (see theme.css for centralized rules) */
+
+/* small stats row */
+.stats-row {
+  display: flex;
+  gap: 18px;
+  margin: 10px 0 8px 0;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid #eef0f3;
+  padding: 18px 20px;
+  border-radius: 12px;
+  min-width: 220px;
+  box-shadow: 0 8px 26px rgba(15, 15, 15, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.stat-card h4 {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 600;
+}
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0b1220;
+  margin: 0;
+}
+
+.stat-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(58, 97, 255, 0.12); /* light primary tint */
+  color: #3a61ff; /* primary */
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(58, 97, 255, 0.06);
+}
+
+/* Make stats-row span both grid columns */
+.card-rows > .stats-row { grid-column: 1 / -1; display: flex; gap: 18px; margin-bottom: 8px; }
+
+/* Make system-status span both columns, below the two main cards */
+.card-rows > .system-status-card { grid-column: 1 / -1; }
+
+/* responsive shrink */
+@media (max-width: 980px) {
+  .stats-row { flex-wrap: wrap; }
+  .stat-card { min-width: 46%; }
+}
+

@@ -388,17 +388,18 @@ textarea.input {
   padding: 10px 16px;
   min-width: auto;
   border-radius: 10px;
-  border: 1px solid #e2e6ea;
-  background: #ffffff;
+  border: none;
+  background: var(--primary);
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, transform 0.12s ease;
   font-size: 17px;
 }
 
 .file-btn:hover {
-  background: #f4f6ff;
-  border-color: #3a61ff;
+  background: #2f52d9;
+  transform: translateY(-1px);
 }
 
 .file-summary {
@@ -442,7 +443,7 @@ textarea.input {
 
 /* przycisk */
 .btn-primary {
-  background: #3a61ff;
+  background: var(--primary);
   width: 60%;
   align-self: center;
   color: #ffffff;
@@ -594,3 +595,5 @@ textarea.input {
 .ui-badge:hover {
   background: #fffb0065;
 }
+
+/* Dark-mode overrides moved to theme.css (centralized theme file) */

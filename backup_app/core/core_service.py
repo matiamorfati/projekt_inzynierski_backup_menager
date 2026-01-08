@@ -75,6 +75,41 @@ def get_system_status() -> Dict[str, Any]:
     }
 
 
+def _format_bytes(size: int) -> str:
+    """Proste formatowanie bajtów na czytelny string (KB/MB/GB)."""
+    try:
+        size = int(size)
+    except Exception:
+        return "0 B"
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
+        if size < 1024:
+            return f"{size} {unit}"
+        size = size / 1024
+    return f"{size:.1f} PB"
+
+
+def get_dashboard_stats() -> Dict[str, Any]:
+    """
+    Zwraca statystyki do dashboardu: total_backups, storage_used (czytelne), success_rate (%).
+    """
+    stats = _db.get_backup_stats() or {"total": 0, "storage_used": 0, "success_count": 0}
+    total = stats.get("total", 0)
+    storage_used = stats.get("storage_used", 0)
+    success = stats.get("success_count", 0)
+    success_rate = 0
+    if total > 0:
+        try:
+            success_rate = round((success / total) * 100, 1)
+        except Exception:
+            success_rate = 0
+
+    return {
+        "total_backups": total,
+        "storage_used": _format_bytes(storage_used),
+        "success_rate": success_rate,
+    }
+
+
 # 1. Backupy
 
 

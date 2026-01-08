@@ -9,7 +9,8 @@ import json
 from . import core_service
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    stats = core_service.get_dashboard_stats()
+    return render(request, 'dashboard.html', {"stats": stats})
 
 def history(request):
     return render(request, 'backup_history.html')

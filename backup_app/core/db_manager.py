@@ -419,6 +419,32 @@ class DatabaseManager:
         except sqlite3.Error as e:
             self.logger.error(f"Błąd podczas odczytu historii: {e}")
             return []
+
+    def get_backup_stats(self):
+        """
+        Zwraca podstawowe statystyki dotyczące backupów:
+        - total: liczba rekordów
+        - storage_used: suma rozmiarów (w bajtach)
+        - success_count: liczba rekordów ze statusem 'OK'
+        """
+        try:
+            self.cursor.execute("SELECT COUNT(1), COALESCE(SUM(size),0) FROM backups")
+            total_row = self.cursor.fetchone() or (0, 0)
+            total = total_row[0] or 0
+            storage_used = total_row[1] or 0
+
+            self.cursor.execute("SELECT COUNT(1) FROM backups WHERE status = ?", ("OK",))
+            success_row = self.cursor.fetchone() or (0,)
+            success_count = success_row[0] or 0
+
+            return {
+                "total": total,
+                "storage_used": storage_used,
+                "success_count": success_count,
+            }
+        except sqlite3.Error as e:
+            self.logger.error(f"Błąd podczas pobierania statystyk backupów: {e}")
+            return {"total": 0, "storage_used": 0, "success_count": 0}
         
     def get_backup_by_name(self, name: str):
         """

@@ -147,6 +147,49 @@
             </div>
           </div>
           <div class="card-rows">
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-top">
+                  <div class="icon-wrapper">
+                    <!-- backup icon -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M5 11v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M9 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <h4>Total Backups</h4>
+                </div>
+                <p class="stat-value">{{ stats.total_backups|default:"0" }}</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-top">
+                  <div class="icon-wrapper">
+                    <!-- storage icon -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="4" width="18" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                      <rect x="3" y="14" width="18" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <h4>Storage Used</h4>
+                </div>
+                <p class="stat-value">{{ stats.storage_used|default:"0 B" }}</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-top">
+                  <div class="icon-wrapper">
+                    <!-- success icon -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <h4>Success Rate</h4>
+                </div>
+                <p class="stat-value">{{ stats.success_rate|default:"0" }}%</p>
+              </div>
+            </div>
             <div class="cards">
               <section class="card">
                 <div class="card-header">
