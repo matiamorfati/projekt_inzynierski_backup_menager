@@ -46,9 +46,6 @@ function renderHistory(backups) {
       const statusOk = (backup.status || "").toUpperCase() === "OK";
       const statusClass = statusOk ? "confirmed" : "failed";
       const statusLabel = statusOk ? "Succeeded" : backup.status || "Failed";
-      const description = backup.description?.trim()
-        ? backup.description
-        : "Brak opisu";
 
       const formattedDate = formatDateNoSeconds(backup.date);
       return `
@@ -56,7 +53,9 @@ function renderHistory(backups) {
                 <td>${backup.custom_name}</td>
                 <td>${formattedDate}</td>
                 <td>${formatBytes(backup.size)}</td>
-                <td class="status ${statusClass}">${statusOk ? "✔" : "✖"} <span>${statusLabel}</span></td>
+                <td class="status ${statusClass}">${
+        statusOk ? "✔" : "✖"
+      } <span>${statusLabel}</span></td>
               </tr>
             `;
     })
@@ -84,49 +83,6 @@ async function fetchHistory() {
   }
 }
 
-async function handleRestore(backupName) {
-  try {
-    const response = await fetch("/api/restore/full/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ backup_name: backupName }),
-    });
-
-    const data = await response.json();
-    if (response.ok && data.ok) {
-      showSuccess();
-    } else {
-      showError();
-    }
-  } catch (error) {
-    console.error("Błąd podczas przywracania:", error);
-    showError();
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  const tableBody = document.getElementById("history-table-body");
-  const searchInput = document.querySelector(".search");
-  const filterSelect = document.querySelector(".status-filter");
-
-  tableBody.addEventListener("click", (event) => {
-    const button = event.target.closest(".restore-btn");
-    if (!button) return;
-
-    const backupName = button.getAttribute("data-name");
-    if (backupName) {
-      handleRestore(backupName);
-    }
-  });
-
-  if (searchInput) {
-    searchInput.addEventListener("input", filterAndRender);
-  }
-  if (filterSelect) {
-    filterSelect.addEventListener("change", filterAndRender);
-  }
-
   fetchHistory();
 });
