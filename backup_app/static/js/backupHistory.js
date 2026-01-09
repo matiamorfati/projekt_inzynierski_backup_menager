@@ -37,7 +37,7 @@ function renderHistory(backups) {
       const formattedDate = formatDateNoSeconds(backup.date);
       return `
               <tr>
-                <td>${backup.name}</td>
+                <td>${backup.custom_name}</td>
                 <td>${formattedDate}</td>
                 <td>${description}</td>
                 <td class="status ${statusClass}">${
@@ -64,8 +64,10 @@ function filterAndRender() {
   if (searchValue) {
     filtered = filtered.filter(
       (b) =>
+        (b.custom_name && b.custom_name.toLowerCase().includes(searchValue)) ||
         (b.name && b.name.toLowerCase().includes(searchValue)) ||
-        (b.date && b.date.toLowerCase().includes(searchValue))
+        (b.date && b.date.toLowerCase().includes(searchValue)) ||
+        (b.description && b.description.toLowerCase().includes(searchValue))
     );
   }
   if (filterValue === "Confirmed") {

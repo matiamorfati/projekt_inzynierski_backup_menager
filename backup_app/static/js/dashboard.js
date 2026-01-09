@@ -53,7 +53,7 @@ function renderHistory(backups) {
       const formattedDate = formatDateNoSeconds(backup.date);
       return `
               <tr>
-                <td>${backup.name}</td>
+                <td>${backup.custom_name}</td>
                 <td>${formattedDate}</td>
                 <td>${formatBytes(backup.size)}</td>
                 <td class="status ${statusClass}">${statusOk ? "✔" : "✖"} <span>${statusLabel}</span></td>
