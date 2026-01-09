@@ -20,7 +20,7 @@
 
       <form method="post" action="{% url 'login' %}">
         {!-- poля formularza -->
-        <% csrf_token %}
+        {% csrf_token %}
 
         <label class="field-label">Username</label>
         <input

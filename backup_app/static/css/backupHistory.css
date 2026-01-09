@@ -337,23 +337,55 @@ a:active {
   font-size: 17px;
 }
 
-/* kontener backup hisotry  */
-.history-container {
+/* wrapper dla całej sekcji historii */
+.history-wrapper {
   background: #fff;
-  padding: 24px;
   border-radius: 12px;
   border: 1px solid #eef0f3;
   box-shadow: 0 8px 30px rgba(15, 15, 15, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 17px;
   max-width: 1180px;
   margin: 0 auto;
   width: 100%;
   max-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* nagłówek historii */
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eef0f3;
+  flex-shrink: 0;
+}
+
+.history-header h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1d2636;
+  margin: 0;
+}
+
+.history-header-icon {
+  width: 28px;
+  height: 28px;
+  color: #3a61ff;
+  flex-shrink: 0;
+}
+
+/* kontener backup hisotry  */
+.history-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 17px;
   overflow-y: auto;
   overflow-x: hidden;
+  flex: 1;
 }
 
 /* górne filtry */
@@ -361,6 +393,7 @@ a:active {
   display: flex;
   gap: 16px;
   align-items: center;
+  padding-top: 6px;
 }
 
 .history-top .search,
@@ -502,3 +535,64 @@ a:active {
     border-radius: 8px;
   }
 }
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark .history-wrapper {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark .history-header {
+  border-bottom-color: #334155;
+}
+
+body.dark .history-header h3 {
+  color: #d8dce0;
+}
+
+body.dark .history-container {
+  background: #1e293b;
+}
+
+body.dark .search,
+body.dark .status-filter {
+  background: #1f2937;
+  color: #e5e7eb;
+  border-color: #374151;
+}
+
+body.dark .search::placeholder {
+  color: #9ca3af;
+}
+
+body.dark .table thead {
+  background: #0f172a;
+  color: #a5b4fc;
+}
+
+body.dark .table tbody tr {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark .table tbody tr:hover {
+  background: #293548;
+}
+
+body.dark .table td {
+  color: #d2d5dc;
+}
+
+body.dark .restore-btn {
+  background: #6366f1;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+body.dark .restore-btn:hover {
+  background: #4f46e5;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+

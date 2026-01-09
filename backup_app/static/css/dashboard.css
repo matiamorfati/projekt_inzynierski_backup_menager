@@ -353,6 +353,13 @@ body {
   border: 1px solid #eef0f3;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
   padding-bottom: 18px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body.dark .card {
+  border: none;
 }
 
 .card-header {
@@ -394,21 +401,45 @@ body {
 .table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 16px;
   padding: 0 22px;
 }
 
 .table thead th {
-  background: #e9edff;
-  padding: 14px;
+  background: transparent;
+  padding: 16px 14px 8px 14px;
   font-size: 14px;
   color: #2b2b8f;
+  border: none;
+  border-bottom: 1px solid #d4dbf7;
+  text-align: left;
 }
 
 .table tbody td {
-  background: #fff;
-  padding: 14px;
+  background: #e8ebff;
+  padding: 22px 14px;
   font-size: 15px;
+  border-top: 1px solid #d4dbf7;
+  border-bottom: 1px solid #d4dbf7;
+  border-left: none;
+  border-right: none;
+}
+
+.table tbody tr {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table tbody tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-left: 1px solid #d4dbf7;
+}
+
+.table tbody tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-right: 1px solid #d4dbf7;
 }
 
 .status.confirmed {
