@@ -126,26 +126,43 @@ body {
   width: 260px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
   background: #ffffff;
-  padding: 28px 20px 20px;
+  padding: 0;
   border-radius: 0;
   border-right: 1.5px solid #e3e6ee;
   box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: fixed;
+  top: 84px;
+  left: 0;
+  height: calc(100vh - 84px);
+  overflow: hidden;
+  z-index: 50;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 28px 20px 20px;
   overflow-y: auto;
+  flex: 1;
+  padding-bottom: 130px;
 }
 
 .user-section {
   display: grid;
   grid-template-columns: 50px 1fr;
   gap: 12px;
-  margin-top: auto;
-  padding-top: 20px;
+  padding: 20px;
   border-top: 1px solid #e3e6ee;
-  width: 100%;
+  border-right: 1.5px solid #e3e6ee;
+  width: 260px;
+  background: #ffffff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
 }
 
 .user-avatar {
@@ -261,6 +278,7 @@ body {
   gap: 22px;
   align-items: center;
   padding: 28px 24px;
+  margin-left: 260px;
 }
 
 .content-header {
