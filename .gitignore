@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+*.db
+backup_data.db
+/media
+/staticfiles
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials
+token.json
+credentials/*.json
+!credentials/client_secret.json
+!credentials/service_account.json
+
+# Backups
+backup_app/backups/*.zip
+backup_app/backups/**/*.zip
+
+# Logs
+logs/*.log
+*.log
+
+# Restored files
+restored_files/*
+!restored_files/.gitkeep
