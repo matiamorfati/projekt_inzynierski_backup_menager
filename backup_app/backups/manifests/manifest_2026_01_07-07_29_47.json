@@ -1,0 +1,22 @@
+{
+  "settings.js": {
+    "hash": "f304a98f6f60a641f4176eeb7f1cbc8d235f39b93d95717562514fa6313be2c0",
+    "size": 3662
+  },
+  "theme.js": {
+    "hash": "b864b88fa3f5c14e4a0653d0cf6a59ae85297c34b0c3f477876f6f44a17543bb",
+    "size": 1179
+  },
+  "dashboard.js": {
+    "hash": "e928974ce8c2e40a2c6c7825c3340c3fa2fbc62195fb3bbad43b41c38c21552f",
+    "size": 3294
+  },
+  "backupHistory.js": {
+    "hash": "8589bd8ed2e324c7a5e256ef121b07a4ebb9987fb92a92471485c6bfb2640468",
+    "size": 4245
+  },
+  "createBackup.js": {
+    "hash": "6fcd6b2b554068085e0987a2cf7139689c8a55eec95b16e74960e8f6b30e15e7",
+    "size": 7778
+  }
+}
