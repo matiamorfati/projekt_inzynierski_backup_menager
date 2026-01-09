@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <!-- meta i style -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,26 +11,15 @@
   </head>
 
   <body>
+    <!-- aplikacja -->
     <div class="app">
+      <!-- header -->
       <header class="header">
         <h1 class="brand">backUP.manager</h1>
 
         <div class="header-actions">
           <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
-
-          <!-- USER -->
-          <span class="user-label"> {{ request.user.username }} </span>
-
-          <!-- LOGOUT -->
-          <form
-            method="post"
-            action="{% url 'logout' %}"
-            style="display: inline"
-          >
-            {% csrf_token %}
-            <button type="submit" class="logout-btn">Log out</button>
-          </form>
         </div>
       </header>
 
@@ -107,6 +97,19 @@
 
             Settings
           </a>
+
+          <!-- USER SECTION -->
+          <div class="user-section">
+            <div class="user-avatar">{{ request.user.username|first|upper }}</div>
+            <div class="user-info">
+              <div class="user-name">{{ request.user.username }}</div>
+              <div class="user-email">{{ request.user.email }}</div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="logout-link">→ Log out</button>
+            </form>
+          </div>
         </nav>
 
         <main class="content">
@@ -120,32 +123,50 @@
             </div>
           </div>
 
-          <section class="history-container">
-            <div class="history-top">
-              <input
-                class="search"
-                type="text"
-                placeholder="Search by name or date"
-              />
-              <select class="status-filter" aria-label="Filter by status">
-                <option>Filter by status: All</option>
-                <option>Confirmed</option>
-                <option>Failed</option>
-              </select>
+          <section class="history-wrapper">
+            <div class="history-header">
+              <svg
+                class="history-header-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <h3>Backup History</h3>
             </div>
 
-            <table class="table" role="table" aria-label="Backup history table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="history-table-body"></tbody>
-            </table>
+            <div class="history-container">
+              <div class="history-top">
+                <input
+                  class="search"
+                  type="text"
+                  placeholder="Search by name or date"
+                />
+                <select class="status-filter" aria-label="Filter by status">
+                  <option>Filter by status: All</option>
+                  <option>Confirmed</option>
+                  <option>Failed</option>
+                </select>
+              </div>
+
+              <table class="table" role="table" aria-label="Backup history table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body"></tbody>
+              </table>
+            </div>
           </section>
         </main>
       </div>

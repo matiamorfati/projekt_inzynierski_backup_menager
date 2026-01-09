@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- meta tagi i CSS -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backup Manager</title>
@@ -33,6 +34,7 @@
   </head>
 
   <body>
+    <!-- główna aplikacja -->
     <div class="app">
       <!-- HEADER -->
       <header class="header">
@@ -41,19 +43,6 @@
         <div class="header-actions">
           <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
-
-          <!-- USER -->
-          <span class="user-label"> {{ request.user.username }} </span>
-
-          <!-- LOGOUT -->
-          <form
-            method="post"
-            action="{% url 'logout' %}"
-            style="display: inline"
-          >
-            {% csrf_token %}
-            <button type="submit" class="logout-btn">Log out</button>
-          </form>
         </div>
       </header>
 
@@ -134,7 +123,21 @@
 
             Settings
           </a>
+
+          <!-- USER SECTION -->
+          <div class="user-section">
+            <div class="user-avatar">{{ request.user.username|first|upper }}</div>
+            <div class="user-info">
+              <div class="user-name">{{ request.user.username }}</div>
+              <div class="user-email">{{ request.user.email }}</div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="logout-link">→ Log out</button>
+            </form>
+          </div>
         </nav>
+
         <!-- MAIN CONTENT -->
         <main class="content">
           <div class="content-header">
@@ -147,121 +150,222 @@
             </div>
           </div>
           <div class="card-rows">
-            <div class="cards">
-              <section class="card">
-                <div class="card-header">
-                  <h3>Latest Backups</h3>
-                  <a class="restore-btn" href="{% url 'history' %}">
-                    Restore backup
-                  </a>
-                </div>
-                <section class="history-container">
-                  <table
-                    class="table"
-                    role="table"
-                    aria-label="Backup history table"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody id="history-table-body"></tbody>
-                  </table>
-                </section>
-              </section>
-              <section class="card">
-                <div class="card-header">
-                  <h3>Settings Summary</h3>
-                  <span class="ui-badge" title="UI prototype / planned feature">
-                    Prototype
-                  </span>
-                  <a class="restore-btn" href="{% url 'settings' %}"
-                    >Go to settings</a
-                  >
-                </div>
-                <div class="setting">
-                  <div class="enable-autobackup-setting">
-                    <h4>Automatic Backups</h4>
-                    <div class="toggle">Enabled</div>
-                  </div>
-                  <div class="info-container">
-                    <p>
-                      <span class="colorBlue">Last backup:</span> Feb 1, 2025
-                    </p>
-                    <p>
-                      <span class="colorBlue">Status:</span>
-                      <span class="status confirmed">✔ Succeeded</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="setting">
-                  <h3 class="marginminus">Backup Locations</h3>
-                  <div class="storage-info-container">
-                    <div class="info-container">
-                      <p>
-                        <span class="colorBlue">Local:</span> /backups/local
-                      </p>
+              <div class="stats-row">
+                <div class="stat-card">
+                  <div class="stat-top">
+                    <div class="icon-wrapper">
+                      <!-- backup icon -->
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 11v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
                     </div>
-                    <div class="info-container">
-                      <p>
-                        <span class="colorBlue">Cloud:</span> mati@gmail.com
-                      </p>
+                    <h4>Total Backups</h4>
+                  </div>
+                  <p class="stat-value">{{ stats.total_backups|default:"0" }}</p>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-top">
+                    <div class="icon-wrapper">
+                      <!-- storage icon -->
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="4" width="18" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="3" y="14" width="18" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                      </svg>
+                    </div>
+                    <h4>Storage Used</h4>
+                  </div>
+                  <p class="stat-value">{{ stats.storage_used|default:"0 B" }}</p>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-top">
+                    <div class="icon-wrapper">
+                      <!-- success icon -->
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <h4>Success Rate</h4>
+                  </div>
+                  <p class="stat-value">{{ stats.success_rate|default:"0" }}%</p>
+                </div>
+              </div>
+
+              <div class="main-col">
+                <section class="card">
+                  <div class="card-header">
+                    <div class="card-header-title">
+                      <svg class="card-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                      </svg>
+                      <h3>Latest Backups</h3>
+                    </div>
+                    <a class="restore-btn" href="{% url 'history' %}">
+                      Restore backup
+                    </a>
+                  </div>
+                  <section class="history-container">
+                    <table
+                      class="table"
+                      role="table"
+                      aria-label="Backup history table"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Date</th>
+                          <th>Size</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="history-table-body"></tbody>
+                    </table>
+                  </section>
+                </section>
+              </div>
+
+              <aside class="sidebar-col">
+                <section class="card settings-summary-card">
+                  <div class="settings-summary-header">
+                    <div class="settings-summary-title">
+                      <svg class="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 0 0-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 0 0-2.282.819l-.922 1.597a1.875 1.875 0 0 0 .432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 0 0 0 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 0 0-.432 2.385l.922 1.597a1.875 1.875 0 0 0 2.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 0 0 2.28-.819l.923-1.597a1.875 1.875 0 0 0-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 0 0 0-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 0 0-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 0 0-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 0 0-1.85-1.567h-1.843ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" clip-rule="evenodd" />
+                      </svg>
+                      <h3>Settings Summary</h3>
+                    </div>
+                  </div>
+
+                  <!-- Automatic Backups Section -->
+                  <div class="settings-section automatic-backups-section">
+                    <div class="settings-section-header">
+                      <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94l15.55-4.838a.75.75 0 000-1.414L3.478 2.405z" />
+                      </svg>
+                      <h4>Automatic Backups</h4>
+                      <span class="status-badge enabled">✔ Enabled</span>
+                    </div>
+                    <div class="settings-details">
+                      <div class="detail-item">
+                        <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Last backup: <strong>Feb 1, 2025</strong></span>
+                      </div>
+                      <div class="detail-item">
+                        <svg class="detail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                          <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Status: <strong style="color: #16a34a;">✔ Succeeded</strong></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Backup Locations Section -->
+                  <div class="settings-section backup-locations-section">
+                    <h4 class="locations-title">Backup Locations</h4>
+                    <div class="location-item local-storage">
+                      <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.08 5.227A3 3 0 016.979 3H17.02a3 3 0 012.9 2.227l2.113 7.926A5.228 5.228 0 0018.75 12H5.25a5.228 5.228 0 00-3.284 1.153L4.08 5.227z" />
+                        <path fill-rule="evenodd" d="M5.25 13.5a3.75 3.75 0 100 7.5h13.5a3.75 3.75 0 100-7.5H5.25zm10.5 4.5a.75.75 0 100-1.5.75.75 0 000 1.5zm3.75-.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" clip-rule="evenodd" />
+                      </svg>
+                      <div class="location-details">
+                        <p class="location-label">LOCAL STORAGE</p>
+                        <p class="location-value">/backups/local</p>
+                      </div>
+                    </div>
+                    <div class="location-item cloud-storage">
+                      <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.5 9.75a6 6 0 0111.573-2.226 3.75 3.75 0 014.133 4.303A4.5 4.5 0 0118 20.25H6.75a5.25 5.25 0 01-2.23-10.004 6.072 6.072 0 01-.02-.496z" clip-rule="evenodd" />
+                      </svg>
+                      <div class="location-details">
+                        <p class="location-label">CLOUD STORAGE</p>
+                        <p class="location-value">mati@gmail.com</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Go to Settings Button -->
+                  <a href="{% url 'settings' %}" class="settings-button">
+                    <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 0 0-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 0 0-2.282.819l-.922 1.597a1.875 1.875 0 0 0 .432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 0 0 0 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 0 0-.432 2.385l.922 1.597a1.875 1.875 0 0 0 2.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 0 0 2.28-.819l.923-1.597a1.875 1.875 0 0 0-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 0 0 0-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 0 0-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 0 0-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 0 0-1.85-1.567h-1.843ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" clip-rule="evenodd" />
+                    </svg>
+                    Go to settings
+                  </a>
+                </section>
+              </aside>
+
+              <section class="card system-status-card">
+                <div class="system-status-header">
+                  <div class="system-status-title">
+                    <svg class="status-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" />
+                    </svg>
+                    <h3>System Status</h3>
+                  </div>
+                  <span class="system-status-badge ok">
+                    <span class="badge-dot"></span>
+                    All systems operational
+                  </span>
+                </div>
+
+                <div class="system-status-grid">
+                  <div class="status-item">
+                    <div class="status-icon-wrapper green">
+                      <svg class="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                        <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div class="status-content">
+                      <strong>Backup Engine</strong>
+                      <p><span class="status-dot-inline"></span>Running</p>
+                    </div>
+                  </div>
+
+                  <div class="status-item">
+                    <div class="status-icon-wrapper green">
+                      <svg class="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div class="status-content">
+                      <strong>Scheduler</strong>
+                      <p><span class="status-dot-inline"></span>Active</p>
+                    </div>
+                  </div>
+
+                  <div class="status-item">
+                    <div class="status-icon-wrapper green">
+                      <svg class="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z" />
+                        <path d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z" />
+                        <path d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
+                        <path d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z" />
+                      </svg>
+                    </div>
+                    <div class="status-content">
+                      <strong>Database</strong>
+                      <p><span class="status-dot-inline"></span>Connected</p>
+                    </div>
+                  </div>
+
+                  <div class="status-item">
+                    <div class="status-icon-wrapper green">
+                      <svg class="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.5 9.75a6 6 0 0111.573-2.226 3.75 3.75 0 014.133 4.303A4.5 4.5 0 0118 20.25H6.75a5.25 5.25 0 01-2.23-10.004 6.072 6.072 0 01-.02-.496z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div class="status-content">
+                      <strong>Cloud Provider</strong>
+                      <p><span class="status-dot-inline"></span>Authenticated</p>
                     </div>
                   </div>
                 </div>
               </section>
             </div>
-            <section class="card system-status-card">
-              <div class="card-header">
-                <h3>System Status</h3>
-                <span class="ui-badge" title="UI prototype / planned feature">
-                  Prototype
-                </span>
-
-                <span class="system-status-badge ok"
-                  >All systems operational</span
-                >
-              </div>
-
-              <div class="system-status-grid">
-                <div class="status-item">
-                  <span class="status-dot ok"></span>
-                  <div>
-                    <strong>Backup Engine</strong>
-                    <p>Running</p>
-                  </div>
-                </div>
-
-                <div class="status-item">
-                  <span class="status-dot ok"></span>
-                  <div>
-                    <strong>Scheduler</strong>
-                    <p>Active</p>
-                  </div>
-                </div>
-
-                <div class="status-item">
-                  <span class="status-dot ok"></span>
-                  <div>
-                    <strong>Database</strong>
-                    <p>Connected</p>
-                  </div>
-                </div>
-
-                <div class="status-item">
-                  <span class="status-dot ok"></span>
-                  <div>
-                    <strong>Cloud Provider</strong>
-                    <p>Authenticated</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
         </main>
       </div>
     </div>

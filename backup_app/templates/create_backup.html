@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <!-- meta i style -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,19 +42,6 @@
         <div class="header-actions">
           <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
-
-          <!-- USER -->
-          <span class="user-label"> {{ request.user.username }} </span>
-
-          <!-- LOGOUT -->
-          <form
-            method="post"
-            action="{% url 'logout' %}"
-            style="display: inline"
-          >
-            {% csrf_token %}
-            <button type="submit" class="logout-btn">Log out</button>
-          </form>
         </div>
       </header>
 
@@ -132,6 +120,19 @@
 
             Settings
           </a>
+
+          <!-- USER SECTION -->
+          <div class="user-section">
+            <div class="user-avatar">{{ request.user.username|first|upper }}</div>
+            <div class="user-info">
+              <div class="user-name">{{ request.user.username }}</div>
+              <div class="user-email">{{ request.user.email }}</div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="logout-link">→ Log out</button>
+            </form>
+          </div>
         </nav>
 
         <!-- MAIN CONTENT -->
@@ -149,7 +150,12 @@
           <div class="cards">
             <!-- LEWA KARTA – FORMULARZ -->
             <section class="card form-container">
-              <h3 class="card-title">Manual backup</h3>
+              <div class="card-header-title">
+                <svg class="card-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15z" />
+                </svg>
+                <h3 class="card-title">Manual backup</h3>
+              </div>
               <p class="card-subtitle">
                 Select source directories, choose backup destination and
                 optionally add a description.
@@ -187,12 +193,12 @@
                       multiple
                     />
                     <div class="file-picker-btn-wrapper">
-                            <span
-                  class="ui-badge"
-                  title="UI prototype / planned feature"
-                >
-                  Prototype
-                </span>
+                      <span
+                        class="ui-badge"
+                        title="UI prototype / planned feature"
+                      >
+                        Prototype
+                      </span>
                       <button
                         type="button"
                         class="file-btn"
@@ -200,7 +206,7 @@
                       >
                         Select folders
                       </button>
-                      <p class="file-summary" id="sources-summary"></p>
+                      <p class="file-summary" id="sources-summary">🔗 No folders selected</p>
                     </div>
                   </div>
                 </div>
@@ -265,7 +271,12 @@
               </form>
             </section>
             <section class="card backup-summary">
-              <h3 class="card-title">Backup Summary</h3>
+              <div class="card-header-title">
+                <svg class="card-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M5.625 1.5C4.504 1.5 3.625 2.379 3.625 3.5v17c0 1.121.879 2 2 2h12.75c1.121 0 2-.879 2-2v-17c0-1.121-.879-2-2-2H5.625zM7 9a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 017 9zm0 3a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 017 12zm0 3a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5a.75.75 0 01-.75-.75z" />
+                </svg>
+                <h3 class="card-title">Backup Summary</h3>
+              </div>
               <p class="card-subtitle">There is summary information about your backup.</p>
               <div class="summary-details">
                 <div class="summary-item">
@@ -311,7 +322,7 @@
                   Prototype
                 </span>
                 </div>
-                <div class="summary-item">
+                <div class="summary-item" style="margin-top: 16px;">
                   <p>Backup destination:</p>
                   <div ><span class="highlight"> Local:</span><span id="summary-destination-path-local">Default from settings</span></div>
                   <div ><span class="highlight"> Google Drive:</span><span id="summary-destination-path-google-drive"> mati@gmail.com</span></div>

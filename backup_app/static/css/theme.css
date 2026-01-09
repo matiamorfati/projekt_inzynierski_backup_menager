@@ -1,6 +1,4 @@
-/* =========================
-   ZMIENNE MOTYWU – LIGHT
-   ========================= */
+/* zmienne - light mode */
 :root {
   /* tła */
   --bg-main: #f4f5f7;
@@ -29,14 +27,12 @@
   --enabled-text: #134e28;
 }
 
-/* =========================
-   ZMIENNE MOTYWU – DARK
-   ========================= */
+/* zmienne - dark mode */
 body.dark {
   /* tła */
   --bg-main: #0f172a;
   --bg-card: #1e293b;
-  --bg-header: #020617;
+  --bg-header: #1e293b;
   --bg-sidebar: #1e293b;
 
   /* tekst */
@@ -62,28 +58,27 @@ body.dark {
 
 /* =========================
    GLOBAL
-   ========================= */
+   global - tła i tekst */
 body {
   background: var(--bg-main);
   color: var(--text-main);
 }
 
-/* =========================
-   HEADER
-   ========================= */
-.header {
-  background: var(--bg-header);
+/* nagłówekr);
   border-bottom: 1px solid var(--border-light);
 }
 
 /* =========================
    SIDEBAR
    ========================= */
-.sidebar .nav-link {
-  background: var(--bg-sidebar);
-  color: var(--text-main);
-  transition: background 0.2s ease, color 0.2s ease;
+.sidebar {
+  bsidebar */
+.sidebar {
+  background: var(--bg-card);
+  border-right: 1.5px solid var(--border-light);
 }
+
+/* menu w sidebaru */}
 
 /* hover na element menu */
 .sidebar .nav-link:hover {
@@ -149,97 +144,180 @@ select:focus,
   color: var(--enabled-text);
 }
 
+/* Ensure the "Enabled" badge in settings sits to the right like in dark mode */
+.enable-autobackup-setting .toggle {
+  margin-left: auto; /* push badge to the right inside the flex container */
+  padding: 8px 18px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(22, 130, 61, 0.08);
+}
+
 /* =========================
    DARK MODE – IKONA 🌙 / ☀️
    ========================= */
-.icon-btn {
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
-}
-
-/* hover – light mode */
-.icon-btn:hover {
-  background: rgba(58, 97, 255, 0.12);
-  transform: scale(1.08);
-}
-
-/* hover – dark mode */
-body.dark .icon-btn:hover {
-  background: rgba(99, 102, 241, 0.25);
-}
+/* Icon button styles moved to individual page CSS files */
 
 /* poprawki dla ciemnego motywu - usuwają jaskrawe białe pola */
 body.dark .card {
   background: var(--bg-card);
   color: var(--text-main);
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.2);
-}
-
-/* nagłówek tabeli i wiersze - użyj ciemnych paneli */
-body.dark .table thead th {
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-strong);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-}
-
-/* zachowaj zaokrąglenia nagłówka tabeli jak w light mode */
-body.dark .table thead th:first-child {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-body.dark .table thead th:last-child {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-
-/* upewnij się, że w trybie ciemnym wiersze mają takie same paddingi i tło jak w light */
-/* Make each row appear as one rounded panel (like light mode):
-   remove per-cell borders and let the row's rounded container show.
-*/
-body.dark .table tbody td {
-  padding: 18px 20px;
-  background: var(--bg-card);
-  color: var(--text-main);
   border: none;
-  border-radius: 0;
-  vertical-align: middle;
-  line-height: 1.6;
+  box-shadow: none;
 }
 
-/* Ensure the row acts as the rounded panel container */
-body.dark .table tbody tr {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.12);
-  background: transparent;
+/* Dashboard stat cards - ciemne tło */
+body.dark .stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.25);
 }
 
-/* zamiast jasnego niebieskiego glow użylem cienia */
-body.dark .table tbody tr {
-  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.18);
+body.dark .stat-card h4 {
+  color: var(--text-muted);
+}
+
+body.dark .stat-value {
+  color: var(--text-strong);
+}
+
+body.dark .icon-wrapper {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+}
+
+/* Settings summary card - ciemne tło */
+body.dark .settings-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+body.dark .settings-section {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+/* Settings section details - jaśniejsza czcionka */
+body.dark .detail-item {
+  color: var(--text-muted);
+}
+
+body.dark .settings-section-header h4 {
+  color: var(--text-strong);
+}
+
+/* Backup locations - ciemne tło */
+body.dark .location-item {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+body.dark .location-label {
+  color: var(--primary);
+}
+
+body.dark .location-value {
+  color: var(--text-main);
+}
+
+body.dark .locations-title {
+  color: var(--text-strong);
+}
+
+/* Toggle/Enabled badge - ciemniejsze tło */
+body.dark .toggle {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+body.dark .status-badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* System Status - ciemne tła ikonek */
+body.dark .status-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+body.dark .status-icon-wrapper {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+body.dark .status-icon {
+  color: var(--primary);
+}
+
+body.dark .status-content strong {
+  color: var(--text-strong);
+}
+
+body.dark .status-content p {
+  color: #4ade80;
 }
 
 /* Sidebar links (override light-specific backgrounds) */
+body.dark .sidebar {
+  background: var(--bg-card);
+  border-right: 1.5px solid var(--border-light);
+  box-shadow: 2px 0 8px rgba(2, 6, 23, 0.4);
+}
+
 body.dark .nav-link {
-  background: var(--bg-sidebar);
+  background: transparent;
   color: var(--text-main);
   box-shadow: none;
 }
 
 body.dark .nav-link:hover {
-  background: rgba(99, 102, 241, 0.06);
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-strong);
 }
 
 body.dark .nav-link.active {
-  background: rgba(99, 102, 241, 0.08);
+  background: rgba(99, 102, 241, 0.15);
   color: var(--primary);
+}
+
+body.dark .user-section {
+  border-top: 1px solid var(--border-light);
+}
+
+body.dark .user-name {
+  color: var(--text-strong);
+}
+
+body.dark .user-email {
+  color: var(--text-muted);
+}
+
+body.dark .logout-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+}
+
+body.dark .logout-link:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
 }
 
 /* pola informacyjne w prawej kolumnie */
 body.dark .backup-info,
 body.dark .backup-info-container .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
+  background: #1e2744;
+  border: 1px solid #2a3659;
+  color: #b8c5e0;
+}
+
+body.dark .backup-info .backup-info-tittle,
+body.dark .backup-info h4.backup-info-tittle {
+  color: #7b9dd9 !important;
 }
 
 /* Make restore buttons stand out on dark backgrounds */
@@ -292,15 +370,16 @@ body.dark .form-group label {
 
 /* przycisk wybierania folderów - dopasowany do dark theme */
 body.dark .file-btn {
-  background: var(--input-bg);
-  color: var(--input-text);
-  border: 1px solid var(--input-border);
-  box-shadow: none;
+  /* keep Select folders as primary action in dark mode as well */
+  background: #3a61ff !important;
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(58, 97, 255, 0.12);
 }
 
 body.dark .file-btn:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--primary);
+  background: #2f53e6 !important;
+  box-shadow: 0 8px 22px rgba(58, 97, 255, 0.25);
 }
 
 body.dark .file-summary {
@@ -377,8 +456,8 @@ body.dark .system-status-badge.error {
 /* ustawienia dla widoku historii (prostszym stylem) */
 body.dark .history-container {
   background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  box-shadow: 0 8px 26px rgba(2, 6, 23, 0.45);
+  border: none;
+  box-shadow: none;
   color: var(--text-main);
 }
 
@@ -387,11 +466,6 @@ body.dark .history-top .status-filter {
   background: var(--input-bg);
   color: var(--input-text);
   border: 1px solid var(--input-border);
-}
-
-/* nagłówki tabeli i wiersze już nadpisane globalnie, tutaj tylko drobne poprawki */
-body.dark .table thead th {
-  background: rgba(255, 255, 255, 0.03);
 }
 
 /* ===== Settings visibility fixes ===== */
@@ -431,4 +505,132 @@ body.dark .toggle-switch {
 
 body.dark .toggle-switch.on {
   background: #3a61ff;
+}
+
+/* ==================================================
+   Page-specific dark-mode tweaks moved here
+   (Previously in dashboard.css and createBackup.css)
+   ================================================== */
+
+/* Branding and header tweaks */
+body.dark .brand { color: #7aa3ff; }
+
+/* Make logout / primary actions consistent */
+body.dark .logout-btn { background: #3557d6; box-shadow: 0 6px 20px rgba(53,87,214,0.18); }
+
+/* Sidebar link hover/active refinements (keeps primary accent) */
+body.dark .nav-link { background: rgba(11,20,34,0.6); color: #cfe3ff; border: 1px solid rgba(255,255,255,0.02); box-shadow: none; }
+body.dark .nav-link:hover { background: rgba(12,24,46,0.75); }
+body.dark .nav-link.active { background: linear-gradient(180deg, rgba(63,86,255,0.12), rgba(63,86,255,0.06)); color: #bfe0ff; border: 1px solid rgba(63,86,255,0.12); }
+
+/* Card headers and small titles */
+body.dark .card-header h3,
+body.dark .setting h3 { color: #e6f0ff; }
+
+/* Buttons: ensure restore/primary buttons use primary accent */
+body.dark .primary-btn,
+body.dark .restore-btn,
+body.dark .btn-primary { background: #3a61ff; color: #fff; }
+body.dark .btn-primary:hover,
+body.dark .restore-btn:hover { background: #2f53e6; }
+
+/* Table tweaks copied from page overrides */
+body.dark .table thead th { 
+  background: transparent; 
+  color: #7b9dd9; 
+  border: none;
+  border-bottom: 1px solid #2a3659;
+  text-align: left;
+}
+body.dark .table tbody td { 
+  background: #1e2744; 
+  color: #b8c5e0; 
+  border-top: 1px solid #2a3659;
+  border-bottom: 1px solid #2a3659;
+  border-left: none;
+  border-right: none;
+}
+body.dark .table tbody tr td:first-child {
+  border-left: 1px solid #2a3659;
+}
+body.dark .table tbody tr td:last-child {
+  border-right: 1px solid #2a3659;
+}
+body.dark .table tbody tr { 
+  box-shadow: none; 
+}
+
+/* Info boxes / summary areas */
+body.dark .backup-storage-info,
+body.dark .info-container,
+body.dark .summary-item { background: #1e2744; color: #b8c5e0; box-shadow: none; border: 1px solid #2a3659; }
+body.dark .summary-item p { color: #7b9dd9; font-weight: 600; }
+
+/* Settings summary / enable autobackup block */
+/* Settings summary toggle: use theme variables and align right like in light mode */
+body.dark .enable-autobackup-setting { background: rgba(12,20,36,0.6); border: 1px solid rgba(255,255,255,0.02); }
+body.dark .enable-autobackup-setting h4 { color: #dbe8ff; }
+body.dark .enable-autobackup-setting .toggle {
+  /* Use same semantic colors (adapts via :root / body.dark variables) */
+  background: var(--enabled-bg);
+  color: var(--enabled-text);
+  box-shadow: 0 2px 8px rgba(2,6,23,0.45);
+  padding: 8px 18px;
+  border-radius: 8px;
+  margin-left: auto; /* push to the right inside the flex container */
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Inputs and selects for page-specific forms */
+body.dark .input,
+body.dark textarea.input,
+body.dark .file-btn,
+body.dark select { background: rgba(8,12,20,0.6); color: #dbe8ff; border: 1px solid rgba(255,255,255,0.03); }
+body.dark .input:focus { box-shadow: 0 0 0 3px rgba(58,97,255,0.06); border-color: #3a61ff; }
+
+/* Small UI bits */
+body.dark .ui-badge { background: rgba(10,16,28,0.6); color: #cfe3ff; border: 1px solid rgba(63,86,255,0.08); }
+body.dark .ui-badge::before { background: rgba(140,180,255,0.9); box-shadow: 0 0 0 3px rgba(140,180,255,0.08); }
+body.dark .view-log { color: #cfe3ff; }
+body.dark a { color: #bfe0ff; }
+
+/* createBackup summary/button tweaks */
+body.dark .btn-primary { box-shadow: 0 6px 18px rgba(58,97,255,0.12); }
+
+/* small responsive tweak kept from original pages */
+@media (max-width: 1024px) { body.dark .sidebar { background: transparent; } }
+
+/* scrollbar - ciemny w dark mode */
+body.dark ::-webkit-scrollbar {
+  width: 12px;
+}
+
+body.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 6px;
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* koniec przeniesionych nadpisów */
+
+/* Force Select folders to use primary accent in dark mode (more specific to override other page CSS) */
+body.dark .file-picker-btn-wrapper .file-btn,
+body.dark .file-btn.special-primary {
+  background: #3a61ff !important;
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(58, 97, 255, 0.12);
+}
+body.dark .file-picker-btn-wrapper .file-btn:hover,
+body.dark .file-btn.special-primary:hover {
+  background: #2f53e6 !important;
+  box-shadow: 0 8px 22px rgba(58, 97, 255, 0.25);
 }

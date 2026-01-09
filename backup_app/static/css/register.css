@@ -21,14 +21,14 @@ body {
   line-height: 1.35;
 }
 
-/* prosty layout aplikacji */
+/* layout aplikacji */
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* header ) */
+/* header - na górze */
 .header {
   height: 64px;
   background: #fff;
@@ -40,6 +40,8 @@ body {
   position: sticky;
   top: 0;
 }
+
+/* branding */
 .brand {
   color: #3a61ff;
   font-size: 20px;
