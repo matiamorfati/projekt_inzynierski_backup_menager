@@ -267,6 +267,33 @@ body.dark .sidebar {
   box-shadow: 2px 0 8px rgba(2, 6, 23, 0.4);
 }
 
+body.dark .user-section {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-light);
+  border-right: 1.5px solid var(--border-light);
+  box-shadow: 2px 0 8px rgba(2, 6, 23, 0.4);
+}
+
+body.dark .user-name {
+  color: var(--text-strong);
+}
+
+body.dark .user-email {
+  color: var(--text-muted);
+}
+
+body.dark .logout-link {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  color: var(--text-main);
+}
+
+body.dark .logout-link:hover {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.2);
+  color: #f87171;
+}
+
 body.dark .nav-link {
   background: transparent;
   color: var(--text-main);

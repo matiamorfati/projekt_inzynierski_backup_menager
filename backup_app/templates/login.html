@@ -19,7 +19,6 @@
       <p class="sub">Login to your account</p>
 
       <form method="post" action="{% url 'login' %}">
-        {!-- poля formularza -->
         {% csrf_token %}
 
         <label class="field-label">Username</label>
