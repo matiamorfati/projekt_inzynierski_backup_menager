@@ -1,4 +1,8 @@
+console.log("backupHistory.js - loading...");
+
 let allBackups = [];
+
+// Funkcje showSuccess i showError są zdefiniowane w HTML (window.showSuccess, window.showError)
 
 function formatDateNoSeconds(dateString) {
   // Obsługuje formaty ISO i inne typowe
@@ -65,9 +69,7 @@ function filterAndRender() {
     filtered = filtered.filter(
       (b) =>
         (b.custom_name && b.custom_name.toLowerCase().includes(searchValue)) ||
-        (b.name && b.name.toLowerCase().includes(searchValue)) ||
-        (b.date && b.date.toLowerCase().includes(searchValue)) ||
-        (b.description && b.description.toLowerCase().includes(searchValue))
+        (b.date && b.date.toLowerCase().includes(searchValue))
     );
   }
   if (filterValue === "Confirmed") {
@@ -95,12 +97,13 @@ async function fetchHistory() {
     console.error(error);
     tableBody.innerHTML =
       "<tr><td colspan='5'>Nie udało się pobrać historii</td></tr>";
-    showError();
+    if (window.showError) window.showError();
   }
 }
 
 async function handleRestore(backupName) {
   try {
+    console.log("Rozpoczynam restore dla:", backupName);
     const response = await fetch("/api/restore/full/", {
       method: "POST",
       headers: {
@@ -109,15 +112,22 @@ async function handleRestore(backupName) {
       body: JSON.stringify({ backup_name: backupName }),
     });
 
+    console.log("Response status:", response.status);
     const data = await response.json();
+    console.log("Response data:", data);
+    console.log("data.ok:", data.ok);
+    console.log("response.ok:", response.ok);
+    
     if (response.ok && data.ok) {
-      showSuccess();
+      console.log("Wywołuję showSuccess");
+      if (window.showSuccess) window.showSuccess();
     } else {
-      showError();
+      console.log("Wywołuję showError - data.ok =", data.ok, ", response.ok =", response.ok);
+      if (window.showError) window.showError();
     }
   } catch (error) {
     console.error("Błąd podczas przywracania:", error);
-    showError();
+    if (window.showError) window.showError();
   }
 }
 
