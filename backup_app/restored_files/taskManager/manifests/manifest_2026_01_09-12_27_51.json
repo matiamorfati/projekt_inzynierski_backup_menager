@@ -1,0 +1,22 @@
+{
+  "app.py": {
+    "hash": "8a135686f1ed720f12cfcbc326fa4a1499036c9eccc89aa9f9d6752112257893",
+    "size": 2830
+  },
+  "classes.py": {
+    "hash": "eddd8736a3699daf5a531d6e29b1dad009856204819dd2c23920b3e6b3d1112a",
+    "size": 2391
+  },
+  "readme.md": {
+    "hash": "828ad33652317414b747c9199b96c0dad4d349e2646710070144eb1569682bb3",
+    "size": 2210
+  },
+  "tests.py": {
+    "hash": "a1f14dd6c89a1521c9077ea08e9167f7beaf990bf590fbdbfa3e86cf6f630cea",
+    "size": 3115
+  },
+  "__pycache__\\classes.cpython-313.pyc": {
+    "hash": "35b4286a77d916d04209019bef70835b00bee6d1d829a4a3a2cefd9cc8fa2f91",
+    "size": 5102
+  }
+}
