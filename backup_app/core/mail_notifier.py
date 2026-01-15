@@ -48,14 +48,21 @@ class MailNotifier:
         self.logger.info("MailNotifier zainicjalizowany")
 
     # 1. Wysyłanie maila
-    def send_email(self, subject: str, body: str, attachments: list[str] = None):
+    def send_email(self, subject: str, body: str, attachments: list[str] = None, recipient_email: str = None):
         """
         Wysyła waidomość e-mail z podanym tematem i treścią
+        :param subject: Temat wiadomości
+        :param body: Treść wiadomości
+        :param attachments: Lista ścieżek do załączników
+        :param recipient_email: Email odbiorcy (jeśli None, użyje domyślnego z config)
         """
+        # Użyj podanego emaila lub domyślnego
+        recipient = recipient_email if recipient_email else self.recipient_email
+        
         try:
             msg = EmailMessage()
             msg["From"] = self.sender_email
-            msg["To"] = self.recipient_email
+            msg["To"] = recipient
             msg["Subject"] = subject
             msg.set_content(body)
 
@@ -80,7 +87,7 @@ class MailNotifier:
                 server.login(self.sender_email, self.sender_password)
                 server.send_message(msg)
 
-            self.logger.info(f"E-mail wysłano do: {self.recipient_email} ({subject})")
+            self.logger.info(f"E-mail wysłano do: {recipient} ({subject})")
             return True
 
         except Exception as e:
@@ -90,12 +97,13 @@ class MailNotifier:
         
 
     # 2. Wysyłanie powiadomienia o backupie
-    def notify_backup_result(self, backup_name: str, status: str, details: str= "", attachments: list[str] | None = None):
+    def notify_backup_result(self, backup_name: str, status: str, details: str= "", attachments: list[str] | None = None, recipient_email: str | None = None):
         """
         Wysyła powiadominie e-mail po zakończonym backupie
         :param backup_name: Nazwa pliku backup
         :param status: 'Ok' lub 'FAILED'
         :param details: dodatkowe info (hash, rozmiar)
+        :param recipient_email: Email odbiorcy (jeśli None, użyje domyślnego)
         """
 
         date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -107,7 +115,7 @@ class MailNotifier:
             f"Szczegóły:\n{details}\n"
         )
 
-        return self.send_email(subject, body, attachments=attachments)
+        return self.send_email(subject, body, attachments=attachments, recipient_email=recipient_email)
     
     # 3. Wysyłanie raportu dziennego
     # Można dać to jako obcjonalne ON/OFF

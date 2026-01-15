@@ -117,13 +117,15 @@ def run_backup_from_sources(sources: List[str],
                             destination: Optional[str] = None, 
                             upload_to_drive: Optional[bool] = None,
                             description: Optional[str] = None,
-                            custom_name: Optional[str] = None) -> Dict[str, Any]:
+                            custom_name: Optional[str] = None,
+                            recipient_email: Optional[str] = None) -> Dict[str, Any]:
     """
     Ręczne uruchomienie backupu z podanych ścieżek
     upload_to_drive:
     - True: Wysyłka na drvie
     - False: Brak wysyłki na drive
     - None: użyje ustawień z CONFIG["enable_drive_upload"]
+    recipient_email: Email użytkownika do powiadomień (opcjonalny)
     Nie używa input()
     """
     _logger.info(f"Manualny backup from sources: {sources}, "
@@ -135,6 +137,7 @@ def run_backup_from_sources(sources: List[str],
                                   upload_to_drive=upload_to_drive,
                                   description=description,
                                   custom_name=custom_name,
+                                  recipient_email=recipient_email,
     )
 
     history = _db.get_backup_history(limit=1) or []

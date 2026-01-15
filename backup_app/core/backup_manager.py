@@ -96,7 +96,8 @@ class BackupManager:
                       sources: list[str] | None = None,
                       upload_to_drive: bool | None = None,
                       description: str | None = None,
-                      custom_name: str | None = None):
+                      custom_name: str | None = None,
+                      recipient_email: str | None = None):
         """
         Główna metoda tworzenia backupu.
         :param source: ścieżka źródłowa (jeśli różna od domyślej w config)
@@ -104,7 +105,8 @@ class BackupManager:
         :param destination: ścieżka docelowa backupu (jeśli różna od domyślej w config)
         :param upload_to_drive: Sprawdza czy wysyłamy backup na drive czy nie
         :param description: jest to opis backupu
-        :param custom_name: customowa nazwa backupu 
+        :param custom_name: customowa nazwa backupu
+        :param recipient_email: Email użytkownika do powiadomień (opcjonalny) 
         """
 
         # 1. Ustalenie ścieżki 
@@ -234,7 +236,8 @@ class BackupManager:
                 backup_name,
                 "OK",
                 details,
-                attachments = attachments
+                attachments = attachments,
+                recipient_email=recipient_email
             )
 
         except Exception as e:

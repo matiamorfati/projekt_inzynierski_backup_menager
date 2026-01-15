@@ -52,12 +52,16 @@ def api_run_backup_from_sources(request):
     if isinstance(upload_to_drive, str):
         upload_to_drive =upload_to_drive.lower() == "true"
 
+    # Pobierz email zalogowanego użytkownika
+    recipient_email = request.user.email if request.user.is_authenticated else None
+
     result = core_service.run_backup_from_sources(
         sources=sources, 
         destination=destination,
         upload_to_drive=upload_to_drive,
         description=description,
-        custom_name=custom_name
+        custom_name=custom_name,
+        recipient_email=recipient_email
     )
     return JsonResponse(result)
 
