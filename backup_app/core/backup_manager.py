@@ -2,10 +2,9 @@
 # moduł odpowiedzialny za tworzenie kopi zapasowych 
 # Główny segment Całego porgramu
 
-# dodać w przyszłości import shutil 
-
 # ogolne
 import os
+import shutil
 import zipfile
 from datetime import datetime
 
@@ -120,15 +119,17 @@ class BackupManager:
                  
 
         # 2. Ustalenie katalogu docelowego
-        destination = destination or self.default_backup_dir
-        os.makedirs(destination, exist_ok=True)
+        # ZAWSZE używamy default_backup_dir do zapisu w projekcie
+        # Parametr destination zostanie użyty do skopiowania pliku po utworzeniu
+        project_backup_dir = self.default_backup_dir
+        os.makedirs(project_backup_dir, exist_ok=True)
 
         
         
         # 3. Tworzymy nazwe pliku backup (backup_2025_10_22-10_23_11.zip)  
         timestamp = datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
         backup_name = f"Backup_{timestamp}.zip"
-        backup_path = os.path.join(destination, backup_name)
+        backup_path = os.path.join(project_backup_dir, backup_name)
         self.logger.info(f"Tworzenie backupu: {backup_name}")
 
         # 3.5 Tworzenie manifestu i dodanie go tam gdzie robi sie backup
@@ -142,7 +143,7 @@ class BackupManager:
                 source_dir = sources_list[0]
                 manifest = build_dir_manifest(source_dir, logger=self.logger)
                 manifest_name = f"manifest_{timestamp}.json"
-                manifest_dir = os.path.join(destination, "manifests")
+                manifest_dir = os.path.join(project_backup_dir, "manifests")
                 os.makedirs(manifest_dir, exist_ok=True)
                 manifest_path = os.path.join(manifest_dir, manifest_name)
                 save_manifest(manifest, manifest_path)
@@ -150,7 +151,7 @@ class BackupManager:
             except Exception as e:
                 self.logger.error(f"Błąd przy tworzeniu manifestu: {e}")
         else:
-            self.logger.info("Pominięto manifest: backup zawiera wiele ścieżek lub pojedyńcze pliki.")
+            self.logger.info("Pominięto manifest: backup zawsze wiele ścieżek lub pojedyńcze pliki.")
 
 
         # 4. Archiwizacja
@@ -239,6 +240,16 @@ class BackupManager:
                 attachments = attachments,
                 recipient_email=recipient_email
             )
+
+            # Kopiowanie backupu do dodatkowej lokalizacji (jeśli podana)
+            if destination and os.path.abspath(destination) != os.path.abspath(self.default_backup_dir):
+                try:
+                    os.makedirs(destination, exist_ok=True)
+                    extra_backup_path = os.path.join(destination, backup_name)
+                    shutil.copy2(backup_path, extra_backup_path)
+                    self.logger.info(f"Backup skopiowany również do: {extra_backup_path}")
+                except Exception as copy_error:
+                    self.logger.error(f"Nie udało się skopiować backupu do {destination}: {copy_error}")
 
         except Exception as e:
             self.logger.error(f"Wystąpił problem przy tworzeniu backupu: {e}")

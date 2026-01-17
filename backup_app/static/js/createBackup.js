@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
       payload.destination = destinationInput.value.trim();
     }
 
-    if (backupType === "drive") {
+    if (backupType === "drive" || backupType === "both") {
       payload.upload_to_drive = true;
     }
 
