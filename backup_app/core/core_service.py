@@ -132,7 +132,7 @@ def run_backup_from_sources(sources: List[str],
                  f"to destination={destination}, upload_to_drive={upload_to_drive}"
     )
 
-    _backup_manager.create_backup(sources=sources, 
+    success = _backup_manager.create_backup(sources=sources, 
                                   destination=destination,
                                   upload_to_drive=upload_to_drive,
                                   description=description,
@@ -144,7 +144,7 @@ def run_backup_from_sources(sources: List[str],
     last = _backup_row_to_dict(history[0])  if history else None
 
     return {
-        "ok": last is not None,
+        "ok": success and last is not None and last.get("status") == "OK",
         "backup": last,
     }
 
@@ -156,7 +156,7 @@ def run_backup_from_profile(profile_id: Optional[int] = None, upload_to_drive: O
     upload_to_drive działą tak samo jak w run_backup_from_sources
     """
     _logger.info(f"Backup from profile (id={profile_id}), upload_to_drive={upload_to_drive}")
-    _backup_manager.create_backup_from_profile(profile_id=profile_id,
+    success = _backup_manager.create_backup_from_profile(profile_id=profile_id,
                                                upload_to_drive=upload_to_drive,
     )
 
@@ -164,7 +164,7 @@ def run_backup_from_profile(profile_id: Optional[int] = None, upload_to_drive: O
     last = _backup_row_to_dict(history[0]) if history else None
 
     return {
-        "ok": last is not None,
+        "ok": success and last is not None and last.get("status") == "OK",
         "backup": last,
     }
 

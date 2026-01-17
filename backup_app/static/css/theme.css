@@ -367,6 +367,12 @@ body.dark .status.success {
   font-weight: 700;
 }
 
+/* kolor statusu failed w trybie ciemnym */
+body.dark .status.failed {
+  color: #ef4444;
+  font-weight: 700;
+}
+
 /* nagłówki w kartach mają być czytelne */
 body.dark .card h4,
 body.dark .card h3 {
@@ -592,6 +598,7 @@ body.dark .backup-storage-info,
 body.dark .info-container,
 body.dark .summary-item { background: #1e2744; color: #b8c5e0; box-shadow: none; border: 1px solid #2a3659; }
 body.dark .summary-item p { color: #7b9dd9; font-weight: 600; }
+body.dark .highlight { color: #e6f0ff; font-weight: 700; }
 
 /* Settings summary / enable autobackup block */
 /* Settings summary toggle: use theme variables and align right like in light mode */

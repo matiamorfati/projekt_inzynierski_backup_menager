@@ -33,7 +33,7 @@ function renderHistory(backups) {
     .map((backup) => {
       const statusOk = (backup.status || "").toUpperCase() === "OK";
       const statusClass = statusOk ? "confirmed" : "failed";
-      const statusLabel = statusOk ? "Succeeded" : backup.status || "Failed";
+      const statusLabel = statusOk ? "Succeeded" : "Failed";
       const description = backup.description?.trim()
         ? backup.description
         : "Brak opisu";
@@ -48,9 +48,8 @@ function renderHistory(backups) {
         statusOk ? "✔" : "✖"
       } <span>${statusLabel}</span></td>
                 <td>
-                  <button class="btn-primary restore-btn" data-name="${
-                    backup.name
-                  }">Restore</button>
+                  <button class="btn-primary restore-btn" data-name="${backup.name}"
+                  data-destination="${backup.destination ?? ""}">Restore</button>
                 </td>
               </tr>
             `;
@@ -101,15 +100,18 @@ async function fetchHistory() {
   }
 }
 
-async function handleRestore(backupName) {
+async function handleRestore(backupName, backupDestination) {
   try {
     console.log("Rozpoczynam restore dla:", backupName);
+    
     const response = await fetch("/api/restore/full/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ backup_name: backupName }),
+      body: JSON.stringify({ backup_name: backupName, 
+                            destination: backupDestination,
+      }),
     });
 
     console.log("Response status:", response.status);
@@ -141,8 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!button) return;
 
     const backupName = button.getAttribute("data-name");
+    const backupDestination = button.getAttribute("data-destination");
     if (backupName) {
-      handleRestore(backupName);
+      handleRestore(backupName, backupDestination);
     }
   });
 

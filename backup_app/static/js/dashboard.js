@@ -45,7 +45,7 @@ function renderHistory(backups) {
     .map((backup) => {
       const statusOk = (backup.status || "").toUpperCase() === "OK";
       const statusClass = statusOk ? "confirmed" : "failed";
-      const statusLabel = statusOk ? "Succeeded" : backup.status || "Failed";
+      const statusLabel = statusOk ? "Succeeded" : "Failed";
 
       const formattedDate = formatDateNoSeconds(backup.date);
       return `

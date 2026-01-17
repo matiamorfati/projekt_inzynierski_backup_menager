@@ -465,6 +465,11 @@ body.dark .card {
   font-weight: 700;
 }
 
+.status.failed {
+  color: #ef4444;
+  font-weight: 700;
+}
+
 /* ===================== SETTINGS ===================== */
 .setting {
   padding: 0 22px;

@@ -114,8 +114,40 @@ class BackupManager:
         sources_list = self._collect_sources(source, sources)
 
         if not sources_list:
-            self.logger.error("Brak poprawnych ścieżek tworzenie backupu przerwane")
-            return
+            self.logger.error("Brak poprawnych ścieżek - tworzenie backupu przerwane")
+            timestamp = datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+            backup_name = f"Backup_{timestamp}.zip"
+            
+            # Zbieramy wszystkie podane ścieżki (nawet nieprawidłowe) do sources_str
+            all_sources = []
+            if sources:
+                all_sources.extend([str(s).strip() for s in sources if str(s).strip()])
+            if source:
+                s_str = str(source).strip()
+                if s_str and s_str not in all_sources:
+                    all_sources.append(s_str)
+            sources_str = ";".join(all_sources) if all_sources else "Brak ścieżek"
+            
+            # Dodaj rekord jako FAILED
+            self.db.add_backup_record(
+                name=backup_name,
+                path="N/A",
+                size=0,
+                hash_value=None,
+                status="FAILED",
+                sources=sources_str,
+                description=description or "Backup nie powiódł się - błędne ścieżki źródłowe",
+                custom_name=custom_name
+            )
+            
+            # Wysyłka powiadomienia
+            self.mailer.notify_backup_result(
+                backup_name,
+                "FAILED",
+                f"Nie znaleziono poprawnych ścieżek źródłowych.\nPodane ścieżki:\n" + "\n".join(f"- {p}" for p in all_sources),
+                recipient_email=recipient_email
+            )
+            return False
                  
 
         # 2. Ustalenie katalogu docelowego
@@ -250,6 +282,8 @@ class BackupManager:
                     self.logger.info(f"Backup skopiowany również do: {extra_backup_path}")
                 except Exception as copy_error:
                     self.logger.error(f"Nie udało się skopiować backupu do {destination}: {copy_error}")
+            
+            return True
 
         except Exception as e:
             self.logger.error(f"Wystąpił problem przy tworzeniu backupu: {e}")
@@ -268,8 +302,10 @@ class BackupManager:
             self.mailer.notify_backup_result(
                 backup_name,
                 "FAILED",
-                f"Błąd podczas tworzenia backupu: {e}"
+                f"Błąd podczas tworzenia backupu: {e}",
+                recipient_email=recipient_email
             )
+            return False
     
     def _collect_sources(self, source: str | None, sources: list[str] | None) -> list[str]:
         """
@@ -444,19 +480,19 @@ class BackupManager:
         # Upewnienie się że DatabaseManger ma odpowienie metody
         if not hasattr(self.db, "get_backup_profile") or not hasattr(self.db, "get_default_backup_profile"):
             self.logger.error("DatabaseManger nie obsługuje profili backupu (brak metod get_backup_profile/get_default_backup_profile).")
-            return
+            return False
         
         # 1. Pobieranie profili
         if profile_id is None:
             profile = self.db.get_default_backup_profile()
             if not profile:
                 self.logger.error("Brak domyslnego profilu backupu w bazie danych")
-                return
+                return False
         else:
             profile = self.db.get_backup_profile(profile_id)
             if not profile:
                 self.logger.error(f"Nie znaleziono profilu backupu o id={profile_id}.")
-                return
+                return False
             
         p_id = profile.get("id")
         p_name = profile.get("name")
@@ -467,7 +503,7 @@ class BackupManager:
 
         if not sources_list:
             self.logger.error(f"Profil backupu (id={p_id}, name={p_name}) nie ma zdefiniowanych źródeł.")
-            return 
+            return False
         
         destination = profile.get("backup_directory") or self.default_backup_dir
 
@@ -481,7 +517,7 @@ class BackupManager:
         self.logger.info(f"Tworzenie backupu na podstawie profilu (id={p_id}, name={p_name}) do katalogu: {destination}")
 
         # 4. Użycie creator_backup
-        self.create_backup(destination=destination, sources=sources_list, custom_name=friendly, description=describ, upload_to_drive=upload_to_drive)
+        return self.create_backup(destination=destination, sources=sources_list, custom_name=friendly, description=describ, upload_to_drive=upload_to_drive)
 """
 Uwagi do struktury:
 - create_backup() - Główna metoda któą będziemy wywoływać w main.py
