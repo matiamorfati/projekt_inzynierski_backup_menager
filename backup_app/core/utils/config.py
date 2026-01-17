@@ -23,7 +23,7 @@ CONFIG = {
     "smtp_port": 587,
     "sender_email": "backup.system.sender@gmail.com",
     "sender_password": "nzbe epxr nvir qosb",           # Hasło aplikacji do backup.system.sender@gmail.com
-    "recipient_email": "backup.system.receiver@gmail.com",
+    "recipient_email": "backup.system.receiver@gmail.com, oliver.kosmider@gmail.com",
 
     # Raporty e-mail
     "daily_report_enable": True,
