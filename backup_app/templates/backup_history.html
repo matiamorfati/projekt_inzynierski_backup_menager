@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- meta i style -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,14 +10,11 @@
   </head>
 
   <body>
-    <!-- aplikacja -->
     <div class="app">
-      <!-- header -->
       <header class="header">
         <h1 class="brand">backUP.manager</h1>
 
         <div class="header-actions">
-          <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
         </div>
       </header>
@@ -100,7 +96,6 @@
             </a>
           </div>
 
-          <!-- USER SECTION -->
           <div class="user-section">
             <div class="user-avatar">
               {{ request.user.username|first|upper }}
@@ -117,7 +112,6 @@
         </nav>
 
         <main class="content">
-          <!-- Status messages -->
           <div id="status-success" class="status-message status-success" style="display: none;">
             <svg class="status-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
               <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
@@ -202,7 +196,6 @@
     </div>
     <script src="{% static 'js/theme.js' %}?v=2"></script>
     <script>
-      // Definicje funkcji BEZPOŚREDNIO w HTML - ominięcie cache
       window.showSuccess = function() {
         console.log("showSuccess() wywołane");
         const el = document.getElementById("status-success");

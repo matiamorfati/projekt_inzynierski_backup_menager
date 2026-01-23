@@ -1,30 +1,22 @@
-/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 html, body {
   height: 100%;
 }
-
-/* TŁO */
 body {
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   background: #f4f5f7;
   color: #111827;
 }
-
-/* WYŚRODKOWANIE */
 .login-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-/* KARTA - panel logowania */
 .login-card {
   width: 100%;
   max-width: 420px;
@@ -34,29 +26,23 @@ body {
   border: 1px solid #eef0f3;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
-
-/* TEKST */
 .login-title {
   text-align: center;
   font-size: 22px;
   font-weight: 700;
   color: #3a61ff;
 }
-
 .sub {
   text-align: center;
   color: #6b7280;
   margin: 8px 0 24px;
 }
-
-/* INPUTY */
 .field-label {
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 6px;
   display: block;
 }
-
 .login-input {
   width: 100%;
   padding: 12px 14px;
@@ -66,14 +52,11 @@ body {
   margin-bottom: 16px;
   font-size: 15px;
 }
-
 .login-input:focus {
   outline: none;
   border-color: #3a61ff;
   background: #fff;
 }
-
-/* BUTTON */
 .login-btn {
   width: 100%;
   padding: 12px;
@@ -85,12 +68,9 @@ body {
   cursor: pointer;
   transition: background 0.15s ease;
 }
-
 .login-btn:hover {
   background: #2f53e6;
 }
-
-/* ERROR */
 .login-error {
   margin-top: 16px;
   padding: 10px;
@@ -100,8 +80,6 @@ body {
   font-size: 14px;
   text-align: center;
 }
-
-/* ROW POD HASŁEM */
 .login-row {
   display: flex;
   justify-content: space-between;
@@ -109,23 +87,17 @@ body {
   margin: -8px 0 16px;
   font-size: 0.8rem;
 }
-
-/* LINKI */
 .login-link {
   color: #3a61ff;
   text-decoration: none;
   font-weight: 600;
 }
-
 .login-link:hover {
   text-decoration: underline;
 }
-
-/* REGISTER POD FORM */
 .register-hint {
   margin-top: 18px;
   text-align: center;
   font-size: 0.8rem;
   color: #6b7280;
 }
-

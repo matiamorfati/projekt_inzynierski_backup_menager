@@ -1,7 +1,3 @@
-/* =========================================================
-   FONTS – NIE RUSZANE (INTER + LOGO)
-========================================================= */
-
 @font-face {
   font-family: "Inter";
   src: url("../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
@@ -9,7 +5,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Inter";
   src: url("../fonts/Inter-Italic-VariableFont_opsz,wght.ttf")
@@ -18,7 +13,6 @@
   font-style: italic;
   font-display: swap;
 }
-
 @font-face {
   font-family: "LogoFont";
   src: url("../fonts/MajorMonoDisplay-Regular.ttf") format("truetype");
@@ -26,22 +20,15 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* =========================================================
-   RESET + GLOBAL
-========================================================= */
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 html,
 body {
   height: 100%;
 }
-
 body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     sans-serif;
@@ -53,7 +40,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 h1,
 h2,
 h3,
@@ -64,29 +50,21 @@ h6 {
     sans-serif;
   font-weight: 700;
 }
-
 em,
 i {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     sans-serif;
   font-style: italic;
 }
-
 a {
   color: inherit;
   text-decoration: none;
 }
-
-/* =========================================================
-   APP / HEADER
-========================================================= */
-
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
 .header {
   height: 84px;
   background: var(--bg-header);
@@ -100,7 +78,6 @@ a {
   top: 0;
   z-index: 10;
 }
-
 .brand {
   font-family: "LogoFont", monospace;
   font-size: 42px;
@@ -109,13 +86,11 @@ a {
   color: #3a61ff;
   letter-spacing: 2px;
 }
-
 .header-actions {
   display: flex;
   align-items: center;
   gap: 18px;
 }
-
 .icon-btn {
   background: transparent;
   border: none;
@@ -127,11 +102,9 @@ a {
   color: #374151;
   transition: all 0.2s ease;
 }
-
 .icon-btn:hover {
   transform: scale(1.1);
 }
-
 .logout-btn {
   background: #3a61ff;
   color: #ffffff;
@@ -144,15 +117,9 @@ a {
   box-shadow: 0 6px 16px rgba(58, 97, 255, 0.18);
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-
 .logout-btn:hover {
   background: #2f53e6;
 }
-
-/* =========================================================
-   LAYOUT / SIDEBAR (COFNIĘTY)
-========================================================= */
-
 .layout {
   display: flex;
   gap: 0;
@@ -160,7 +127,6 @@ a {
   flex: 1;
   align-items: flex-start;
 }
-
 .sidebar {
   width: 260px;
   display: flex;
@@ -177,7 +143,6 @@ a {
   overflow: hidden;
   z-index: 50;
 }
-
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -187,7 +152,6 @@ a {
   flex: 1;
   padding-bottom: 130px;
 }
-
 .user-section {
   display: grid;
   grid-template-columns: 50px 1fr;
@@ -203,7 +167,6 @@ a {
   z-index: 100;
   box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
 }
-
 .user-avatar {
   width: 50px;
   height: 50px;
@@ -217,7 +180,6 @@ a {
   font-size: 18px;
   grid-row: 1;
 }
-
 .user-info {
   text-align: left;
   display: flex;
@@ -226,23 +188,19 @@ a {
   grid-column: 2;
   grid-row: 1;
 }
-
 .user-name {
   font-weight: 600;
   color: #222;
   font-size: 15px;
 }
-
 .user-email {
   color: #9ca3af;
   font-size: 13px;
 }
-
 .logout-form {
   grid-column: 1 / -1;
   width: 100%;
 }
-
 .logout-link {
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
@@ -263,17 +221,14 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-
 .logout-link:hover {
   background: #fee2e2;
   border-color: #fca5a5;
   color: #dc2626;
 }
-
 .logout-link:active {
   transform: translateY(1px);
 }
-
 .nav-link {
   display: flex;
   align-items: center;
@@ -291,28 +246,20 @@ a {
   transition: box-shadow 0.25s cubic-bezier(0.4, 0.2, 0.2, 1), background 0.18s,
     color 0.18s;
 }
-
 .nav-link:hover {
   background: #e8ebff;
   box-shadow: 0 12px 36px rgba(15, 15, 15, 0.09);
 }
-
 .nav-link.active {
   background: #e9edff;
   color: #2b2b8f;
   border: 1px solid rgba(79, 70, 229, 0.08);
 }
-
 .icon {
   width: 28px;
   height: 28px;
   flex-shrink: 0;
 }
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
 .content {
   flex: 1;
   display: flex;
@@ -322,14 +269,11 @@ a {
   padding: 28px 24px;
   margin-left: 260px;
 }
-
 .content-header {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
 }
-
-/* panel podobny do dashboard */
 .settings-panel {
   max-width: 1180px;
   margin: 0;
@@ -338,21 +282,14 @@ a {
   padding: 24px;
   border: 1px solid #eef0f3;
 }
-
 .content-header h2 {
   font-size: 32px;
 }
-
 .content-subtitle {
   font-size: 16px;
   color: #6b7280;
   margin-top: 4px;
 }
-
-/* =========================================================
-   CARDS / SETTINGS
-========================================================= */
-
 .settings-row {
   display: flex;
   gap: 40px;
@@ -362,54 +299,44 @@ a {
   margin: 0 auto;
   width: auto;
 }
-
 .card {
   background: #ffffff;
   border-radius: 14px;
   border: 1.5px solid #e3e6ee;
   box-shadow: 0 4px 24px rgba(60, 60, 60, 0.07);
 }
-
 body.dark .card {
   border: none;
 }
-
-/* lewy card – delikatnie węższy */
 .settings-card {
   flex: 1 1 0;
   max-width: 900px;
   min-width: 620px;
   width: 100%;
 }
-
-/* prawa kolumna z backup-info i user config */
 .settings-right-col {
   flex: 0 0 300px;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-
 .settings-card.card {
   padding: 32px 36px;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-
 .settings-card h3 {
   line-height: 1.3;
   font-weight: 500;
   font-size: 25px;
 }
-
 .card-header-title {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 0.2rem;
 }
-
 .card-header-icon {
   width: 24px;
   height: 24px;
@@ -418,7 +345,6 @@ body.dark .card {
   min-width: 24px;
   min-height: 24px;
 }
-
 .btn-icon {
   width: 18px;
   height: 18px;
@@ -429,33 +355,24 @@ body.dark .card {
   min-height: 18px;
   margin-bottom: 1px;
 }
-
 .drive-row {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .drive-row .muted {
   margin-top: 16px;
 }
-
 .drive-row .file-btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-/* =========================================================
-   FORM ELEMENTS
-========================================================= */
-
 .settings-card label {
   font-size: 17px;
   font-weight: 600;
   color: #1d2636;
 }
-
 .input,
 .settings-card input,
 .settings-card select {
@@ -467,29 +384,19 @@ body.dark .card {
   font-size: 16px;
   background: #ffffff;
 }
-
 .input:focus {
   outline: none;
   border-color: #3a61ff;
 }
-
 .settings-card select {
   height: 46px;
 }
-
-/* =========================================================
-   TOGGLE
-========================================================= */
-
-/* przełącznik toggle */
 .toggle-label {
   display: flex;
   align-items: center;
   gap: 14px;
   cursor: pointer;
 }
-
-/* switch - przycisk */
 .toggle-switch {
   position: relative;
   width: 48px;
@@ -500,19 +407,16 @@ body.dark .card {
   transition: background 0.2s ease;
   flex-shrink: 0;
 }
-
 .toggle-text {
   font-size: 18px;
   font-weight: 500;
 }
-
 .toggle-switch input {
   position: absolute;
   inset: 0;
   opacity: 0;
   cursor: pointer;
 }
-
 .toggle-switch .knob {
   position: absolute;
   top: 3px;
@@ -524,19 +428,12 @@ body.dark .card {
   transition: transform 0.2s ease;
   box-shadow: 0 2px 6px rgba(60, 60, 60, 0.15);
 }
-
 .toggle-switch.on {
   background: #3a61ff;
 }
-
 .toggle-switch.on .knob {
   transform: translateX(22px);
 }
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
 .save-btn,
 .file-btn {
   margin-top: 18px;
@@ -550,28 +447,20 @@ body.dark .card {
   cursor: pointer;
   transition: background 0.18s ease;
 }
-
 .save-btn:hover,
 .file-btn:hover {
   background: #2f53e6;
 }
-
-/* =========================================================
-   LAST / NEXT BACKUP – JAK NORMALNE CARDY
-========================================================= */
-
 .backup-info-container {
   display: flex;
   gap: 12px;
 }
-
 .backup-info-tittle {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 4px;
   color: #3a61ff;
 }
-
 .card.backup-info {
   padding: 16px 20px;
   margin: 0;
@@ -582,47 +471,35 @@ body.dark .card {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(58, 97, 255, 0.07);
 }
-
 .card.backup-info h4 {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 4px;
 }
-
 .theme-label {
   margin-bottom: -8px;
 }
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
 @media (max-width: 1100px) {
   .settings-row {
     flex-direction: column;
   }
-
   .settings-card {
     min-width: 0;
     width: 100%;
   }
 }
-
 @media (max-width: 640px) {
   .header {
     height: 64px;
     padding: 0 12px;
   }
-
   .brand {
     font-size: 22px;
   }
-
   .content-header h2 {
     font-size: 22px;
   }
 }
-
 .ui-badge {
   display: inline-flex;
   align-items: center;
@@ -631,7 +508,6 @@ body.dark .card {
   height: 22px;
   padding: 2px 10px;
   border-radius: 999px;
-
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -642,7 +518,6 @@ body.dark .card {
   cursor: pointer;
   transition: 0.3s ease;
 }
-
 .ui-badge::before {
   content: "";
   width: 7px;
@@ -651,7 +526,6 @@ body.dark .card {
   background: rgba(140, 180, 255, 0.9);
   box-shadow: 0 0 0 3px rgba(140, 180, 255, 0.16);
 }
-
 .ui-badge:hover {
   background: #fffb0065;
 }

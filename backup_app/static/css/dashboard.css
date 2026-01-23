@@ -1,4 +1,3 @@
-/* ===================== RESET ===================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,8 +7,6 @@ html,
 body {
   height: 100%;
 }
-
-/* ===================== FONTS ===================== */
 @font-face {
   font-family: "LogoFont";
   src: url("../fonts/MajorMonoDisplay-Regular.ttf") format("truetype");
@@ -27,8 +24,6 @@ body {
   font-style: italic;
   font-display: swap;
 }
-
-/* ===================== BASE ===================== */
 body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     sans-serif;
@@ -38,14 +33,11 @@ body {
   line-height: 1.35;
   -webkit-font-smoothing: antialiased;
 }
-
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* ===================== HEADER ===================== */
 .header {
   height: 84px;
   background: var(--bg-header);
@@ -59,7 +51,6 @@ body {
   top: 0;
   z-index: 10;
 }
-
 .brand {
   font-family: "LogoFont", monospace;
   font-size: 42px;
@@ -68,13 +59,11 @@ body {
   color: #3a61ff;
   letter-spacing: 2px;
 }
-
 .header-actions {
   display: flex;
   align-items: center;
   gap: 18px;
 }
-
 .icon-btn {
   background: transparent;
   border: none;
@@ -86,11 +75,9 @@ body {
   font-size: 26px;
   transition: all 0.2s ease;
 }
-
 .icon-btn:hover {
   transform: scale(1.1);
 }
-
 .logout-btn {
   background: #3a61ff;
   color: #fff;
@@ -103,17 +90,13 @@ body {
   transition: background 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 6px 16px rgba(58, 97, 255, 0.18);
 }
-
 .logout-btn:hover {
   background: #2f53e6;
   box-shadow: 0 8px 20px rgba(58, 97, 255, 0.28);
 }
-
 .logout-btn:active {
   transform: translateY(1px);
 }
-
-/* ===================== LAYOUT ===================== */
 .layout {
   display: flex;
   gap: 0;
@@ -121,7 +104,6 @@ body {
   align-items: flex-start;
   flex: 1;
 }
-
 .sidebar {
   width: 260px;
   display: flex;
@@ -138,7 +120,6 @@ body {
   overflow: hidden;
   z-index: 50;
 }
-
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -148,7 +129,6 @@ body {
   flex: 1;
   padding-bottom: 130px;
 }
-
 .user-section {
   display: grid;
   grid-template-columns: 50px 1fr;
@@ -164,7 +144,6 @@ body {
   z-index: 100;
   box-shadow: 2px 0 8px rgba(60, 60, 60, 0.06);
 }
-
 .user-avatar {
   width: 50px;
   height: 50px;
@@ -178,7 +157,6 @@ body {
   font-size: 18px;
   grid-row: 1;
 }
-
 .user-info {
   text-align: left;
   display: flex;
@@ -187,23 +165,19 @@ body {
   grid-column: 2;
   grid-row: 1;
 }
-
 .user-name {
   font-weight: 600;
   color: #222;
   font-size: 15px;
 }
-
 .user-email {
   color: #9ca3af;
   font-size: 13px;
 }
-
 .logout-form {
   grid-column: 1 / -1;
   width: 100%;
 }
-
 .logout-link {
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
@@ -224,17 +198,14 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-
 .logout-link:hover {
   background: #fee2e2;
   border-color: #fca5a5;
   color: #dc2626;
 }
-
 .logout-link:active {
   transform: translateY(1px);
 }
-
 .nav-link {
   display: flex;
   align-items: center;
@@ -252,25 +223,20 @@ body {
   box-shadow: 0 8px 30px rgba(15, 15, 15, 0.06);
   transition: box-shadow 0.25s cubic-bezier(0.4, 0.2, 0.2, 1), background 0.18s, color 0.18s;
 }
-
 .nav-link:hover {
   background: #e8ebff;
   box-shadow: 0 12px 36px rgba(15, 15, 15, 0.09);
 }
-
 .nav-link.active {
   background: #e9edff;
   color: #2b2b8f;
   border: 1px solid rgba(79, 70, 229, 0.08);
 }
-
 .icon {
   width: 28px;
   height: 28px;
   flex-shrink: 0;
 }
-
-/* ===================== CONTENT ===================== */
 .content {
   flex: 1;
   display: flex;
@@ -280,25 +246,20 @@ body {
   padding: 28px 24px;
   margin-left: 260px;
 }
-
 .content-header {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   padding-left: 6px;
 }
-
 .content-header h2 {
   font-size: 32px;
 }
-
 .content-subtitle {
   font-size: 16px;
   color: #6b7280;
   margin-top: 4px;
 }
-
-/* ===================== DASHBOARD GRID ===================== */
 .card-rows {
   display: grid;
   grid-template-columns: minmax(520px, 700px) minmax(380px, 440px);
@@ -310,16 +271,12 @@ body {
   margin-right: auto;
   width: auto;
 }
-
-/* ===================== STATS ROW ===================== */
 .stats-row {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
-
-/* karty ze statystykami */
 .stat-card {
   background: #fff;
   border: 1px solid #eef0f3;
@@ -327,13 +284,11 @@ body {
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
 }
-
 .stat-top {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .icon-wrapper {
   width: 44px;
   height: 44px;
@@ -344,27 +299,21 @@ body {
   justify-content: center;
   color: #3a61ff;
 }
-
 .stat-card h4 {
   font-size: 13px;
   color: #6b7280;
 }
-
 .stat-value {
   font-size: 30px;
   font-weight: 800;
   margin-top: 6px;
 }
-
-/* ===================== MAIN / SIDEBAR ===================== */
 .main-col {
   grid-column: 1 / 2;
 }
-
 .sidebar-col {
   grid-column: 2 / 3;
 }
-
 .card {
   background: #fff;
   border-radius: 12px;
@@ -375,36 +324,30 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 body.dark .card {
   border: none;
 }
-
 .card-header {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 18px 22px;
 }
-
 .card-header-title {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .card-header-icon {
   width: 24px;
   height: 24px;
   color: #3a61ff;
   flex-shrink: 0;
 }
-
 .card-header h3 {
   font-size: 22px;
   font-weight: 600;
 }
-
 .restore-btn {
   margin-left: auto;
   background: #3a61ff;
@@ -414,15 +357,12 @@ body.dark .card {
   font-size: 14px;
   text-decoration: none;
 }
-
-/* ===================== TABLE ===================== */
 .table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 16px;
   padding: 0 22px;
 }
-
 .table thead th {
   background: transparent;
   padding: 16px 14px 8px 14px;
@@ -432,7 +372,6 @@ body.dark .card {
   border-bottom: 1px solid #d4dbf7;
   text-align: left;
 }
-
 .table tbody td {
   background: #e8ebff;
   padding: 22px 14px;
@@ -442,39 +381,31 @@ body.dark .card {
   border-left: none;
   border-right: none;
 }
-
 .table tbody tr {
   border-radius: 10px;
   overflow: hidden;
 }
-
 .table tbody tr td:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border-left: 1px solid #d4dbf7;
 }
-
 .table tbody tr td:last-child {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-right: 1px solid #d4dbf7;
 }
-
 .status.confirmed {
   color: #16a34a;
   font-weight: 700;
 }
-
 .status.failed {
   color: #ef4444;
   font-weight: 700;
 }
-
-/* ===================== SETTINGS ===================== */
 .setting {
   padding: 0 22px;
 }
-
 .enable-autobackup-setting {
   display: flex;
   align-items: center;
@@ -483,7 +414,6 @@ body.dark .card {
   border-radius: 10px;
   margin-bottom: 14px;
 }
-
 .toggle {
   margin-left: auto;
   background: #f0fff6;
@@ -491,7 +421,6 @@ body.dark .card {
   border-radius: 8px;
   font-weight: 700;
 }
-
 .info-container {
   background: #e8ebff;
   padding: 12px;
@@ -499,43 +428,35 @@ body.dark .card {
   font-size: 14px;
   margin-bottom: 10px;
 }
-
 .colorBlue {
   color: #3a61ff;
   font-weight: 600;
 }
-
-/* ===================== SYSTEM STATUS ===================== */
 .system-status-card {
   grid-column: 1 / -1;
   padding: 24px;
 }
-
 .system-status-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
 }
-
 .system-status-title {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .status-header-icon {
   width: 28px;
   height: 28px;
   color: #3a61ff;
 }
-
 .system-status-title h3 {
   font-size: 20px;
   font-weight: 600;
   margin: 0;
 }
-
 .system-status-badge {
   display: inline-flex;
   align-items: center;
@@ -548,20 +469,17 @@ body.dark .card {
   color: #16a34a;
   border: 1px solid #bbf7d0;
 }
-
 .badge-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #16a34a;
 }
-
 .system-status-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
-
 .status-item {
   background: #f9fafb;
   padding: 16px;
@@ -570,7 +488,6 @@ body.dark .card {
   align-items: flex-start;
   gap: 14px;
 }
-
 .status-icon-wrapper {
   width: 44px;
   height: 44px;
@@ -580,29 +497,24 @@ body.dark .card {
   justify-content: center;
   flex-shrink: 0;
 }
-
 .status-icon-wrapper.green {
   background: #e8ebff;
 }
-
 .status-icon {
   width: 24px;
   height: 24px;
   color: #3a61ff;
 }
-
 .status-content {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-
 .status-content strong {
   font-size: 15px;
   font-weight: 600;
   color: #1f2937;
 }
-
 .status-content p {
   font-size: 13px;
   color: #16a34a;
@@ -612,7 +524,6 @@ body.dark .card {
   gap: 6px;
   font-weight: 500;
 }
-
 .status-dot-inline {
   width: 8px;
   height: 8px;
@@ -620,50 +531,39 @@ body.dark .card {
   background: #16a34a;
   display: inline-block;
 }
-
-/* ===================== BADGES ===================== */
 .ui-badge {
   font-size: 12px;
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid #0da3bd;
 }
-
-/* ===================== RESPONSIVE ===================== */
-/* ===================== SETTINGS SUMMARY CARD ===================== */
 .settings-summary-card {
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-
 .settings-summary-header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .settings-summary-title {
   display: flex;
   align-items: center;
   gap: 12px;
   flex: 1;
 }
-
 .settings-icon {
   width: 28px;
   height: 28px;
   color: #3a61ff;
 }
-
 .settings-summary-title h3 {
   font-size: 20px;
   font-weight: 600;
   margin: 0;
 }
-
-/* Settings Section */
 .settings-section {
   background: #e8ebff;
   border-radius: 10px;
@@ -672,20 +572,17 @@ body.dark .card {
   flex-direction: column;
   gap: 12px;
 }
-
 .settings-section-header {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .section-icon {
   width: 20px;
   height: 20px;
   color: #3a61ff;
   flex-shrink: 0;
 }
-
 .settings-section-header h4 {
   font-size: 15px;
   font-weight: 600;
@@ -693,7 +590,6 @@ body.dark .card {
   margin: 0;
   flex: 1;
 }
-
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -706,15 +602,12 @@ body.dark .card {
   background: #f0fdf4;
   color: #16a34a;
 }
-
-/* Details in Settings Section */
 .settings-details {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-left: 0;
 }
-
 .detail-item {
   display: flex;
   align-items: center;
@@ -722,29 +615,24 @@ body.dark .card {
   font-size: 14px;
   color: #374151;
 }
-
 .detail-icon {
   width: 18px;
   height: 18px;
   color: #3a61ff;
   flex-shrink: 0;
 }
-
-/* Backup Locations Section */
 .backup-locations-section {
   background: transparent !important;
   padding: 0;
   gap: 12px;
   border: none !important;
 }
-
 .locations-title {
   font-size: 16px;
   font-weight: 600;
   color: #1f2937;
   margin: 0;
 }
-
 .location-item {
   background: #e8ebff;
   border-radius: 10px;
@@ -753,7 +641,6 @@ body.dark .card {
   align-items: flex-start;
   gap: 12px;
 }
-
 .location-icon {
   width: 24px;
   height: 24px;
@@ -761,13 +648,11 @@ body.dark .card {
   flex-shrink: 0;
   margin-top: 2px;
 }
-
 .location-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-
 .location-label {
   font-size: 11px;
   font-weight: 700;
@@ -776,14 +661,11 @@ body.dark .card {
   letter-spacing: 0.5px;
   margin: 0;
 }
-
 .location-value {
   font-size: 14px;
   color: #374151;
   margin: 0;
 }
-
-/* Settings Button */
 .settings-button {
   display: flex;
   align-items: center;
@@ -799,17 +681,14 @@ body.dark .card {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
 .settings-button:hover {
   background: #2f53e6;
 }
-
 .button-icon {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
 }
-
 .ui-badge {
   display: inline-flex;
   align-items: center;
@@ -818,7 +697,6 @@ body.dark .card {
   height: 22px;
   padding: 2px 10px;
   border-radius: 999px;
-
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -829,7 +707,6 @@ body.dark .card {
   cursor: pointer;
   transition: 0.3s ease;
 }
-
 .ui-badge::before {
   content: "";
   width: 7px;
@@ -838,33 +715,26 @@ body.dark .card {
   background: rgba(140, 180, 255, 0.9);
   box-shadow: 0 0 0 3px rgba(140, 180, 255, 0.16);
 }
-
 .ui-badge:hover {
   background: #fffb0065;
 }
-
-/* ===================== RESPONSIVE ===================== */
 @media (max-width: 980px) {
   .layout {
     flex-direction: column;
   }
-
   .sidebar {
     flex-direction: row;
     width: 100%;
   }
-
   .card-rows {
     grid-template-columns: 1fr;
   }
-
   .stats-row,
   .main-col,
   .sidebar-col,
   .system-status-card {
     grid-column: 1 / -1;
   }
-
   .system-status-grid {
     grid-template-columns: 1fr 1fr;
   }

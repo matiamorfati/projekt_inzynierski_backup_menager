@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <!-- meta i style -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,18 +34,15 @@
 
   <body>
     <div class="app">
-      <!-- HEADER -->
       <header class="header">
         <h1 class="brand">backUP.manager</h1>
 
         <div class="header-actions">
-          <!-- DARK MODE (future) -->
           <button class="icon-btn" title="Toggle dark mode">🌙</button>
         </div>
       </header>
 
       <div class="layout">
-        <!-- SIDEBAR -->
         <nav class="sidebar">
           <div class="sidebar-nav">
             <a class="nav-link" href="{% url 'dashboard' %}">
@@ -123,7 +119,6 @@
             </a>
           </div>
 
-          <!-- USER SECTION -->
           <div class="user-section">
             <div class="user-avatar">{{ request.user.username|first|upper }}</div>
             <div class="user-info">
@@ -137,7 +132,6 @@
           </div>
         </nav>
 
-        <!-- MAIN CONTENT -->
         <main class="content">
           <div class="content-header">
             <div>
@@ -150,7 +144,6 @@
           </div>
 
           <div class="cards">
-            <!-- LEWA KARTA – FORMULARZ -->
             <section class="card form-container">
               <div class="card-header-title">
                 <svg class="card-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -175,7 +168,6 @@
                     placeholder="e.g. My Backup"
                   ></inp>
                 </div>
-                <!-- SOURCE -->
                 <div class="form-group">
                   <label for="sources"
                     >Source directories<span class="required">*</span></label
@@ -213,7 +205,6 @@
                   </div>
                 </div>
 
-                <!-- DESCRIPTION -->
                 <div class="form-group">
                   <label for="description">Description (optional)</label>
                   <textarea
@@ -223,7 +214,6 @@
                   ></textarea>
                 </div>
 
-                <!-- BACKUP TYPE -->
                 <div class="form-group">
                   <label for="backupType"
                     >Backup destination<span class="required">*</span></label

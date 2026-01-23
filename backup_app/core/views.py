@@ -25,9 +25,6 @@ def settings_view(request):
 def register(request):
     return render(request, 'register.html')
 
-# ------------------------------
-# API views — wrappers dla core_service
-# ------------------------------
 def api_system_status(request):
     return JsonResponse(core_service.get_system_status())
 
@@ -41,18 +38,14 @@ def api_run_backup_from_sources(request):
     description = data.get("description")
     custom_name = data.get("custom_name")
     sources = data.get("sources", [])
-    # dodaje walidacje source
     if not isinstance(sources, list) or len([s for s in sources if str(s).strip()]) == 0:
         return JsonResponse({"ok": False, "error": "sources must be a non-empty list"}, status=400)
     destination = data.get("destination")
 
-    # To jest nowe związane z logiką wysyłania na drive
     upload_to_drive = data.get ("upload_to_drive", None)
-    # Dopuszczne jest True/False jak i string "true/false" z frontu
     if isinstance(upload_to_drive, str):
         upload_to_drive =upload_to_drive.lower() == "true"
 
-    # Pobierz email zalogowanego użytkownika
     recipient_email = request.user.email if request.user.is_authenticated else None
 
     result = core_service.run_backup_from_sources(
@@ -74,7 +67,6 @@ def api_run_backup_from_profile(request):
     data = json.loads(request.body or "{}")
     profile_id = data.get("profile_id")
 
-    # Dodajemy nowe tak jak wyzej
     upload_to_drive = data.get("upload_to_drive", None)
     if isinstance(upload_to_drive, str):
         upload_to_drive = upload_to_drive.lower() == "true"
